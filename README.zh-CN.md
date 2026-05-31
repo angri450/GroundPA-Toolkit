@@ -62,21 +62,51 @@ OpenXML 底层直控、.NET 原生执行的 Claude Code 技能插件集。15 个
 
 每次会话只修改对应工作区的 `Program.cs`。输出自动落入带时间戳的子目录。
 
-## 快速安装
+## 安装
+
+### 一键安装
 
 ```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git
-cp -r GroundPA-Toolkit/* ~/.claude/skills/
-dotnet tool install --global Angri450.Nong.Skill.Manager
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
+  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
+  rm -rf /tmp/groundpa && \
+  dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
 
-需要 .NET SDK。不设版本下限。
+**前置条件：** [.NET SDK](https://dotnet.microsoft.com/download)、[Git](https://git-scm.com/)。
+
+| 你的系统 | `cp -r` 换成 |
+|----------|-------------|
+| Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
+| Windows (WSL / Git Bash) | 同上不变 |
+
+### Marketplace（推荐发给朋友）
+
+朋友只需一行命令：
+
+```bash
+claude plugins install groundpa-toolkit
+```
+
+需先注册 Marketplace，见[下方说明](#marketplace-注册)。
 
 ## 核心架构
 
 Skill 文件夹分发时只读。确定性工作通过 NuGet 包（`Angri450.Nong.*`）执行。skill-manager 全局工具负责校验、安全扫描、打包和评测。渐进式披露原则保持 SKILL.md 精简——详细参考资料放在 `references/` 中。
 
 完整约定见 [`skill-manager/SKILL.md`](skill-manager/SKILL.md)。
+
+## Marketplace 注册
+
+注册一次，朋友就能一条命令安装：
+
+```bash
+# 1. 注册 Marketplace（每人只需执行一次）
+claude plugins marketplace add angri450/GroundPA-Toolkit
+
+# 2. 安装插件
+claude plugins install groundpa-toolkit
+```
 
 ## 开源协议
 

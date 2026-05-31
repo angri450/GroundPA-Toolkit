@@ -74,3 +74,41 @@ gh release create vX.Y.Z \
 2. 推送前用 `git log --oneline` 确认提交信息无敏感内容
 3. 不要提交 `bin/`、`obj/`、`.zip`、`.nupkg`（已在 .gitignore 排除）
 4. 发布前跑一遍审计，确认无硬编码路径、无内部项目名
+
+## 推广给朋友
+
+### 方式一：发一键安装命令
+
+发给朋友复制粘贴即可：
+
+```bash
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && cp -r /tmp/groundpa/* ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Skill.Manager
+```
+
+Windows 用户把 `cp -r ...` 换成 `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse`。
+
+前提：朋友需要装 [.NET SDK](https://dotnet.microsoft.com/download) 和 [Git](https://git-scm.com/)。
+
+### 方式二：注册 Claude Code Marketplace
+
+注册后朋友只需一行：
+
+```bash
+claude plugins install groundpa-toolkit
+```
+
+**注册方法：**
+
+1. 去 https://github.com/anthropics/claude-plugins-official
+2. Fork → 添加你的 marketplace 信息 → 提交 PR
+3. 官方审核通过后，任何人直接 `claude plugins install` 即可
+
+社区 Marketplace 也可以先提交到 `kossakovsky/cc-plugins`，审核更快。
+
+### 方式三：直接分享仓库链接
+
+```
+https://github.com/angri450/GroundPA-Toolkit
+```
+
+仓库首页有完整 README，朋友自行按说明安装。

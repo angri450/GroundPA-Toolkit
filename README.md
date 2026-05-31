@@ -62,21 +62,51 @@ All runtime data lives under one tree:
 
 Each session modifies only `Program.cs` in the relevant workspace. Output lands in a timestamped subdirectory under `output/`.
 
-## Quick Install
+## Install
+
+### One-liner
 
 ```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git
-cp -r GroundPA-Toolkit/* ~/.claude/skills/
-dotnet tool install --global Angri450.Nong.Skill.Manager
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
+  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
+  rm -rf /tmp/groundpa && \
+  dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
 
-Requires .NET SDK. No version floor.
+**Prerequisites:** [.NET SDK](https://dotnet.microsoft.com/download), [Git](https://git-scm.com/).
+
+| You're on | Instead of `cp -r` |
+|-----------|--------------------|
+| Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
+| Windows (WSL / Git Bash) | Same as above |
+
+### Marketplace (recommended for friends)
+
+Tell your friend to run:
+
+```bash
+claude plugins install groundpa-toolkit
+```
+
+See [Marketplace](#marketplace) below to register first.
 
 ## Architecture
 
 Skill folders ship read-only. Deterministic work runs through NuGet packages (`Angri450.Nong.*`). The skill-manager global tool handles validation, security scanning, packaging, and evaluation. Progressive disclosure keeps SKILL.md lean — deep reference material lives in `references/`.
 
 See [`skill-manager/SKILL.md`](skill-manager/SKILL.md) for full conventions.
+
+## Marketplace
+
+Register this marketplace once so friends can install with a single command:
+
+```bash
+# 1. Register the marketplace (each user does this once)
+claude plugins marketplace add angri450/GroundPA-Toolkit
+
+# 2. Install the plugin
+claude plugins install groundpa-toolkit
+```
 
 ## License
 
