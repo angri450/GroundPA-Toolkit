@@ -1,6 +1,6 @@
 {
   "name": "groundpa-toolkit",
-  "version": "2.1.0",
+  "version": "1.0.0",
   "description": "GroundPA Toolkit - 土地公的工具箱. 15 skills: Office six-piece (Word/Excel/PPT/Chart/Diagram/MultiModal via OpenXML NuGet), shell scripting (Bash/PowerShell), .NET development, GitHub operations, NuGet packages, assembly decompilation, email, and skill-manager.",
   "author": {
     "name": "angri450"
