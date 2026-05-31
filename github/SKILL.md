@@ -35,7 +35,8 @@ Combined git version control and GitHub operations via `git` and `gh` CLI.
 | API | "api", "graphql", "REST" | [gh-cli.md](references/gh-cli.md) §13 |
 | Codespaces | "codespace", "云开发" | [gh-cli.md](references/gh-cli.md) §15 |
 
-完整 gh CLI 参考: [gh-cli.md](references/gh-cli.md) (21 节, 覆盖所有 gh 命令)
+完整 gh CLI 参考: [gh-cli.md](references/gh-cli.md)
+开发与发布经验: [lessons-learned.md](../gitee/references/lessons-learned.md) (21 节, 覆盖所有 gh 命令)
 
 ## git Core Commands
 
