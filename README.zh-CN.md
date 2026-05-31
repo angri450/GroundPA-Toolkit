@@ -68,7 +68,7 @@ OpenXML 底层直控、.NET 原生执行的 Claude Code 技能插件集。15 个
 
 ```bash
 git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
-  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
+  cp -r /tmp/groundpa/. ~/.claude/skills/ && \
   rm -rf /tmp/groundpa && \
   dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
