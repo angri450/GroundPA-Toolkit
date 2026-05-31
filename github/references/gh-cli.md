@@ -2,30 +2,21 @@
 name: github-cli
 description: "Comprehensive GitHub CLI (gh) reference. Covers repos, issues, PRs, Actions, releases, gists, search, projects v2, API, secrets/variables, labels, codespaces, extensions, auth, and advanced GraphQL patterns."
 metadata:
-  {
-    "openclaw":
-      {
-        "emoji": "🐙",
-        "requires": { "bins": ["gh"] },
-        "install":
-          [
-            {
-              "id": "brew",
-              "kind": "brew",
-              "formula": "gh",
-              "bins": ["gh"],
-              "label": "Install GitHub CLI (brew)",
-            },
-            {
-              "id": "apt",
-              "kind": "apt",
-              "package": "gh",
-              "bins": ["gh"],
-              "label": "Install GitHub CLI (apt)",
-            },
-          ],
-      },
-  }
+  openclaw:
+    emoji: "🐙"
+    requires:
+      bins: ["gh"]
+    install:
+      - id: "brew"
+        kind: "brew"
+        formula: "gh"
+        bins: ["gh"]
+        label: "Install GitHub CLI (brew)"
+      - id: "apt"
+        kind: "apt"
+        package: "gh"
+        bins: ["gh"]
+        label: "Install GitHub CLI (apt)"
 ---
 
 # GitHub CLI (`gh`) — Comprehensive Skill
