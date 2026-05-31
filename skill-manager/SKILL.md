@@ -1,6 +1,6 @@
 ---
 name: skill-manager
-description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit or optimize an existing skill, fix a broken skill, debug why a skill is not triggering, merge overlapping skills, split oversized skills, deprecate obsolete skills, run evals to test a skill, benchmark skill performance with variance analysis, audit skill quality, or optimize a skill's description for better triggering accuracy.
+description: Create, improve, and maintain skills. Trigger on create skill, edit skill, fix skill, merge skills, split skills, deprecate skill, run evals, benchmark, audit quality, or optimize descriptions.
 ---
 
 # skill-manager
