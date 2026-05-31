@@ -77,7 +77,7 @@ git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
 
 ```bash
 git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
-  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
+  cp -r /tmp/groundpa/. ~/.claude/skills/ && \
   rm -rf /tmp/groundpa && \
   dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
