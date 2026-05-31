@@ -89,21 +89,29 @@ Windows 用户把 `cp -r ...` 换成 `Copy-Item /tmp/groundpa/* -Destination ~/.
 
 前提：朋友需要装 [.NET SDK](https://dotnet.microsoft.com/download) 和 [Git](https://git-scm.com/)。
 
-### 方式二：注册 Claude Code Marketplace
+### 方式二：Claude Code Marketplace（推荐）
 
-注册后朋友只需一行：
+本仓库本身就是 marketplace，朋友只需两条命令：
 
 ```bash
-claude plugins install groundpa-toolkit
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@groundpa-marketplace
 ```
 
-**注册方法：**
+然后在 Claude Code 中 `/reload-plugins`，即可通过命名空间调用：
 
-1. 去 https://github.com/anthropics/claude-plugins-official
-2. Fork → 添加你的 marketplace 信息 → 提交 PR
-3. 官方审核通过后，任何人直接 `claude plugins install` 即可
+```text
+/groundpa-toolkit:word
+/groundpa-toolkit:chart
+```
 
-社区 Marketplace 也可以先提交到 `kossakovsky/cc-plugins`，审核更快。
+注意：是 `plugin`（单数），不是 `plugins`。安装格式是 `plugin-name@marketplace-name`。
+
+**提交到公共目录：**
+
+1. 先本地校验：`claude plugin validate .`
+2. Anthropic Community Marketplace：通过 claude.ai 上的表单提交，审核通过后用户可通过 `claude-community` 市场安装
+3. `kossakovsky/cc-plugins`：第三方社区市场，可 PR 提交
 
 ### 方式三：直接分享仓库链接
 
