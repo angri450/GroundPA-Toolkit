@@ -1,11 +1,9 @@
 ---
 name: diagram
 description: >
-  Scientific diagram generator — flowcharts, network graphs, phylogenetic trees, mechanism diagrams.
-  MUST use this skill when the user wants to create flowcharts, network diagrams, phylogenetic trees,
-  system trees, process diagrams, or any scientific/technical illustrations. Also trigger when the
-  user mentions flowchart, network graph, phylogenetic tree, 流程图, 网络图, 系统发育树,
-  机制图, 关系图, Newick, diagram, illustration — even if they do not explicitly say "diagram".
+  Scientific diagrams — flowcharts, network graphs, phylogenetic trees. Trigger on
+  flowchart, workflow, network graph, Newick tree, dendrogram, mechanism diagram,
+  bioicons, or scientific illustration.
 ---
 
 # DiagramCore — Scientific Diagram Generator
@@ -24,18 +22,18 @@ If missing, stop immediately and tell the user to install. Do not attempt to fix
 
 ## Dispatch Logic
 
-1. User mentions "flowchart", "process", "workflow", "流程图", "流程", "工作流" → **flowchart mode**
-2. User mentions "network", "relationship", "graph", "网络图", "关系图", "图谱" → **network mode**
-3. User mentions "tree", "phylogenetic", "Newick", "系统发育树", "进化树", "树状图" → **tree mode**
-4. User mentions "bioicons", "icon", "图标", "素材" → **icon sheet mode**
+1. User mentions "flowchart", "process", "workflow", or Chinese equivalents → **flowchart mode**
+2. User mentions "network", "relationship", "graph", or Chinese equivalents → **network mode**
+3. User mentions "tree", "phylogenetic", "Newick", or Chinese equivalents → **tree mode**
+4. User mentions "bioicons", "icon", "图标" → **icon sheet mode**
 
 ## Cross-Skill Flow
 
 | Step | Skill | Role |
 |------|-------|------|
 | 1. Data preparation | Excel | Create .xlsx with raw data |
-| 2. Statistical analysis | Chart | ANOVA + Duncan → significance letters |
-| 3. Chart generation | Chart | Bar charts with error bars + significance |
+| 2. Statistical analysis | Chart | ANOVA + Duncan to get significance letters |
+| 3. Chart generation | Chart | Bar charts with error bars and significance |
 | 4. Diagram generation | Diagram | Flowcharts, network graphs, phylogenetic trees |
 | 5. Paper insertion | Word | Insert figures into academic paper |
 
@@ -47,7 +45,7 @@ If missing, stop immediately and tell the user to install. Do not attempt to fix
 dotnet run --project <project-path>
 ```
 
-Generates flowchart PNG. Typical flow: `Graph` → `SugiyamaLayout` → `FlowchartRenderer` → PNG output.
+Generates flowchart PNG. Flow: `Graph` → `SugiyamaLayout` → `FlowchartRenderer` → PNG output.
 
 ### Network (Force-directed layout)
 
@@ -55,7 +53,7 @@ Generates flowchart PNG. Typical flow: `Graph` → `SugiyamaLayout` → `Flowcha
 dotnet run --project <project-path>
 ```
 
-Generates network graph PNG. Typical flow: `Graph` → `ForceDirectedLayout` → `NetworkGraphRenderer` → PNG output.
+Generates network graph PNG. Flow: `Graph` → `ForceDirectedLayout` → `NetworkGraphRenderer` → PNG output.
 
 ### Tree (Newick format)
 
@@ -63,7 +61,7 @@ Generates network graph PNG. Typical flow: `Graph` → `ForceDirectedLayout` →
 dotnet run --project <project-path>
 ```
 
-Generates phylogenetic tree PNG. Typical flow: `NewickTree.Parse()` → `TreeLayout` → `TreeRenderer` → PNG output.
+Generates phylogenetic tree PNG. Flow: `NewickTree.Parse()` → `TreeLayout` → `TreeRenderer` → PNG output.
 
 ### Icon Sheet
 
@@ -79,7 +77,7 @@ Generates bioicons sheet PNG with all 40 scientific icons organized by category.
 .\scripts\validate-diagram.ps1 <output.png>
 ```
 
-Checks: file exists → non-zero size → reasonable dimensions. Reports PASS/FAIL.
+Checks: file exists → non-zero size → valid PNG signature → reasonable dimensions. Reports PASS/FAIL.
 
 ## Workspace
 
@@ -92,7 +90,7 @@ dotnet add <target-dir> package Angri450.Nong.Diagram
 
 Then write a `Program.cs` template. See [workspace-setup.md](references/workspace-setup.md) for the full template and details.
 
-After setup, each session only modifies `Program.cs` in `~/Documents/GroundPA Toolkit Workplace/diagram/`. Output goes to `~/Documents/GroundPA Toolkit Workplace/output/`.
+After setup, each session only modifies `Program.cs` in `~/Documents/diagram/`. Output goes to `~/Documents/output/`.
 
 ## Icon Library
 

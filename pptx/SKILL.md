@@ -1,13 +1,8 @@
 ---
 name: pptx
 description: >
-  Read and write PowerPoint presentations (.pptx) with full formatting intelligence.
-  MUST use this skill when the user wants to create presentations, slide decks, reports,
-  or pitch decks; read, parse, or extract data from .pptx files; edit or update slides;
-  work with charts, tables, or templates in PowerPoint. Trigger when the user mentions
-  PowerPoint, PPT, pptx, slides, presentation, slide deck, 演示文稿, 幻灯片, 汇报,
-  or 课件 — even if they do not explicitly say "pptx". Do NOT trigger when the primary
-  deliverable is a Word document, Excel spreadsheet, or HTML page.
+  PowerPoint read/write with full formatting. Trigger on .pptx, presentation,
+  slide deck, pitch deck, extract slides, or template generation.
 ---
 
 # PptxCore — PPT Document Intelligence

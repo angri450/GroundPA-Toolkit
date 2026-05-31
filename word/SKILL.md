@@ -1,14 +1,8 @@
 ---
 name: word
 description: >
-  Read and write Word documents with full formatting intelligence. MUST use this skill
-  when the user wants to read a docx (extract content + layout), analyze a template,
-  create formatted academic papers, generate reports, compare document formats, learn
-  formatting patterns from existing Word files, fill template placeholders, diagnose
-  paper quality, classify research design, extract paper structure, or check references.
-  Also trigger when the user mentions Word, docx, .docx, paper, thesis, report, format,
-  template, document generation, variable operationalization, references, paper diagnosis,
-  or research methods — even if they do not explicitly say "word". This skill separates
+  Word document read/write with full formatting. Trigger on .docx, academic paper,
+  report generation, template analysis, or format extraction.
   reading (extracting format DNA), writing (generating documents from specs), and
   analyzing (paper quality diagnosis, structure extraction).
 ---

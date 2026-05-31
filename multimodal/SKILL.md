@@ -1,12 +1,8 @@
 ---
 name: multimodal
 description: >
-  Multi-modal document processing — OCR recognition, speech-to-text, text-to-speech.
-  MUST use this skill when the user wants to OCR an image/PDF, extract text from scanned
-  documents, convert document images to Word/Markdown, recognize text from screenshots,
-  or process documents with PaddleOCR. Also trigger when the user mentions OCR, 识别,
-  扫描, 提取文字, 图片转文字, PDF转Word, PaddleOCR, 多模态, multimodal, or 文档解析
-  — even if they do not explicitly say "multimodal". First capability: PaddleOCR-VL-1.6
+  Multi-modal document processing — OCR, speech-to-text, text-to-speech. Trigger on
+  OCR image, extract text from PDF, recognize speech, or convert document images.
   cloud API + local PaddleOCR CPU.
 ---
 

@@ -1,13 +1,9 @@
 ---
 name: excel
 description: >
-  Read and write Excel spreadsheets (.xlsx, .xlsm, .csv) with full formatting intelligence.
-  MUST use this skill when the user wants to create spreadsheets, financial models, dashboards,
-  or trackers; read, parse, or extract data from .xlsx files; edit or update workbooks; work
-  with formulas, charts, or templates; import CSV/TSV data; add data validation and dropdown menus.
-  Trigger when the user mentions spreadsheet, workbook, Excel, .xlsx, financial model, tracker,
-  dashboard, 电子表格, 图表, 下拉, 数据验证, or 数据透视 — even if they do not explicitly say
-  "excel". Do NOT trigger when the primary deliverable is a Word document, HTML report, or Python script.
+  Excel spreadsheet read/write with formatting, formulas, charts, and data validation.
+  Trigger on .xlsx, spreadsheet, workbook, pivot table, dropdown, conditional formatting,
+  or Excel template generation.
 ---
 
 # ExcelCore — Excel Document Intelligence

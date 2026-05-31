@@ -1,14 +1,8 @@
 ---
 name: email
 description: >
-  Send and receive emails using the ClawEmail mail-cli tool. Use this skill
-  whenever the user wants to send an email, check their inbox, read messages,
-  reply to emails, forward emails, search mail history, download attachments,
-  or manage mailboxes — even if they don't explicitly say "email" or "mail-cli".
-  Also trigger when the user mentions any @claw.163.com address, mentions
-  ClawEmail, or pastes content that looks like email threads. If in doubt and
-  the task involves any kind of electronic message, prefer invoking this skill
-  over guessing.
+  Email operations via ClawEmail CLI. Trigger on send email, check inbox, reply,
+  forward, search mail, download attachments, or manage mailboxes.
 ---
 
 # ClawEmail 邮件收发

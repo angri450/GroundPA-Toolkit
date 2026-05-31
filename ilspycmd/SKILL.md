@@ -1,12 +1,8 @@
 ---
 name: ilspycmd
 description: >
-  Decompile .NET assemblies to C# source code. MUST use this skill when the user
-  wants to inspect, decompile, or recover source code from a compiled .NET DLL or EXE;
-  understand what a third-party library does internally; extract API surface from
-  a NuGet package; or reverse-engineer a .NET binary. Also trigger when the user
-  mentions ILSpy, ilspycmd, decompile, 反编译, 反解, DLL inspection, 查看DLL源码,
-  or 提取源码 — even if they do not explicitly say "ilspycmd".
+  Decompile .NET assemblies to C# source. Trigger on inspect DLL, recover source code,
+  decompile EXE, extract API surface, or understand third-party library internals.
 ---
 
 # ilspycmd
