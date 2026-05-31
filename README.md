@@ -86,7 +86,7 @@ GroundPA Toolkit ships with its own Claude Code marketplace. Friends install in 
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@groundpa-marketplace
+claude plugin install groundpa-toolkit@angri450
 ```
 
 Then reload in Claude Code:
@@ -115,7 +115,7 @@ This repo is its own marketplace. Anyone can register it once and install:
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@groundpa-marketplace
+claude plugin install groundpa-toolkit@angri450
 ```
 
 To submit to community directories for wider discovery:

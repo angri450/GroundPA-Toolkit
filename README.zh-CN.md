@@ -86,7 +86,7 @@ GroundPA Toolkit 自带 Claude Code marketplace。朋友只需两条命令：
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@groundpa-marketplace
+claude plugin install groundpa-toolkit@angri450
 ```
 
 然后在 Claude Code 中重载：
@@ -115,7 +115,7 @@ Skill 文件夹分发时只读。确定性工作通过 NuGet 包（`Angri450.Non
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@groundpa-marketplace
+claude plugin install groundpa-toolkit@angri450
 ```
 
 如需提交到社区目录获得更多曝光：

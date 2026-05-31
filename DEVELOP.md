@@ -95,7 +95,7 @@ Windows 用户把 `cp -r ...` 换成 `Copy-Item /tmp/groundpa/* -Destination ~/.
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@groundpa-marketplace
+claude plugin install groundpa-toolkit@angri450
 ```
 
 然后在 Claude Code 中 `/reload-plugins`，即可通过命名空间调用：
