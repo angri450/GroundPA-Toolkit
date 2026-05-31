@@ -80,15 +80,28 @@ git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
 | Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
 | Windows (WSL / Git Bash) | 同上不变 |
 
-### Marketplace（推荐发给朋友）
+### Marketplace（推荐）
 
-朋友只需一行命令：
+GroundPA Toolkit 自带 Claude Code marketplace。朋友只需两条命令：
 
 ```bash
-claude plugins install groundpa-toolkit
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@groundpa-marketplace
 ```
 
-需先注册 Marketplace，见[下方说明](#marketplace-注册)。
+然后在 Claude Code 中重载：
+
+```text
+/reload-plugins
+```
+
+Skills 通过 `groundpa-toolkit:` 命名空间调用：
+
+```text
+/groundpa-toolkit:word
+/groundpa-toolkit:pptx
+/groundpa-toolkit:chart
+```
 
 ## 核心架构
 
@@ -98,15 +111,18 @@ Skill 文件夹分发时只读。确定性工作通过 NuGet 包（`Angri450.Non
 
 ## Marketplace 注册
 
-注册一次，朋友就能一条命令安装：
+本仓库本身就是 marketplace，任何人注册一次即可安装：
 
 ```bash
-# 1. 注册 Marketplace（每人只需执行一次）
-claude plugins marketplace add angri450/GroundPA-Toolkit
-
-# 2. 安装插件
-claude plugins install groundpa-toolkit
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@groundpa-marketplace
 ```
+
+如需提交到社区目录获得更多曝光：
+
+1. 本地校验：`claude plugin validate .`
+2. 通过 claude.ai 上的表单提交到 Anthropic Community Marketplace
+3. 或提交 PR 到 `kossakovsky/cc-plugins` 第三方市场
 
 ## 开源协议
 

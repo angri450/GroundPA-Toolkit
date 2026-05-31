@@ -80,15 +80,28 @@ git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
 | Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
 | Windows (WSL / Git Bash) | Same as above |
 
-### Marketplace (recommended for friends)
+### Marketplace (recommended)
 
-Tell your friend to run:
+GroundPA Toolkit ships with its own Claude Code marketplace. Friends install in two commands:
 
 ```bash
-claude plugins install groundpa-toolkit
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@groundpa-marketplace
 ```
 
-See [Marketplace](#marketplace) below to register first.
+Then reload in Claude Code:
+
+```text
+/reload-plugins
+```
+
+Skills use the `groundpa-toolkit:` namespace:
+
+```text
+/groundpa-toolkit:word
+/groundpa-toolkit:pptx
+/groundpa-toolkit:chart
+```
 
 ## Architecture
 
@@ -98,15 +111,18 @@ See [`skill-manager/SKILL.md`](skill-manager/SKILL.md) for full conventions.
 
 ## Marketplace
 
-Register this marketplace once so friends can install with a single command:
+This repo is its own marketplace. Anyone can register it once and install:
 
 ```bash
-# 1. Register the marketplace (each user does this once)
-claude plugins marketplace add angri450/GroundPA-Toolkit
-
-# 2. Install the plugin
-claude plugins install groundpa-toolkit
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@groundpa-marketplace
 ```
+
+To submit to community directories for wider discovery:
+
+1. Validate locally: `claude plugin validate .`
+2. Submit to Anthropic Community Marketplace via the form on claude.ai
+3. Or submit a PR to `kossakovsky/cc-plugins` for third-party listing
 
 ## License
 
