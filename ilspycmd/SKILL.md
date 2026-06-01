@@ -39,7 +39,7 @@ unzip <package>.nupkg -d <dir>
 # 3. Find the DLL in lib/netX.Y/
 
 # 4. Decompile
-ilspycmd <dir>/lib/net11.0/<assembly>.dll -o <output> -p
+ilspycmd <dir>/lib/net8.0/<assembly>.dll -o <output> -p
 ```
 
 **If ilspycmd fails with runtime version error:**

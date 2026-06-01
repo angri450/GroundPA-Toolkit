@@ -39,6 +39,8 @@ If missing, stop immediately and tell the user to install. Do not attempt to fix
 
 ## Core Operations
 
+**自动画布裁剪**：width/height 参数仅用于布局计算空间，不决定输出尺寸。输出自动裁剪到内容 + 内边距。中文标签和 `\n` 多行文本均支持。
+
 ### Flowchart (Sugiyama layout)
 
 ```powershell

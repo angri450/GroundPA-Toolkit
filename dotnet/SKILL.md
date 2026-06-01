@@ -63,7 +63,7 @@ If two domains are needed, load both. Beyond two, decompose the task.
 - **Read project files before acting** — `.csproj`, `Directory.Build.props`, `Directory.Packages.props`
 - **Prefer `dotnet` CLI** — deterministic and reviewable
 - **Verify after every action** — check output, not just exit codes
-- **.NET SDK 10+ is assumed** unless the project says otherwise
+- **.NET SDK 8.0+ is assumed** unless the project says otherwise
 
 ## Validation
 

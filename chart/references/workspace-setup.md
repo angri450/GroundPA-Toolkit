@@ -2,13 +2,25 @@
 
 首次使用 Chart 功能前必须完成。后续每次只需要修改 `Program.cs`。
 
+## 0. 检查已存在项目
+
+若 `~/Documents/GroundPA Toolkit Workplace/chart/ChartWriter/` 已存在，先打开 `ChartWriter.csproj`：
+
+- 搜索 `Angri450.Nong.Chart`
+- 若为 `<Reference Include="...">` 或 `<HintPath>` → 本地 DLL 引用，删除整个 `<Reference>` 块，替换为：
+  ```xml
+  <PackageReference Include="Angri450.Nong.Chart" Version="*" />
+  ```
+- 若已是 `<PackageReference>` → 跳过，执行 `dotnet restore`
+- 若项目不存在 → 继续第 1 步
+
 ## 1. 检查依赖
 
 ```powershell
 dotnet --version
 ```
 
-若未安装 .NET SDK 11.0，告知用户去 https://dotnet.microsoft.com/en-us/download/dotnet/11.0 安装。
+若未安装 .NET SDK 8.0+，告知用户去 https://dotnet.microsoft.com/download 安装。
 
 ## 2. 确认 NuGet 源
 
@@ -71,11 +83,13 @@ if (args.Length > 0 && args[0] == "combine")
 
 // === 默认模式：生成图表 ===
 // 写法 1: 从 JSON 读数据
-var dataFile = "data.json";
+var dataFile = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+    "GroundPA Toolkit Workplace", "chart", "ChartWriter", "data.json");
 if (!File.Exists(dataFile))
 {
     Console.Error.WriteLine($"Data file not found: {dataFile}");
-    Console.Error.WriteLine("Place a JSON file at: {0}", Path.GetFullPath(dataFile));
+    Console.Error.WriteLine("Place a JSON file at: {0}", dataFile);
     Environment.Exit(1);
 }
 
