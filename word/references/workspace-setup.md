@@ -45,7 +45,18 @@ dotnet add <target-dir> package Angri450.Nong.Docx
 
 Single dependency: `Angri450.Nong.Docx` (transitively pulls `DocumentFormat.OpenXml`). No additional packages needed.
 
-## 4. Write Program.cs Template
+## 4. Copy Format JSON to Project
+
+Format JSON files MUST be copied to the project directory to avoid hardcoded skill version paths. This prevents breakage when the toolkit plugin upgrades.
+
+```powershell
+mkdir -Force <target-dir>/formats/
+cp <skill-root>/word/formats/*.json <target-dir>/formats/
+```
+
+Copy **all** format JSON files (not just the one being used). Each format is ~2 KB and won't bloat the project.
+
+## 5. Write Program.cs Template
 
 Use Write tool to create `<target-dir>/Program.cs`:
 
@@ -121,7 +132,7 @@ var body = main.Document.Body!;
 // Load styles from format JSON
 var sp = main.AddNewPart<StyleDefinitionsPart>();
 sp.Styles = new Styles();
-StyleBuilder.BuildFromJson(sp.Styles, "<format-json-path>");
+StyleBuilder.BuildFromJson(sp.Styles, "formats/life-sciences-contest.json");
 
 // Numbering definitions (for reference lists)
 var np = main.AddNewPart<NumberingDefinitionsPart>();
@@ -129,7 +140,7 @@ np.Numbering = new Numbering();
 StyleBuilder.BuildNumbering(np.Numbering);
 
 // Page layout from format JSON page node
-var sectPr = StyleBuilder.LoadPageLayout("<format-json-path>").Build();
+var sectPr = StyleBuilder.LoadPageLayout("formats/life-sciences-contest.json").Build();
 
 // Use full constructor for footnote/endnote/chart support
 var w = new DocumentWriter(body, doc);
@@ -151,19 +162,22 @@ main.Document.Save();
 Console.WriteLine("OK: " + Path.GetFullPath(outPath));
 ```
 
-Replace `<format-json-path>` with the absolute path to the format JSON, e.g. `<skill-root>/formats/life-sciences-contest.json`.
-
-## 5. Project Structure
+## 6. Project Structure
 
 ```
 <target-dir>/
 ├── DocxWriter.csproj        ← References Angri450.Nong.Docx (single dependency)
 ├── Program.cs               ← Paper content, overwritten each session
+├── formats/                 ← Format JSON files (copied from skill, never hardcode skill paths)
+│   ├── life-sciences-contest.json
+│   ├── journal-paper.json
+│   ├── course-paper.json
+│   └── degree-thesis.json
 ├── bin/Debug/               ← Build output (normal, do not delete)
 └── obj/Debug/               ← Intermediate files (normal, do not delete)
 ```
 
-## 6. Subsequent Usage
+## 7. Subsequent Usage
 
 Each Word generation session:
 1. Write new `Program.cs` via Write tool

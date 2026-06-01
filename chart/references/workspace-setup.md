@@ -115,8 +115,6 @@ ChartBuilder.BarChartWithSignificance(
 Console.WriteLine("OK: " + Path.GetFullPath(Path.Combine(outDir, "chart.png")));
 ```
 
-`<format-json-path>` 替换为实际格式 JSON 的绝对路径。
-
 ## 5. 工程结构
 
 ```
