@@ -22,8 +22,8 @@ Ask the user: **Which one? Need adjustments? Or provide a reference docx for aut
 ## 2. Quick Start
 
 1. Confirm format template (see above)
-2. Write `Program.cs` via Write tool, call `StyleBuilder.BuildFromJson(sp.Styles, "formats/xxx.json")` to load styles
-3. `dotnet run --project <project-path>` to generate docx
+2. Set `GROUNDPA_FORMAT_JSON` env var to `<skill-root>/formats/<chosen-format>.json`, then write `Program.cs` via Write tool
+3. `dotnet run --project <project-path>` to generate docx (format path resolved from env var, no hardcoded path in Program.cs)
 4. `dotnet run --project <project-path> -- preview output.docx` to preview + diagnose
 5. Run `validate.ps1` for validation (includes content quality diagnosis), only deliver on PASS
 
