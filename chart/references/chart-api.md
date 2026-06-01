@@ -191,3 +191,11 @@ ChartBuilder.BarChartWithSignificance(
 - 分组数 < 2：ANOVA 需要至少 2 个处理
 - 文件不存在：`DataLoader` 抛出 `FileNotFoundException`
 - xlsx 工作表不存在：ClosedXML 抛出异常
+
+## 中文渲染
+
+ChartBuilder 内部已自动调用 `FontHelper.GetCjkFamilyName()` 设置中文字体，无需手动配置。
+
+字体检测优先级：`Microsoft YaHei UI > 微软雅黑 > Noto Sans SC > SimHei > SimSun > PingFang SC`，最后回退到 `SKFontManager.MatchCharacter('汉')`。
+
+若图表中文字符仍显示为方框（□），说明系统上没有候选 CJK 字体，需安装思源黑体（Noto Sans SC）或微软雅黑。

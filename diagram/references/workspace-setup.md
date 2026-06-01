@@ -2,17 +2,29 @@
 
 本文档说明如何设置 Diagram skill 的工作区。
 
+## 0. 检查已存在项目
+
+若 `~/Documents/GroundPA Toolkit Workplace/diagram/DiagramWriter/` 已存在，先打开 `DiagramWriter.csproj`：
+
+- 搜索 `Angri450.Nong.Diagram`
+- 若为 `<Reference Include="...">` 或 `<HintPath>` → 本地 DLL 引用，删除整个 `<Reference>` 块，替换为：
+  ```xml
+  <PackageReference Include="Angri450.Nong.Diagram" Version="*" />
+  ```
+- 若已是 `<PackageReference>` → 跳过，执行 `dotnet restore`
+- 若项目不存在 → 继续第 1 步
+
 ## 1. 创建 .NET 项目
 
 ```powershell
 # 创建输出目录
-mkdir -p ~/Documents/GroundPA Toolkit Workplace/output
+New-Item -ItemType Directory -Force -Path "$HOME\Documents\GroundPA Toolkit Workplace\output"
 
 # 创建工作目录和项目
-mkdir -p ~/Documents/GroundPA Toolkit Workplace/diagram
-cd ~/Documents/GroundPA Toolkit Workplace/diagram
+New-Item -ItemType Directory -Force -Path "$HOME\Documents\GroundPA Toolkit Workplace\diagram"
+Set-Location "$HOME\Documents\GroundPA Toolkit Workplace\diagram"
 dotnet new console -n DiagramWriter
-cd DiagramWriter
+Set-Location DiagramWriter
 dotnet add package Angri450.Nong.Diagram
 ```
 
@@ -129,7 +141,9 @@ DiagramBuilder.Flowchart(graph, customPath);
 
 ### 如何调整图表大小？
 
-所有 `DiagramBuilder` 方法都接受 `width` 和 `height` 参数：
+width 和 height 参数仅用于布局算法的计算空间，最终输出会自动裁剪到内容边界。传入 900x600 等安全值即可。
+
+如需更大的布局空间（例如节点很多），增大 width/height 可提供更多计算空间，但最终 PNG 仍会裁剪到内容 + 内边距。
 
 ```csharp
 DiagramBuilder.Flowchart(graph, "chart.png", width: 1200, height: 800);

@@ -1,5 +1,11 @@
 # Excel Write Reference
 
+## 重要：不要额外安装 ClosedXML
+
+`Angri450.Nong.ThirdParty` 已合并了 ClosedXML 和 ScottPlot 等 15 个开源库。若消费者额外安装 `ClosedXML` 或 `ScottPlot` NuGet 包，会导致 **CS0433 类型冲突**（同一类型存在于两个程序集）。
+
+只需安装 `Angri450.Nong.Excel`，所有 ClosedXML 类型通过 ThirdParty 传递依赖自动可用。
+
 ## 模板选择（每次写之前必须做）
 
 **向用户展示已有配色方案，主动问清楚。**

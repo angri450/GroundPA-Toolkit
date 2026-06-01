@@ -2,13 +2,25 @@
 
 首次使用 Write Excel 功能前必须完成。后续每次写 Excel 只修改 `Program.cs`。
 
+## 0. 检查已存在项目
+
+若 `~/Documents/GroundPA Toolkit Workplace/excel/ExcelWriter/` 已存在，先打开 `ExcelWriter.csproj`：
+
+- 搜索 `Angri450.Nong.Excel`
+- 若为 `<Reference Include="...">` 或 `<HintPath>` → 本地 DLL 引用，删除整个 `<Reference>` 块，替换为：
+  ```xml
+  <PackageReference Include="Angri450.Nong.Excel" Version="*" />
+  ```
+- 若已是 `<PackageReference>` → 跳过，执行 `dotnet restore`
+- 若项目不存在 → 继续第 1 步
+
 ## 1. 检查依赖
 
 ```powershell
 dotnet --version
 ```
 
-若未安装 .NET SDK,告知用户去 https://dotnet.microsoft.com/download 安装。
+若未安装 .NET SDK 8.0+，告知用户去 https://dotnet.microsoft.com/download 安装。
 
 ## 2. 创建工程
 

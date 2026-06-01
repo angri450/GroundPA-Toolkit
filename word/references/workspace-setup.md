@@ -2,13 +2,25 @@
 
 Required before first use of Write Word. Subsequent sessions only modify `Program.cs`.
 
+## 0. Check Existing Project
+
+If `~/Documents/GroundPA Toolkit Workplace/word/DocxWriter/` already exists, open `DocxWriter.csproj`:
+
+- Search for `Angri450.Nong.Docx`
+- If `<Reference Include="...">` or `<HintPath>` — local DLL reference, delete the entire `<Reference>` block, replace with:
+  ```xml
+  <PackageReference Include="Angri450.Nong.Docx" Version="*" />
+  ```
+- If already `<PackageReference>` — skip, run `dotnet restore`
+- If project does not exist — continue to step 1
+
 ## 1. Check Dependencies
 
 ```powershell
 dotnet --version
 ```
 
-If .NET SDK not installed, tell user to install from https://dotnet.microsoft.com/download.
+If .NET SDK 8.0+ not installed, tell user to install from https://dotnet.microsoft.com/download.
 
 ## 2. Verify NuGet Source
 
