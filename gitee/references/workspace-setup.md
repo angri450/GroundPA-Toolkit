@@ -8,7 +8,15 @@ Required scopes: `projects`, `issues`, `pull_requests`, `notifications`
 
 ## 2. Configure MCP Server
 
-Add to `~/.claude/mcp.json`:
+Run in terminal:
+
+```
+claude mcp add --transport http gitee https://api.gitee.com/mcp
+```
+
+When prompted, enter your personal access token as the `Authorization` header value. The CLI writes directly to `~/.claude.json` (user-level config) and triggers a connection check immediately.
+
+Alternatively, edit `~/.claude.json` manually and add the `gitee` entry under `mcpServers`:
 
 ```json
 {
@@ -22,6 +30,8 @@ Add to `~/.claude/mcp.json`:
   }
 }
 ```
+
+Do NOT write to `~/.claude/mcp.json` — that path is not read by Claude Code. `mcp.json` (without leading dot) is for project-level config only.
 
 ## 3. Verify
 
