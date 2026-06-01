@@ -106,6 +106,15 @@ if (args.Length > 0 && args[0] == "paper-diagnose")
 
 // === Default: Generate Document ===
 
+// Format JSON path: set GROUNDPA_FORMAT_JSON env var, or pass as first positional arg.
+// The skill loader sets GROUNDPA_FORMAT_JSON automatically to <skill-root>/formats/xxx.json.
+// Manual override: dotnet run --project <path> -- /path/to/format.json
+string formatPath = Environment.GetEnvironmentVariable("GROUNDPA_FORMAT_JSON")
+    ?? (args.Length > 0 && File.Exists(args[0]) ? args[0] : null)
+    ?? throw new InvalidOperationException(
+        "Set GROUNDPA_FORMAT_JSON env var or pass format JSON path as argument. " +
+        "Example: dotnet run --project <path> -- /path/to/life-sciences-contest.json");
+
 string outDir = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
     "GroundPA Toolkit Workplace", "output",
@@ -121,7 +130,7 @@ var body = main.Document.Body!;
 // Load styles from format JSON
 var sp = main.AddNewPart<StyleDefinitionsPart>();
 sp.Styles = new Styles();
-StyleBuilder.BuildFromJson(sp.Styles, "<format-json-path>");
+StyleBuilder.BuildFromJson(sp.Styles, formatPath);
 
 // Numbering definitions (for reference lists)
 var np = main.AddNewPart<NumberingDefinitionsPart>();
@@ -129,7 +138,7 @@ np.Numbering = new Numbering();
 StyleBuilder.BuildNumbering(np.Numbering);
 
 // Page layout from format JSON page node
-var sectPr = StyleBuilder.LoadPageLayout("<format-json-path>").Build();
+var sectPr = StyleBuilder.LoadPageLayout(formatPath).Build();
 
 // Use full constructor for footnote/endnote/chart support
 var w = new DocumentWriter(body, doc);
@@ -151,7 +160,20 @@ main.Document.Save();
 Console.WriteLine("OK: " + Path.GetFullPath(outPath));
 ```
 
-Replace `<format-json-path>` with the absolute path to the format JSON, e.g. `<skill-root>/formats/life-sciences-contest.json`.
+Before running, set the `GROUNDPA_FORMAT_JSON` environment variable to `<skill-root>/formats/<chosen-format>.json`, or pass the format path as the first positional argument:
+
+```powershell
+$env:GROUNDPA_FORMAT_JSON = "<skill-root>/formats/life-sciences-contest.json"
+dotnet run --project <project-path>
+```
+
+Or with a positional argument:
+
+```powershell
+dotnet run --project <project-path> -- <skill-root>/formats/life-sciences-contest.json
+```
+
+Do NOT hardcode `<skill-root>` as a versioned absolute path in Program.cs — it breaks on plugin upgrade.
 
 ## 5. Project Structure
 
