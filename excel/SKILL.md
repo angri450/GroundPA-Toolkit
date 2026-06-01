@@ -15,7 +15,7 @@ Two independent capabilities, loaded on demand:
 
 ## Dependencies
 
-- .NET SDK 11.0 (`dotnet --version` must work)
+- .NET SDK 8.0+ (`dotnet --version` must work)
 
 If missing, stop immediately and tell the user to install. Do not attempt to fix.
 

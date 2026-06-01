@@ -132,6 +132,8 @@ layout.Layout(tree, width: 800, height: 600, radial: true);  // 径向布局
 
 ## Renderer — 渲染器
 
+**重要**：所有渲染器的 `width` 和 `height` 参数不再决定最终输出尺寸——仅用于布局计算空间。输出会自动裁剪到内容 + 内边距。可以为所有调用传入 900x600 等安全值。
+
 ### FlowchartRenderer
 
 ```csharp
@@ -193,7 +195,7 @@ graph.AddNode("pcr", "PCR").Shape = "icon:LabEquipment:pcr-machine";
 
 ## 完整示例
 
-### 实验流程图
+### 实验流程图（含中文节点 + 多行文本）
 
 ```csharp
 using DiagramCore;
@@ -201,9 +203,9 @@ using DiagramCore.Models;
 
 var graph = new Graph();
 
-// 添加节点
-graph.AddNode("sample", "样品采集");
-graph.AddNode("dna", "DNA 提取");
+// 添加节点（支持中文标签 + 多行文本 \n 分隔）
+graph.AddNode("sample", "样品采集\n(田间)");
+graph.AddNode("dna", "DNA 提取\n(CTAB 法)");
 graph.AddNode("pcr", "PCR 扩增");
 graph.AddNode("seq", "测序");
 graph.AddNode("analysis", "生物信息分析");
@@ -214,7 +216,7 @@ graph.AddEdge("dna", "pcr");
 graph.AddEdge("pcr", "seq");
 graph.AddEdge("seq", "analysis");
 
-// 渲染
+// 渲染（width/height 仅用于布局计算，输出自动裁剪到内容边界）
 DiagramBuilder.Flowchart(graph, "workflow.png");
 ```
 
@@ -257,3 +259,15 @@ graph.AddEdge("BRCA1", "EGFR");
 // 渲染
 DiagramBuilder.NetworkGraph(graph, "protein_network.png");
 ```
+
+## 中文渲染与多行文本
+
+所有渲染器（`FlowchartRenderer`、`NetworkGraphRenderer`、`TreeRenderer`）均已使用 `DiagramCore.Renderers.FontHelper` 自动设置 CJK Typeface，无需手动配置。
+
+字体检测优先级：`Microsoft YaHei UI > 微软雅黑 > Noto Sans SC > SimHei > SimSun > PingFang SC`，最后回退到字体管理器匹配。
+
+**多行文本**：节点标签支持 `\n` 分隔。`NetworkGraphRenderer` 的节点尺寸会根据文本内容自适应（14px 中文字符 × 行数 + 内边距），不再使用固定半径。
+
+**画布自适应**：三种渲染器（Flowchart、NetworkGraph、Tree）均已从固定画布改为自动裁剪到内容边界。`width` 和 `height` 参数仅用于布局算法的计算空间，最终输出尺寸由内容决定。
+
+若图表中文字符仍显示为方框（□），说明系统上没有候选 CJK 字体，需安装思源黑体（Noto Sans SC）或微软雅黑。
