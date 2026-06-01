@@ -1,6 +1,6 @@
 {
   "name": "groundpa-toolkit",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "GroundPA Toolkit. 16 skills: Office suite (Word/Excel/PPT/Chart/Diagram/MultiModal), shell scripting (Bash/PowerShell), developer tools (.NET/GitHub/Gitee/NuGet/ILSpy/ghproxy), email, and skill-manager.",
   "author": {
     "name": "angri450"
