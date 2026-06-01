@@ -42,6 +42,9 @@ Use manual DLL bundling via `BuildOutputInPackage` MSBuild target instead.
 
 ## Skill Design
 
+### 21. User-level MCP config is `~/.claude.json`, not `~/.claude/mcp.json`
+`mcp.json` (without leading dot) is project-level config only. `enabledMcpjsonServers` only affects project-level `.mcp.json`. The correct way to add a user-level MCP server is `claude mcp add --transport http <name> <url>`, which writes to `~/.claude.json` and triggers a connection check.
+
 ### 10. Description optimization: 20-25 words, front-loaded
 Claude Code UI truncates at ~25 words. Front-load with highest-value trigger keywords. Remove "MUST use this skill when" boilerplate. AI handles semantic matching across languages — no need for Chinese keywords in the body.
 
