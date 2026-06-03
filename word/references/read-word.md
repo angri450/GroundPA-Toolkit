@@ -1,5 +1,20 @@
 # Read Word — Document Reading and Feature Extraction
 
+## Path Priority (Read Dispatch)
+
+Reading a docx file has two paths, in priority order:
+
+1. **.NET CLI (preferred)**: `dotnet run --project <DocxWriter-path> -- preview <file>`
+   - Full OOXML namespace support, handles cross-line paragraphs, embedded images
+   - Requires: `~/Documents/GroundPA Toolkit Workplace/word/DocxWriter/` with `Angri450.Nong.Docx` package reference
+   - If project exists but restore failed → `dotnet restore` and retry
+2. **PowerShell fallback**: Add-Type + Regex parsing of raw XML
+   - Use ONLY when DocxWriter project does not exist or .NET SDK is missing
+   - Known limitations: OOXML namespace mismatches, cross-line paragraph splits
+   - Never use as first choice when .NET CLI is available
+
+**Rule**: Always attempt path 1 first. Only fall back to path 2 if path 1 is unavailable (project missing, SDK not installed) or genuinely fails (compilation error). Never silently skip path 1.
+
 ## Quick Start
 
 ### Format Fingerprint Extraction
