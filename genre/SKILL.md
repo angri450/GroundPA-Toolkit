@@ -1,63 +1,36 @@
 ---
 name: genre
-description: >
-  Academic paper writing and analysis via Nong.Genre NuGet package. Trigger on
-  paper, thesis, 论文, 诊断, diagnosis, evidence chain, 证据链, reference check,
-  参考文献, variable plan, 变量方案, GB/T 7714, 公文, official document, 信件, letter.
+description: Template discovery via nong. Trigger on available writing templates, genre templates, format presets, template list, or showing a template.
 ---
 
-# Genre — Academic Paper Intelligence & Writing
+# Genre
 
-Two capabilities, loaded on demand:
+Use `nong genre` only for template discovery. Paper diagnosis and paper generation live in the `inspect` skill.
 
-- **Paper Analysis** → load [paper-analysis.md](references/paper-analysis.md)
-- **Write Paper** → load [write-paper.md](references/write-paper.md)
+## Prerequisites
 
-## Dependencies
-
-- .NET SDK 8.0+ (`dotnet` command available)
-- NuGet packages: `Angri450.Nong.Docx` + `Angri450.Nong.Genre`
-
-Dependency chain: ThirdParty → Docx → Genre.
-
-If .NET SDK 8.0+ is missing, stop immediately and tell the user to install it. Do not attempt to fix.
-
-## Dispatch Logic
-
-1. User mentions "分析", "诊断", "分类", "提取", "检查", "analyze", "diagnose", "classify", "extract" → **load paper-analysis.md**
-2. User mentions "生成", "写", "创建", "论文", "generate", "write", "create", "paper" → **load write-paper.md**
-3. User mentions "公文", "official document" → reply "公文写作功能开发中，暂不可用。"
-4. User mentions "信件", "信函", "letter" → reply "信函写作功能开发中，暂不可用。"
-5. Both analysis + writing → analysis first, then writing
-
-## Workspace
-
-First use: create the .NET project with three commands:
+Run once before work:
 
 ```powershell
-dotnet new console -n GenreWriter -o <target-dir> --force
-dotnet add <target-dir> package Angri450.Nong.Docx
-dotnet add <target-dir> package Angri450.Nong.Genre
+nong commands --json
 ```
 
-Then write a `Program.cs` template. See [workspace-setup.md](references/workspace-setup.md) for the full template and details.
+If `nong` is missing, tell the user to install:
 
-After setup, each session only modifies `Program.cs`.
-
-## Subcommand Quick Reference
-
-```
-dotnet run --project <path> -- classify <text>       → PaperTypeClassifier
-dotnet run --project <path> -- structure <text>      → PaperStructureExtractor
-dotnet run --project <path> -- diagnose <docx>       → PaperDiagnostics (full pipeline)
-dotnet run --project <path> -- references <text>     → ReferenceAnalyzer
-dotnet run --project <path> -- variable-plan <text>  → VariablePlanGenerator
-dotnet run --project <path> -- analyze <docx>        → Full diagnosis pipeline
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
 ```
 
-## Key Conventions
+## Implemented Commands
 
-- Paper writing uses `PaperWriter`, engine operations use `DocumentWriter`
-- GB/T 7714 style via `Gbt7714Style`, NOT `StyleBuilder.BuildAll()`
-- Do NOT reference `Angri450.Nong.Docx` paper methods — those are removed from `DocumentWriter`
-- 公文 (official document) and 信件 (letter) are coming soon — do not pretend they are implemented
+```powershell
+nong genre list [--json]
+nong genre show <name> [--json]
+```
+
+## Dispatch
+
+1. To see available templates, run `nong genre list --json`.
+2. To inspect one template, run `nong genre show <name> --json`.
+3. Do not claim official document writing, letter writing, or full paper writing from this skill.
+4. For writing a paper from a JSON spec, use `nong inspect write-paper`.

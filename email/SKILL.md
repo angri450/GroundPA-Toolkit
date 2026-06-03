@@ -146,7 +146,7 @@ the user explicitly asks to process, handle, or mark messages (e.g. "处理一�
 
 ```bash
 mail-cli compose send \
-  --to "recipient@example.com" \
+  --to "<recipient-email>" \
   --subject "Subject line" \
   --body "Plain text body"
 ```
@@ -155,7 +155,7 @@ For HTML email, add `--html`:
 
 ```bash
 mail-cli compose send \
-  --to "recipient@example.com" \
+  --to "<recipient-email>" \
   --subject "Subject" \
   --body "<h1>Heading</h1><p>Body</p>" --html
 ```
@@ -176,10 +176,10 @@ message is automatically quoted in the reply.
 
 ```bash
 # Default "quote" mode — original is inline
-mail-cli compose forward --id "53:xxxxx" --to "recipient@example.com"
+mail-cli compose forward --id "53:xxxxx" --to "<recipient-email>"
 
 # "attach" mode — original is an attachment
-mail-cli compose forward --id "53:xxxxx" --to "recipient@example.com" --mode attach
+mail-cli compose forward --id "53:xxxxx" --to "<recipient-email>" --mode attach
 ```
 
 Add `--body "Please see attached"` to prepend a note.
