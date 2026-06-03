@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "angri450",
-  "description": "GroundPA Toolkit — 15 skills for Office, Shell, .NET, GitHub, and more",
+  "description": "GroundPA Toolkit — 17 skills for Office, Shell, .NET, GitHub, and more",
   "owner": {
     "name": "angri450"
   },
   "plugins": [
     {
       "name": "groundpa-toolkit",
-      "description": "GroundPA Toolkit: 15 skills — Office six-piece (Word/Excel/PPT/Chart/Diagram/MultiModal via OpenXML NuGet), shell scripting, .NET, GitHub, NuGet, ILSpy, email, and skill-manager",
+      "description": "GroundPA Toolkit: 17 skills — Office seven-piece (Word/Excel/PPT/Chart/Diagram/MultiModal/Genre via OpenXML NuGet), shell scripting, .NET, GitHub, NuGet, ILSpy, email, and skill-manager",
       "author": {
         "name": "angri450"
       },

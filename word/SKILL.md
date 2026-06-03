@@ -24,11 +24,22 @@ If .NET SDK 8.0+ is missing, stop immediately and tell the user to install it. D
 
 ## Dispatch Logic
 
-1. User mentions "analyze", "read", "extract", "template", "format", "dissect" → **load read-word.md**
+1. User mentions "analyze", "read", "extract", "template", "format", "dissect" → **load read-word.md**, then perform Read Dispatch (below)
 2. User mentions "generate", "create", "write", "output docx", "fill template" → **load write-word.md**
 3. User mentions "paper diagnosis", "paper type", "variable plan", "reference check", "evidence chain", "data requirement", "quality diagnosis" → **load paper-analysis.md**
 4. Both read + write → read first, then write
 5. Write + paper analysis → both loaded
+
+### Read Dispatch（读取 docx 时的路径优先级）
+
+When loading read-word.md to read/extract a docx file, **always check and prefer .NET CLI**:
+
+1. Check `~/Documents/GroundPA Toolkit Workplace/word/DocxWriter/` exists
+   - **Exists** → use `dotnet run --project <path> -- preview <file>` (fast, accurate, full OOXML support)
+   - **Exists but csproj missing `Angri450.Nong.Docx`** → `dotnet restore` then retry
+   - **Not exists** → fall back to PowerShell (Add-Type + Regex parsing of XML)
+2. .NET CLI path is primary. Only when it genuinely fails (compilation error, missing SDK) should PowerShell be attempted.
+3. Never silently skip .NET CLI and go straight to PowerShell.
 
 ## Core Operations
 
