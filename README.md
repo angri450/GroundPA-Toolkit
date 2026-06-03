@@ -1,128 +1,137 @@
 # GroundPA Toolkit
 
-OpenXML-native, .NET-first Claude Code skills. 15 skills covering Office document generation, shell scripting, .NET development, GitHub operations, and skill lifecycle management — all powered by deterministic NuGet packages and CLI tools.
+GroundPA Toolkit 2.0.0 is a Nong CLI-first Claude Code skill set for agricultural paper and document workflows.
 
-## Philosophy
+The skill layer no longer asks the model to scaffold temporary .NET projects for normal Office work. It routes requests to the deterministic `nong` CLI, then lets the model read JSON output, fix inputs, and compose the next step.
 
-Model capacity is for semantic work — mining, synthesizing, writing. Deterministic work (validate, scan, package, generate, render) ships as NuGet packages. Skill folders are read-only at distribution time; all runtime data lives under a unified workspace.
+## Design
 
-## Skills
+Model capacity is for semantic work: choosing workflows, drafting specs, interpreting diagnostics, and writing. Deterministic work runs through .NET tools:
 
-### Office & Document Generation
-
-| Skill | Does | NuGet |
-|-------|------|-------|
-| **word** | Academic papers, theses, reports — three-line tables, formula numbering, TOC, template engine | `Angri450.Nong.Docx` |
-| **pptx** | Defense presentations, research reports, lecture slides — 10 themes, fluent SlideBuilder | `Angri450.Nong.Pptx` |
-| **excel** | Spreadsheets, financial models, dashboards — formulas, validation, conditional formatting | `Angri450.Nong.Excel` |
-| **chart** | ANOVA, Duncan MRT, publication-quality bar charts with significance labels | `Angri450.Nong.Chart` |
-| **diagram** | Flowcharts (Sugiyama), network graphs (force-directed), phylogenetic trees (Newick), bioicons | `Angri450.Nong.Diagram` |
-| **multimodal** | OCR (PaddleOCR-VL cloud + local CPU), document-to-Markdown, document-to-Word | `Angri450.Nong.MultiModal` |
-
-### Shell Scripting
-
-| Skill | Does |
-|-------|------|
-| **bash** | Quoting, arrays, `set -e`, trap, Git Safety Protocol, sandbox-safe patterns |
-| **powershell** | PS 7+: cmdlets, modules, Pester, PSScriptAnalyzer, credential security |
-
-### Developer Tools
-
-| Skill | Does |
-|-------|------|
-| **dotnet** | C#, MSBuild, ASP.NET Core, EF Core, MAUI, performance diagnostics |
-| **github** | git + gh CLI: commits, PRs, issues, releases |
-| **ghproxy** | GitHub URL acceleration for restricted-network environments |
-| **nuget** | Package management: install, update, pack, publish |
-| **ilspycmd** | Decompile .NET assemblies to C# — inspect DLLs, extract API surface |
-
-### Communication & Meta
-
-| Skill | Does | NuGet |
-|-------|------|-------|
-| **email** | ClawEmail mail-cli: inbox, forward, search, attachments | — |
-| **skill-manager** | Validate, scan, package, eval, scaffold — full skill lifecycle CLI | `Angri450.Nong.Skill.Manager` |
-
-## Workspace
-
-All runtime data lives under one tree:
-
-```
-~/Documents/GroundPA Toolkit Workplace/
-├── word/DocxWriter/          # Word project
-├── pptx/PptxWriter/          # PowerPoint project
-├── excel/ExcelWriter/        # Excel project
-├── chart/ChartWriter/        # Chart project
-├── diagram/DiagramWriter/    # Diagram project
-├── multimodal/OcrTask/       # OCR project
-├── skill-manager/            # Evals, session records, build artifacts
-└── output/                   # Generated files
-    └── <timestamp>+<project>+<seq>/
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
+nong commands --json
 ```
 
-Each session modifies only `Program.cs` in the relevant workspace. Output lands in a timestamped subdirectory under `output/`.
+The skill-manager tool remains the lifecycle tool for validating, scanning, packaging, and evaluating skills:
+
+```powershell
+dotnet tool install --global Angri450.Nong.Skill.Manager
+```
+
+## Implemented Nong Skills
+
+Only implemented `nong` commands are exposed as 2.0.0 skills.
+
+| Skill | Implemented Commands |
+|-------|----------------------|
+| `word` | `word read`, `word preview`, `word fill`, `word rebuild` |
+| `inspect` | `inspect diagnose`, `inspect refs`, `inspect write-paper` |
+| `excel` | `excel sheets`, `excel read`, `excel to-groups` |
+| `chart` | `chart analyze`, `chart anova`, `chart duncan`, `chart bar` |
+| `diagram` | `diagram flowchart`, `diagram network` |
+| `genre` | `genre list`, `genre show` |
+| `icons` | `icons list`, `icons search` |
+
+PPTX and OCR are not exposed in 2.0.0 because the current `nong` CLI marks those commands as stubs.
+
+## Other Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `bash` | Bash quoting, arrays, error handling, and sandbox-safe patterns |
+| `powershell` | PowerShell cmdlets, modules, error handling, and credential safety |
+| `dotnet` | C#, MSBuild, ASP.NET Core, EF Core, MAUI, diagnostics, and NuGet workflows |
+| `github` | `git` and `gh` CLI workflows |
+| `gitee` | Gitee and Gitee MCP workflows |
+| `ghproxy` | GitHub URL acceleration for restricted-network environments |
+| `nuget` | Package installation, packing, and publishing |
+| `ilspycmd` | .NET assembly decompilation |
+| `email` | ClawEmail mail-cli workflows |
+| `skill-manager` | Skill validation, security scan, packaging, evals, and scaffolding |
+
+## Common Workflows
+
+### Word
+
+```powershell
+nong word read paper.docx --json
+nong word preview paper.docx --json
+nong word fill template.docx data.json -o out.docx --json
+nong word rebuild dirty.docx -o clean.docx --json
+```
+
+### Paper Inspection
+
+```powershell
+nong inspect diagnose paper.txt --json
+nong inspect refs paper.txt --json
+nong inspect write-paper spec.json -o paper.docx --json
+```
+
+### Excel to Statistics to Chart
+
+```powershell
+nong excel to-groups data.xlsx --group Treatment --value Yield --raw > groups.json
+nong chart analyze groups.json --json
+nong chart bar groups.json -o fig.png --json
+```
+
+### Diagrams
+
+```powershell
+nong diagram flowchart flow.json -o flow.png --json
+nong diagram network network.json -o network.png --json
+```
 
 ## Install
 
-### One-liner
-
-```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
-  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
-  rm -rf /tmp/groundpa && \
-  dotnet tool install --global Angri450.Nong.Skill.Manager
-```
-
-**Prerequisites:** [.NET SDK](https://dotnet.microsoft.com/download), [Git](https://git-scm.com/).
-
-| You're on | Instead of `cp -r` |
-|-----------|--------------------|
-| Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
-| Windows (WSL / Git Bash) | Same as above |
-
-### Marketplace (recommended)
-
-GroundPA Toolkit ships with its own Claude Code marketplace. Friends install in two commands:
+### Marketplace
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
 ```
 
-Then reload in Claude Code:
+Then reload Claude Code:
 
 ```text
 /reload-plugins
 ```
 
-Skills use the `groundpa-toolkit:` namespace:
+### Required .NET Tools
+
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Skill.Manager
+```
+
+If the tools are already installed:
+
+```powershell
+dotnet tool update --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Skill.Manager
+```
+
+## Workspace
+
+Runtime outputs should go under:
 
 ```text
-/groundpa-toolkit:word
-/groundpa-toolkit:pptx
-/groundpa-toolkit:chart
+$HOME/Documents/GroundPA Toolkit Workplace/output/
 ```
 
-## Architecture
+Use absolute paths when calling `nong` from agent workflows. For generated files, read the `artifacts` field from JSON output.
 
-Skill folders ship read-only. Deterministic work runs through NuGet packages (`Angri450.Nong.*`). The skill-manager global tool handles validation, security scanning, packaging, and evaluation. Progressive disclosure keeps SKILL.md lean — deep reference material lives in `references/`.
+## Contract
 
-See [`skill-manager/SKILL.md`](skill-manager/SKILL.md) for full conventions.
+All Nong-facing skills follow the same rule:
 
-## Marketplace
-
-This repo is its own marketplace. Anyone can register it once and install:
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
-```
-
-To submit to community directories for wider discovery:
-
-1. Validate locally: `claude plugin validate .`
-2. Submit to Anthropic Community Marketplace via the form on claude.ai
-3. Or submit a PR to `kossakovsky/cc-plugins` for third-party listing
+1. Run `nong commands --json` to discover available commands.
+2. Use only commands marked `implemented`.
+3. Prefer `--json` for model-readable output.
+4. Treat `status: "error"` as failure.
+5. Read `errors[0].code`, `errors[0].message`, and `artifacts` before taking the next step.
 
 ## License
 
