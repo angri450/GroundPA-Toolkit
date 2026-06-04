@@ -137,6 +137,21 @@ Then reload Claude Code:
 /reload-plugins
 ```
 
+## Update
+
+If already installed, update to the latest version:
+
+```bash
+claude plugin marketplace update angri450
+claude plugin update groundpa-toolkit@angri450
+```
+
+Then reload:
+
+```text
+/reload-plugins
+```
+
 ### Required .NET Tools
 
 ```powershell

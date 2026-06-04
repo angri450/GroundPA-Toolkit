@@ -135,6 +135,21 @@ claude plugin install groundpa-toolkit@angri450
 /reload-plugins
 ```
 
+## 更新
+
+如果已经安装过，用以下命令更新到最新版本：
+
+```bash
+claude plugin marketplace update angri450
+claude plugin update groundpa-toolkit@angri450
+```
+
+然后重载：
+
+```text
+/reload-plugins
+```
+
 ### 必装 .NET 工具
 
 ```powershell
