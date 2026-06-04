@@ -111,16 +111,38 @@ nong ocr to-word scan.png -o out.docx --json
 
 `ocr cloud` 和 `ocr to-word` 需要 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 是受环境门控的本地路径，模型路径未安装或推理未就绪时可能返回 E005/E009。
 
-## 安装与更新
+## 安装
 
-以下命令同时用于首次安装和后续更新，无需 git 登录：
+首次安装需要先添加 marketplace，再安装插件：
+
+```bash
+claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
+claude plugin install groundpa-toolkit@angri450
+```
+
+然后重载插件：
+
+```text
+/reload-plugins
+```
+
+如果 Gitee SSH 不可用，也可以用 GitHub：
+
+```bash
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
+```
+
+## 更新
+
+已安装过的用户，更新 marketplace 和插件即可：
 
 ```bash
 claude plugin marketplace update angri450
 claude plugin update groundpa-toolkit@angri450
 ```
 
-然后重载插件：
+然后重载：
 
 ```text
 /reload-plugins
