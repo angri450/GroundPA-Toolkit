@@ -126,13 +126,6 @@ claude plugin update groundpa-toolkit@angri450
 /reload-plugins
 ```
 
-如果以上命令不可用，也可以用需要 git 认证的方式：
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
-```
-
 ### 必装 .NET 工具
 
 ```powershell
