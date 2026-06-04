@@ -113,33 +113,9 @@ nong ocr to-word scan.png -o out.docx --json
 
 `ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is a gated local path and may return E005/E009 unless the local model path is installed and verified.
 
-## Install
+## Install & Update
 
-### Marketplace
-
-**GitHub**
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
-```
-
-**Gitee**
-
-```bash
-claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit.git
-claude plugin install groundpa-toolkit@angri450
-```
-
-Then reload Claude Code:
-
-```text
-/reload-plugins
-```
-
-## Update
-
-If already installed, update to the latest version:
+Use these commands for both first-time install and subsequent updates, no git login required:
 
 ```bash
 claude plugin marketplace update angri450
@@ -150,6 +126,13 @@ Then reload:
 
 ```text
 /reload-plugins
+```
+
+If the above is unavailable, use the git-authenticated path instead:
+
+```bash
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
 ```
 
 ### Required .NET Tools

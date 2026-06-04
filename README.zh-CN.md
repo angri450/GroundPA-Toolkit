@@ -111,43 +111,26 @@ nong ocr to-word scan.png -o out.docx --json
 
 `ocr cloud` 和 `ocr to-word` 需要 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 是受环境门控的本地路径，模型路径未安装或推理未就绪时可能返回 E005/E009。
 
-## 安装
+## 安装与更新
 
-### Marketplace
-
-**GitHub**
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
-```
-
-**Gitee**
-
-```bash
-claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit.git
-claude plugin install groundpa-toolkit@angri450
-```
-
-然后在 Claude Code 里：
-
-```text
-/reload-plugins
-```
-
-## 更新
-
-如果已经安装过，用以下命令更新到最新版本：
+以下命令同时用于首次安装和后续更新，无需 git 登录：
 
 ```bash
 claude plugin marketplace update angri450
 claude plugin update groundpa-toolkit@angri450
 ```
 
-然后重载：
+然后重载插件：
 
 ```text
 /reload-plugins
+```
+
+如果以上命令不可用，也可以用需要 git 认证的方式：
+
+```bash
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
 ```
 
 ### 必装 .NET 工具
