@@ -117,8 +117,17 @@ nong ocr to-word scan.png -o out.docx --json
 
 ### Marketplace
 
+**GitHub**
+
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
+```
+
+**Gitee**
+
+```bash
+claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit.git
 claude plugin install groundpa-toolkit@angri450
 ```
 
