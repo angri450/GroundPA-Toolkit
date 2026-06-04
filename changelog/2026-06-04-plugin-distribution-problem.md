@@ -27,9 +27,7 @@ claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit.git
 
 ### 3. Gitee SSH
 
-```powershell
-claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
-```
+SSH URL 形式可以绕过 HTTPS 密码弹窗，但仍然要求用户提前配置 Gitee SSH key。
 
 问题：需要用户提前配置 Gitee SSH key，首次连接还需要写入 known_hosts。对普通用户门槛太高。
 
@@ -47,12 +45,36 @@ claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit/raw/ma
 
 问题：Claude Code 的 URL-based marketplace 只下载 marketplace.json 本身，不 clone 仓库。`source: "./"` 指向的相对路径不存在，插件安装时报 path not found。
 
-## 当前推荐方案：本地 zip 安装
+## 已解决方案：Gitee 一行安装脚本
+
+实现仓库根目录 `install.ps1`：
+
+```powershell
+irm https://gitee.com/angri450/GroundPA-Toolkit/raw/main/install.ps1 | iex
+```
+
+脚本行为：
+
+```text
+1. 从 Gitee archive URL 匿名下载源码 zip，不执行 Git clone。
+2. 解压到稳定本地目录 `%LOCALAPPDATA%\GroundPA-Toolkit`。
+3. 校验 `.claude-plugin/plugin.json` 和 `.claude-plugin/marketplace.json` 存在。
+4. 拒绝覆盖非 GroundPA 目录，避免误删用户文件。
+5. 执行 `claude plugin validate <local-dir>`。
+6. 移除旧的 `angri450` marketplace 注册。
+7. 执行 `claude plugin marketplace add --scope user <local-dir>`。
+8. 执行 `claude plugin install --scope user groundpa-toolkit@angri450`。
+9. 提示用户重启 Claude Code 或执行 `/reload-plugins`。
+```
+
+这个方案保留 `"source": "./"`。区别是 marketplace 已经位于本地完整插件目录中，`./` 可以正确解析，不再依赖 Claude Code clone 远程 Git 仓库。
+
+## 备选方案：本地 zip 安装
 
 用户从 Gitee Release 页面下载 zip，解压到本地，用本地路径添加 marketplace：
 
 ```powershell
-claude plugin marketplace add C:\path\to\GroundPA-Toolkit
+claude plugin marketplace add <local-groundpa-folder>
 claude plugin install groundpa-toolkit@angri450
 /reload-plugins
 ```
@@ -61,7 +83,7 @@ claude plugin install groundpa-toolkit@angri450
 
 缺点：用户需要手动下载解压，更新时也要重新下载覆盖。体验不如一行命令。
 
-## 待解决
+## 原待解决项
 
 需要实现一键安装脚本，让用户不需要手动下载解压。大致思路：
 
@@ -78,6 +100,8 @@ claude plugin install groundpa-toolkit@angri450
 ```powershell
 irm https://gitee.com/angri450/GroundPA-Toolkit/raw/main/install.ps1 | iex
 ```
+
+状态：已实现。
 
 ## 技术约束
 
