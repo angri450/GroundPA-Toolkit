@@ -1590,8 +1590,8 @@ gh auth status
 # Switch active account
 gh auth switch
 
-# Use a specific token for one command
-GH_TOKEN=ghp_xxx gh api user --jq '.login'
+# Use a specific token for one command; set the value outside repository files
+GH_TOKEN="$GITHUB_TOKEN_VALUE" gh api user --jq '.login'
 
 # Login to multiple hosts
 gh auth login --hostname github.com

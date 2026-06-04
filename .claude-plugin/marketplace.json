@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "groundpa-toolkit",
-      "description": "GroundPA Toolkit 2.0.0: implemented nong CLI workflows for Word, paper inspection, Excel, statistics, diagrams, templates, Bioicons, plus shell, .NET, GitHub/Gitee, NuGet, ILSpy, email, and skill-manager",
+      "description": "GroundPA Toolkit 2.1.0: implemented nong CLI workflows for Word, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, plus shell, .NET, GitHub/Gitee, NuGet, ILSpy, email, and skill-manager",
       "author": {
         "name": "angri450"
       },
