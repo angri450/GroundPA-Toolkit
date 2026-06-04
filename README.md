@@ -113,9 +113,31 @@ nong ocr to-word scan.png -o out.docx --json
 
 `ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is a gated local path and may return E005/E009 unless the local model path is installed and verified.
 
-## Install & Update
+## Install
 
-Use these commands for both first-time install and subsequent updates, no git login required:
+First-time install requires adding the marketplace, then installing the plugin:
+
+```bash
+claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
+claude plugin install groundpa-toolkit@angri450
+```
+
+Then reload:
+
+```text
+/reload-plugins
+```
+
+If Gitee SSH is unavailable, use GitHub instead:
+
+```bash
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
+```
+
+## Update
+
+If already installed, update the marketplace and plugin:
 
 ```bash
 claude plugin marketplace update angri450
