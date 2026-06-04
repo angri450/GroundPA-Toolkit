@@ -115,43 +115,45 @@ nong ocr to-word scan.png -o out.docx --json
 
 ## Install
 
-### Local zip install (recommended, no Git login)
+### Skills install (recommended, no Git login, no SSH key)
 
-1. Download the latest `GroundPA-Toolkit.zip` from the [Release page](https://gitee.com/angri450/GroundPA-Toolkit/releases)
-2. Extract to a local folder, e.g. `C:\Users\Administrator\Downloads\GroundPA-Toolkit`
-3. Add the local marketplace and install the plugin:
+This is the **classic Claude Code skills installation**: git clone the repo and copy to `~/.claude/skills/`. It does not use the plugin marketplace mechanism, avoids background clone, and won't trigger interactive Gitee login prompts.
 
-```powershell
-claude plugin marketplace add C:\Users\Administrator\Downloads\GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
+**GitCode (recommended, anonymous clone)**
+
+```bash
+git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
 ```
 
-Then reload:
+**Gitee**
 
-```text
+```bash
+git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+```
+
+**GitHub**
+
+```bash
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+```
+
+After install, run `/reload-plugins` or restart Claude Code.
+
+### Plugin Marketplace install (experimental)
+
+This uses the Claude Code plugin marketplace mechanism. It requires Claude Code to clone the repository in the background; Gitee HTTPS may trigger authentication prompts and fail.
+
+```bash
+claude plugin marketplace add https://gitcode.com/angri450/GroundPA-Toolkit.git
+claude plugin install groundpa-toolkit@angri450
 /reload-plugins
 ```
 
-### Git install (requires Gitee SSH)
+GitHub alternative:
 
 ```bash
-claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
+claude plugin marketplace add angri450/GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
-```
-
-## Update
-
-1. Download the new zip and extract it to the same folder (overwrite)
-2. Run:
-
-```bash
-claude plugin marketplace update angri450
-claude plugin update groundpa-toolkit@angri450
-```
-
-Then reload:
-
-```text
 /reload-plugins
 ```
 
@@ -161,10 +163,26 @@ Then reload:
 dotnet tool install --global Angri450.Nong.Cli
 ```
 
-If the tools are already installed:
+If already installed:
 
 ```powershell
 dotnet tool update --global Angri450.Nong.Cli
+```
+
+## Update
+
+Skills install: re-clone and overwrite.
+
+```bash
+git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa
+```
+
+Plugin Marketplace:
+
+```bash
+claude plugin marketplace update angri450
+claude plugin update groundpa-toolkit@angri450
+/reload-plugins
 ```
 
 ## Workspace
