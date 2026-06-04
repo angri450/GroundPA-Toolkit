@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "groups": [
     {
       "title": "Nong CLI Document Tools",
@@ -13,8 +13,8 @@
     },
     {
       "title": "Developer Tools",
-      "description": "Git version control, GitHub CLI, Gitee MCP, NuGet, .NET development, assembly decompilation, and proxy acceleration",
-      "skills": ["dotnet", "github", "gitee", "ghproxy", "nuget", "ilspycmd"]
+      "description": "Git version control, GitHub CLI, Gitee MCP, GitCode CLI, NuGet, .NET development, assembly decompilation, and proxy acceleration",
+      "skills": ["dotnet", "github", "gitee", "gitcode", "ghproxy", "nuget", "ilspycmd"]
     },
     {
       "title": "Communication & Meta",
