@@ -113,22 +113,34 @@ nong ocr to-word scan.png -o out.docx --json
 
 ## 安装
 
-首次安装无需登录 Git，直接通过 Gitee raw 地址添加 marketplace，插件通过 npm 安装：
+### 本地 zip 安装（推荐，无需 Git 登录）
 
-```bash
-claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit/raw/main/.claude-plugin/marketplace.json
+1. 从 [Release 页面](https://gitee.com/angri450/GroundPA-Toolkit/releases) 下载最新的 `GroundPA-Toolkit.zip`
+2. 解压到本地目录，例如 `C:\Users\Administrator\Downloads\GroundPA-Toolkit`
+3. 添加本地 marketplace 并安装插件：
+
+```powershell
+claude plugin marketplace add C:\Users\Administrator\Downloads\GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
 ```
 
-然后重载插件：
+然后重载：
 
 ```text
 /reload-plugins
 ```
 
+### Git 安装（需要 Gitee SSH）
+
+```bash
+claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
+claude plugin install groundpa-toolkit@angri450
+```
+
 ## 更新
 
-已安装过的用户，更新 marketplace 和插件即可：
+1. 下载新版 zip，覆盖解压到同一目录
+2. 执行：
 
 ```bash
 claude plugin marketplace update angri450
