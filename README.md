@@ -128,13 +128,6 @@ Then reload:
 /reload-plugins
 ```
 
-If the above is unavailable, use the git-authenticated path instead:
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
-```
-
 ### Required .NET Tools
 
 ```powershell
