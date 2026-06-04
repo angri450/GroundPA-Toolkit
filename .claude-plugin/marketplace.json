@@ -13,7 +13,11 @@
         "name": "angri450"
       },
       "category": "developer-tools",
-      "source": "./"
+      "source": {
+        "source": "npm",
+        "package": "groundpa-toolkit",
+        "version": "2.1.0"
+      }
     }
   ]
 }

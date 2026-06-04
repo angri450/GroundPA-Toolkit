@@ -1,0 +1,22 @@
+# Git-related
+.git/
+.gitignore
+.gitattributes
+
+# Development docs not needed at runtime
+DEVELOP.md
+CLAUDE.md
+
+# Changelogs and scan artifacts
+changelog/
+**/.scan-allowlist.json
+
+# Evals (test fixtures, not needed at runtime)
+**/evals/
+**/evals.json
+
+# Binary files
+nuget/nuget.exe
+
+# Node
+node_modules/
