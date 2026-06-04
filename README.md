@@ -115,10 +115,10 @@ nong ocr to-word scan.png -o out.docx --json
 
 ## Install
 
-First-time install requires adding the marketplace, then installing the plugin:
+First-time install requires no Git login. Add the marketplace via Gitee raw URL; the plugin installs from npm:
 
 ```bash
-claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
+claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit/raw/main/.claude-plugin/marketplace.json
 claude plugin install groundpa-toolkit@angri450
 ```
 
@@ -126,13 +126,6 @@ Then reload:
 
 ```text
 /reload-plugins
-```
-
-If Gitee SSH is unavailable, use GitHub instead:
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
 ```
 
 ## Update

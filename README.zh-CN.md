@@ -113,10 +113,10 @@ nong ocr to-word scan.png -o out.docx --json
 
 ## 安装
 
-首次安装需要先添加 marketplace，再安装插件：
+首次安装无需登录 Git，直接通过 Gitee raw 地址添加 marketplace，插件通过 npm 安装：
 
 ```bash
-claude plugin marketplace add git@gitee.com:angri450/GroundPA-Toolkit.git
+claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit/raw/main/.claude-plugin/marketplace.json
 claude plugin install groundpa-toolkit@angri450
 ```
 
@@ -124,13 +124,6 @@ claude plugin install groundpa-toolkit@angri450
 
 ```text
 /reload-plugins
-```
-
-如果 Gitee SSH 不可用，也可以用 GitHub：
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
 ```
 
 ## 更新
