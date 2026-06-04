@@ -1,5 +1,12 @@
-# PPTX Skill Disabled in 2.0.0
+# PPTX Skill
 
-`pptx` is not exposed as a GroundPA skill in 2.0.0 because the current `nong` CLI only marks PPT commands as stubs.
+`pptx` is exposed as a read-only GroundPA skill for the current implemented Nong PPTX commands.
 
-Do not install this directory as a skill until real `nong pptx ...` commands are implemented and verified.
+Use:
+
+```powershell
+nong pptx read deck.pptx --json
+nong pptx slides deck.pptx --json
+```
+
+Do not claim PPTX generation, editing, theme design, animation, or layout repair from this skill.

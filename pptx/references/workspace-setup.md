@@ -1,80 +1,24 @@
-# Workspace Setup — PptxCore .NET 工程搭建
+# PPTX Workspace Setup
 
-首次使用 Write PPT 功能前必须完成。后续每次写 PPT 只修改 `Program.cs`。
+No PPTX writer workspace is required for GroundPA. Use the installed Nong CLI directly.
 
-## 0. 检查已存在项目
-
-若 `~/Documents/GroundPA Toolkit Workplace/pptx/PptxWriter/` 已存在，先打开 `PptxWriter.csproj`：
-
-- 搜索 `Angri450.Nong.Pptx`
-- 若为 `<Reference Include="...">` 或 `<HintPath>` → 本地 DLL 引用，删除整个 `<Reference>` 块，替换为：
-  ```xml
-  <PackageReference Include="Angri450.Nong.Pptx" Version="*" />
-  ```
-- 若已是 `<PackageReference>` → 跳过，执行 `dotnet restore`
-- 若项目不存在 → 继续第 1 步
-
-## 1. 检查依赖
+## Check The CLI
 
 ```powershell
-dotnet --version
+nong commands --json
 ```
 
-若未安装 .NET SDK 8.0+，告知用户去 https://dotnet.microsoft.com/download 安装。
-
-## 2. 创建工程
-
-询问用户工作目录,建议 `~/Documents/GroundPA Toolkit Workplace/pptx/PptxWriter/`。用户确认后执行:
+If the CLI is unavailable:
 
 ```powershell
-dotnet new console -n PptxWriter -o <target-dir> --force
-dotnet add <target-dir> package Angri450.Nong.Pptx
+dotnet tool install --global Angri450.Nong.Cli
 ```
 
-## 3. 写入 Program.cs 模板
+## Read-Only Workflow
 
-用 Write 工具写入 `<target-dir>/Program.cs`,内容:
-
-```csharp
-using PptxCore;
-
-string outDir = Path.Combine(
-    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-    "GroundPA Toolkit Workplace", "output",
-    $"<timestamp>+<project>+<seq>");
-Directory.CreateDirectory(outDir);
-string outPath = Path.Combine(outDir, "slides.pptx");
-
-SlideBuilder.Create()
-    .Theme(ThemePreset.Academic)
-    .AddTitleSlide(opt => opt.Title("演示标题").Subtitle("副标题").Author("作者"))
-    .AddContentSlide(opt => opt.Title("要点").Bullets("第一点", "第二点", "第三点"))
-    .Save(outPath);
-
-// Preview (mandatory after generation)
-var result = SlidePreview.Preview(outPath);
-Console.WriteLine(result.Text);
-if (result.Warnings.Count > 0)
-{
-    foreach (var w in result.Warnings) Console.Error.WriteLine($"WARN: {w}");
-}
-
-Console.WriteLine("OK: " + System.IO.Path.GetFullPath(outPath));
+```powershell
+nong pptx read deck.pptx --json
+nong pptx slides deck.pptx --json
 ```
 
-## 4. 工程结构
-
-```
-<target-dir>/
-├── PptxWriter.csproj        ← 引用 Angri450.Nong.Pptx (NuGet)
-├── Program.cs               ← 幻灯片内容,每次覆盖
-├── bin/Debug/               ← 编译产物(正常,勿删)
-└── obj/Debug/               ← 中间文件(正常,勿删)
-```
-
-## 5. 后续使用
-
-每次生成 PPT 时:
-1. 用 Write 工具写入新的 `Program.cs`
-2. `dotnet run --project <project-path>` 生成 pptx
-3. 输出固定到 `~/Documents/GroundPA Toolkit Workplace/output/<timestamp>+<project>+<seq>/slides.pptx`
+Store any exported JSON or summaries in the user's chosen project output directory. Do not create a PPTX writer project for GroundPA tasks.

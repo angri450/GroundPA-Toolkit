@@ -1,11 +1,11 @@
 ---
 name: excel
-description: Excel CLI operations via nong. Trigger on .xlsx, worksheet listing, table reading, extracting data, or converting treatment/value columns into grouped JSON for statistics.
+description: Excel CLI operations via nong. Trigger on .xlsx, worksheet listing, table reading, extracting data, creating simple workbooks from JSON specs, or converting treatment/value columns into grouped JSON for statistics.
 ---
 
 # Excel
 
-Use `nong` for deterministic Excel reads and data preparation. Do not claim workbook creation, formatting, formulas, dashboards, or pivot tables in 2.0.0.
+Use `nong` for deterministic Excel reads, simple workbook creation, and data preparation. GroundPA routes to the CLI; do not create ad hoc Excel writer projects or bypass `nong`.
 
 ## Prerequisites
 
@@ -28,6 +28,7 @@ nong excel sheets <file.xlsx> [--json]
 nong excel read <file.xlsx> [--sheet <name>] [--range <A1:D20>] [--json]
 nong excel to-groups <file.xlsx> --group <col> --value <col> [--sheet <name>] [--json]
 nong excel to-groups <file.xlsx> --group <col> --value <col> --raw > groups.json
+nong excel create <spec.json> -o <out.xlsx> [--json]
 ```
 
 ## Dispatch
@@ -35,8 +36,31 @@ nong excel to-groups <file.xlsx> --group <col> --value <col> --raw > groups.json
 1. To list worksheets, run `nong excel sheets <file> --json`.
 2. To inspect data, run `nong excel read <file> --json`; add `--sheet` and `--range` when known.
 3. To prepare agricultural experiment data for statistics, run `nong excel to-groups ... --raw > groups.json`.
-4. Feed raw grouped JSON directly into `nong chart analyze`, `anova`, `duncan`, or `bar`.
-5. If the user asks to create or style Excel files, say it is not implemented in the current `nong` CLI.
+4. To create a simple workbook from JSON, write an Excel create spec and run `nong excel create spec.json -o out.xlsx --json`.
+5. Feed raw grouped JSON directly into `nong chart analyze`, `anova`, `duncan`, or `bar`.
+6. Do not promise arbitrary workbook styling, complex formulas, pivot tables, dashboards, or general Excel editing unless a future `nong commands --json` exposes those as implemented CLI commands.
+
+## Create Spec
+
+`excel create` supports simple sheets with headers and rows:
+
+```json
+{
+  "sheets": [
+    {
+      "name": "Data",
+      "headers": ["Treatment", "Yield"],
+      "rows": [
+        ["A", 1.2],
+        ["A", 1.3],
+        ["B", 2.1]
+      ]
+    }
+  ]
+}
+```
+
+Sheet names are required and must be 31 characters or fewer. `headers` and `rows` are required for each sheet.
 
 ## Groups JSON
 
