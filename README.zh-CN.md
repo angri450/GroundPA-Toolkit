@@ -1,6 +1,6 @@
 # GroundPA Toolkit — 土地公的工具箱
 
-GroundPA Toolkit 2.1.0 是面向农学生论文和文档工作流的 Claude Code skill 集。核心变化是：skill 层不再让模型临时写 .NET 小项目，而是统一调用 `nong` CLI。
+GroundPA Toolkit 2.2.0 是面向农学生论文和文档工作流的 Claude Code skill 集。核心变化是：skill 层不再让模型临时写 .NET 小项目，而是统一调用 `nong` CLI。
 
 模型负责判断任务、准备 JSON/spec、解释诊断结果。确定性工作交给 .NET CLI。
 
@@ -19,19 +19,19 @@ nong skill scan . --json
 nong skill package . --json
 ```
 
-## 2.1.0 暴露的 Nong Skills
+## 2.2.0 暴露的 Nong Skills
 
 只暴露当前 `nong` CLI 已实现的命令。
 
 | Skill | 已实现命令 |
 |-------|------------|
-| `word` | read, preview, fill, rebuild, extract, dissect, stats, fonts, styles, validate, merge, outline, images, comments, revisions, infer-format, fix-order, protect, embed-font, add paragraph/table/footnote/endnote/image/toc/xref/link/bookmark/comment/math |
+| `word` | check, convert, read, preview, fill, rebuild, extract, dissect, stats, fonts, styles, validate, merge, outline, images, comments, revisions, infer-format, fix-order, protect, embed-font, add paragraph/table/footnote/endnote/image/toc/xref/link/bookmark/comment/math |
 | `inspect` | diagnose, refs, write-paper, classify, structure, varplan, evidence, data-req, gap, semantics |
 | `excel` | sheets, read, to-groups, create |
 | `chart` | analyze, anova, duncan, bar, line, scatter, pie |
 | `diagram` | flowchart, network, tree |
 | `pptx` | read, slides |
-| `multimodal` | ocr check-env, analyze-image, cloud, to-word, models, install-model, gated local |
+| `multimodal` | ocr check-env, analyze-image, cloud, to-word, models, install-model, 预检后的 local |
 | `genre` | `genre list`, `genre show` |
 | `icons` | `icons list`, `icons search` |
 
@@ -55,6 +55,7 @@ nong skill package . --json
 ### Word
 
 ```powershell
+nong word check paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
 nong word fonts paper.docx --json
 nong word styles paper.docx --json
@@ -112,7 +113,7 @@ nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` 和 `ocr to-word` 需要 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 是受环境门控的本地路径，模型路径未安装或推理未就绪时可能返回 E005/E009。
+`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。
 
 ## 安装
 
@@ -144,6 +145,8 @@ git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdi
 
 这个方式通过 Claude Code plugin marketplace 机制安装。要求 Claude Code 在后台成功 clone 仓库，Gitee HTTPS 可能触发认证弹窗导致失败。
 
+Plugin Marketplace 只安装 skills，不会安装必需的 `nong` CLI。安装插件后还要安装或更新下面的 .NET tool。
+
 ```bash
 claude plugin marketplace add https://gitcode.com/angri450/GroundPA-Toolkit.git
 claude plugin install groundpa-toolkit@angri450
@@ -169,6 +172,8 @@ dotnet tool install --global Angri450.Nong.Cli
 ```powershell
 dotnet tool update --global Angri450.Nong.Cli
 ```
+
+Nong 3.2.3+ 已为只有更新 .NET 运行时的机器写入 `RollForward=LatestMajor`，并提供纯 .NET 本地 OCR。如果旧版工具提示找不到兼容框架，先更新工具；必要时在当前 shell 设置 `DOTNET_ROLL_FORWARD=LatestMajor` 后重试。
 
 ## 更新
 

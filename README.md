@@ -1,6 +1,6 @@
 # GroundPA Toolkit
 
-GroundPA Toolkit 2.1.0 is a Nong CLI-first Claude Code skill set for agricultural paper and document workflows.
+GroundPA Toolkit 2.2.0 is a Nong CLI-first Claude Code skill set for agricultural paper and document workflows.
 
 The skill layer no longer asks the model to scaffold temporary .NET projects for normal Office work. It routes requests to the deterministic `nong` CLI, then lets the model read JSON output, fix inputs, and compose the next step.
 
@@ -23,17 +23,17 @@ nong skill package . --json
 
 ## Implemented Nong Skills
 
-Only implemented `nong` commands are exposed as 2.1.0 skills.
+Only implemented `nong` commands are exposed as 2.2.0 skills.
 
 | Skill | Implemented Commands |
 |-------|----------------------|
-| `word` | read, preview, fill, rebuild, extract, dissect, stats, fonts, styles, validate, merge, outline, images, comments, revisions, infer-format, fix-order, protect, embed-font, add paragraph/table/footnote/endnote/image/toc/xref/link/bookmark/comment/math |
+| `word` | check, convert, read, preview, fill, rebuild, extract, dissect, stats, fonts, styles, validate, merge, outline, images, comments, revisions, infer-format, fix-order, protect, embed-font, add paragraph/table/footnote/endnote/image/toc/xref/link/bookmark/comment/math |
 | `inspect` | diagnose, refs, write-paper, classify, structure, varplan, evidence, data-req, gap, semantics |
 | `excel` | sheets, read, to-groups, create |
 | `chart` | analyze, anova, duncan, bar, line, scatter, pie |
 | `diagram` | flowchart, network, tree |
 | `pptx` | read, slides |
-| `multimodal` | ocr check-env, analyze-image, cloud, to-word, models, install-model, gated local |
+| `multimodal` | ocr check-env, analyze-image, cloud, to-word, models, install-model, local after preflight |
 | `genre` | `genre list`, `genre show` |
 | `icons` | `icons list`, `icons search` |
 
@@ -57,6 +57,7 @@ Only implemented `nong` commands are exposed as 2.1.0 skills.
 ### Word
 
 ```powershell
+nong word check paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
 nong word fonts paper.docx --json
 nong word styles paper.docx --json
@@ -114,7 +115,7 @@ nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is a gated local path and may return E005/E009 unless the local model path is installed and verified.
+`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime; treat it as stable after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass.
 
 ## Install
 
@@ -146,6 +147,8 @@ After install, run `/reload-plugins` or restart Claude Code.
 
 This uses the Claude Code plugin marketplace mechanism. It requires Claude Code to clone the repository in the background; Gitee HTTPS may trigger authentication prompts and fail.
 
+Plugin Marketplace installs the skills only. It does not install the required `nong` CLI; install or update the .NET tool below after plugin installation.
+
 ```bash
 claude plugin marketplace add https://gitcode.com/angri450/GroundPA-Toolkit.git
 claude plugin install groundpa-toolkit@angri450
@@ -171,6 +174,8 @@ If already installed:
 ```powershell
 dotnet tool update --global Angri450.Nong.Cli
 ```
+
+Nong 3.2.3+ includes `RollForward=LatestMajor` for machines with a newer .NET runtime and pure .NET local OCR. If an older tool build reports "no compatible framework", update the tool or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## Update
 
