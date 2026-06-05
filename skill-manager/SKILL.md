@@ -108,7 +108,7 @@ When you encounter and fix errors while using any tool, note them. At the end of
 ```
 
 ### Step 1: Data Gate
-Check `~/Documents/GroundPA Toolkit Workplace/skill-manager/session-records/` for entries matching the target skill. If fewer than 3 and the user doesn't insist, stop and say: "Not enough data. Found N records. Use it a few more sessions."
+Check `<workplace>/skill-manager/session-records/` for entries matching the target skill. If fewer than 3 and the user doesn't insist, stop and say: "Not enough data. Found N records. Use it a few more sessions."
 
 ### Step 2: Synthesize
 Read accumulated session-records. Group by error type, sort by frequency. See [`references/session-recording.md`](references/session-recording.md).
