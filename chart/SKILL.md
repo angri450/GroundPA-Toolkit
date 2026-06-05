@@ -7,19 +7,22 @@ description: Agricultural statistics and chart CLI via nong. Trigger on ANOVA, D
 
 Use `nong` for statistical analysis and implemented figure generation. GroundPA routes to the CLI; do not recreate chart rendering logic in scripts or temporary projects.
 
-## Prerequisites
+## Nong CLI Preflight
 
-Run once before work:
+Claude Plugin Marketplace installs the skills, not the `nong` CLI. Run once before work:
 
 ```powershell
 nong commands --json
 ```
 
-If `nong` is missing, tell the user to install:
+If `nong` is missing, install or update:
 
 ```powershell
 dotnet tool install --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Cli
 ```
+
+If the .NET host says no compatible framework was found, use Nong 3.2.3+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## Implemented Commands
 

@@ -7,19 +7,22 @@ description: Agricultural paper inspection and generation via nong. Trigger on p
 
 Use `nong inspect` for paper-level semantic, structural, evidence, reference, and writing workflows. Inspect consumes text or paper specs; for `.docx` sources, use `word dissect` or `word read` first.
 
-## Prerequisites
+## Nong CLI Preflight
 
-Verify the installed command surface before work:
+Claude Plugin Marketplace installs the skills, not the `nong` CLI. Verify the installed command surface before work:
 
 ```powershell
 nong commands --json
 ```
 
-If `nong` is missing, install the CLI:
+If `nong` is missing, install or update the CLI:
 
 ```powershell
 dotnet tool install --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Cli
 ```
+
+If the .NET host says no compatible framework was found, use Nong 3.2.3+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## Implemented Commands
 

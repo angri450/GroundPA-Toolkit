@@ -9,15 +9,38 @@ Use `nong` as the deterministic Word entrypoint. GroundPA decides the workflow, 
 
 Do not answer layout or formatting questions from plain text alone. Do not use desktop Word COM automation as the normal editing path.
 
-## Default Workflow
+## Nong CLI Preflight
 
-1. Verify the command surface when the session is new or behavior seems stale:
+Claude Plugin Marketplace installs the skills, not the `nong` CLI. Before the first Nong command in a session, run:
 
 ```powershell
 nong commands --json
 ```
 
-2. For complex existing `.docx`, layout questions, table-heavy contracts, or "does this look right" requests, start with a slice:
+If `nong` is missing, install or update:
+
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Cli
+```
+
+If the .NET host says no compatible framework was found, use Nong 3.2.3+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+
+## Default Workflow
+
+1. For any user-supplied `.doc` or `.docx`, preflight first:
+
+```powershell
+nong word check <file.docx|file.doc> --json
+```
+
+If `word check` reports legacy `.doc`, convert to explicit `.docx`:
+
+```powershell
+nong word convert <file.doc> -o <file.docx> --json
+```
+
+2. For complex existing `.docx`, layout questions, table-heavy contracts, or "does this look right" requests, slice after preflight:
 
 ```powershell
 nong word dissect <file.docx> --output <slice-dir> --json
@@ -51,6 +74,7 @@ nong word validate <fixed.docx> --json
 
 - `word read` is text-only evidence. It cannot prove fonts, font size, line spacing, indentation, alignment, table borders, margins, captions, or visual layout.
 - For formatting/layout claims, cite facts from `format.json`, `content.jsonl`, `structure.json`, `fonts`, `styles`, `preview`, or `validate`.
+- VML formula/picture content appears as image blocks/assets, not editable text. Do not treat blank plain-text lines as proof that source content was empty.
 - If the first extraction was plain text, say so and run the format-oriented path before judging.
 - Schema-valid does not mean visually ideal. Report remaining `preview` warnings separately from `validate` errors.
 
@@ -110,7 +134,10 @@ Always pass `--json` when output feeds another tool or model decision. Treat `st
 Common codes:
 
 - `E001 file_not_found`: fix input path; do not continue from stale output.
+- `E002 unsupported_format`: run `word check`; for `.doc`, run `word convert` first.
 - `E003 missing_argument`: supply required `--spec`, `--text`, `--latex`, `--src`, or `-o`.
+- `E005 dependency_missing`: install/update `Angri450.Nong.Cli`, or install a boundary converter such as LibreOffice/Word when `word convert` needs it.
 - `E006 validation_failed`: repair the spec, format description, or document validation issue before retrying.
+- `E009 not_implemented`: do not continue as success; report the limitation and use an implemented Nong command path.
 
 Generated DOCX paths should be explicit with `-o`; use `artifacts.docx` only when no better user-facing path is available.

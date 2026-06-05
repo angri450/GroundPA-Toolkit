@@ -8,20 +8,25 @@ Use this reference when the user provides an existing Word file and asks to chan
 
 Recommended stance:
 
-1. Treat `.doc -> .docx` as a boundary conversion step.
-2. Use installed Word COM or LibreOffice only for that conversion when no pure converter is available.
-3. After conversion, return immediately to `nong word`.
-4. Do not use COM as the main reading/editing engine.
+1. Run `nong word check <file> --json` before reading or editing.
+2. Treat `.doc -> .docx` as a boundary conversion step.
+3. Use `nong word convert <file.doc> -o <file.docx> --json` for that boundary.
+4. After conversion, return immediately to `nong word`.
+5. Do not use COM as the main reading/editing engine.
 
-For Word COM conversion, read [com-automation.md](com-automation.md). Prefer hidden Word, unique output paths, `SaveAs2(..., 16)`, explicit document close, `Quit()`, COM release, and no blanket `Stop-Process WINWORD -Force`.
+`word convert` tries available conversion engines such as LibreOffice and, on Windows, hidden Word COM as a fallback. If you must write a custom Word COM script anyway, read [com-automation.md](com-automation.md). Prefer hidden Word, unique output paths, `SaveAs2(..., 16)`, explicit document close, `Quit()`, COM release, and no blanket `Stop-Process WINWORD -Force`.
 
 ## Real-Case Pipeline
 
 For a user-supplied legacy contract or form:
 
 ```powershell
-# 1. Convert .doc to .docx by an explicit boundary step.
-# 2. Inspect and slice.
+# 1. Preflight and convert when needed.
+nong word check contract.doc --json
+nong word convert contract.doc -o contract.docx --json
+
+# 2. Preflight the converted DOCX, then inspect and slice.
+nong word check contract.docx --json
 nong word dissect contract.docx --output contract.slice --json
 nong word preview contract.docx --json
 nong word validate contract.docx --json
@@ -40,6 +45,8 @@ nong word preview contract.rebuilt.docx --json
 
 Do not stop after `read`. For table-heavy contracts, `content.md` often shows text but not the visible contract layout. Use `format.json`, `content.jsonl`, `structure.json`, `fonts`, `styles`, `preview`, and `validate`.
 
+Use `content.jsonl` or `structure.json` for insertion anchors. Recent Nong builds emit both `id` and `blockId`, plus `index`, in each JSONL line.
+
 ## Legacy Word/WPS Artifacts
 
 Real converted `.doc` files may contain schema-invalid but Word-tolerated XML. `word fix-order` is the first repair tool.
@@ -53,6 +60,7 @@ Known artifacts handled by recent Nong builds:
 - style `next` ordering
 - invalid `tblStyle` children inside table-style `tblPr`
 - style-reference diagnosis where legacy numeric `styleId` maps to a style name such as `Normal`
+- VML picture/formula references (`w:pict` / `v:imagedata`) are surfaced as image blocks/assets with warnings instead of silent blank lines
 
 After repair, always run:
 
@@ -91,8 +99,8 @@ The practical complaint was valid: a prior session fell back to raw COM and made
 
 Current remaining gap:
 
-- Nong needs a first-class existing-document editing API/CLI that behaves like `DocumentReader -> rule matcher -> DocumentEditor -> writer`.
-- Until that exists, use `dissect`, `fix-order`, `rebuild`, `add`, `fill`, and `inspect write-paper` as composable operations, with explicit artifacts and validation.
+- Nong now has `word check` and `word convert`, but still needs a higher-level existing-document editing API/CLI that behaves like `DocumentReader -> rule matcher -> DocumentEditor -> writer`.
+- Until that exists, use `check`, `convert`, `dissect`, `fix-order`, `rebuild`, `add`, `fill`, and `inspect write-paper` as composable operations, with explicit artifacts and validation.
 
 ## Success Criteria
 
@@ -100,6 +108,7 @@ For real user documents, do not call the task done until:
 
 - Source was copied or converted without modifying the original.
 - Every generated DOCX has an explicit output path.
+- `word check` was reviewed for `.doc`, VML, image, and blockId risks.
 - `word validate` passes for deliverable DOCX files.
 - `word preview` diagnostics are reviewed.
 - A report records command outcomes and remaining limitations.

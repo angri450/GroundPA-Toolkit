@@ -42,7 +42,7 @@ nong word add image paper.table.docx --src fig.png --caption "Figure 1" -o paper
 nong word add math paper.fig.docx --latex "E=mc^2" --display -o paper.math.docx --json
 ```
 
-Use `--after <blockId>` when a prior `word dissect --output` slice identified the insertion point.
+Use `--after <blockId>` when a prior `word dissect --output` slice identified the insertion point. Prefer the `blockId` field from `content.jsonl`; `id` is the same anchor in recent slices.
 
 Paragraph spec:
 
@@ -119,5 +119,8 @@ nong word validate paper.docx --json
 Treat `status: "error"` as a hard stop. Common fixes:
 
 - `E001`: verify the input file exists.
+- `E002`: run `word check`; convert `.doc` to `.docx` before editing.
 - `E003`: supply the required option such as `--spec`, `--text`, `--latex`, `--src`, or `-o`.
+- `E005`: install/update `nong`, or install a boundary converter when `word convert` needs one.
 - `E006`: repair invalid JSON specs, invalid format descriptions, or validation failures.
+- `E009`: stop and report the limitation; do not use stale output.
