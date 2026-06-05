@@ -2,6 +2,10 @@
 
 Use `nong word dissect` as the main path for complex `.docx` reading. It creates a NongMark slice that separates readable content, structural hierarchy, formatting facts, and assets.
 
+For existing user-supplied contracts, old Word files, table-heavy forms, or `.doc` conversion handoffs, also read [existing-document-editing.md](existing-document-editing.md).
+
+For formatting or layout questions, `nong word read` is not enough. Plain text cannot prove fonts, font sizes, line spacing, indentation, alignment, table borders, page margins, or caption formatting. If a workflow starts with `word read` and then needs formatting judgment, stop and run the primary slice path.
+
 ## Primary Path
 
 ```powershell
@@ -22,6 +26,25 @@ Slice files:
 
 When you need to insert content later, keep block IDs from `content.jsonl` or `structure.json` and pass them with `--after <blockId>`.
 
+For formatting review, inspect these files before answering:
+
+```text
+paper.slice/format.json
+paper.slice/content.jsonl
+paper.slice/structure.json
+```
+
+Then add inventory commands as needed:
+
+```powershell
+nong word fonts paper.docx --json
+nong word styles paper.docx --json
+nong word preview paper.docx --json
+nong word validate paper.docx --json
+```
+
+Do not tell the user that formatting cannot be checked merely because the first extraction was plain text. Say the first extraction was text-only, run the format-oriented commands, then separate supported facts from current CLI limitations.
+
 ## Lightweight Reads
 
 Use these commands when a full slice is unnecessary:
@@ -33,7 +56,7 @@ nong word outline paper.docx --json
 nong word stats paper.docx --json
 ```
 
-- `read`: plain text extraction for quick inspection.
+- `read`: plain text extraction for quick inspection. Do not use it as evidence for formatting or layout.
 - `preview`: seven-step document structure diagnostics and OOXML warnings.
 - `outline`: heading and section outline.
 - `stats`: document statistics.
@@ -64,3 +87,5 @@ Only write to `formats/` and update [INDEX.md](../formats/INDEX.md) when the use
 ## Boundaries
 
 Do not parse raw OOXML with ad hoc scripts as a Word reading path. If `nong word dissect`, `read`, or `preview` returns `status: "error"`, fix the input or command arguments and rerun the CLI.
+
+Current format extraction can report run-level fonts and font sizes, paragraph alignment, paragraph spacing and indentation, style IDs and names, document font inventory, page and section dimensions, table style IDs, table widths, table borders, cell widths, cell vertical alignment, structure, and OOXML validation warnings. Resolved style inheritance and exact Word visual rendering are still partial and should be reported as current limitations instead of guessed.
