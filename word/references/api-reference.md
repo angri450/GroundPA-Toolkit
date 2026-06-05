@@ -2,6 +2,8 @@
 
 This reference describes the Word command surface exposed by `nong`. Use the CLI directly; do not build a temporary project to access Word internals.
 
+For workflows that start from an existing `.doc`/`.docx` and need repair or layout changes, pair this command reference with [existing-document-editing.md](existing-document-editing.md).
+
 ## Read and Inspect
 
 ```powershell
@@ -18,6 +20,10 @@ nong word revisions paper.docx --json
 ```
 
 Use `word dissect --output` for complex documents. Use `read` only when plain text is enough, and `preview` or `validate` when you need OOXML diagnostics.
+
+For layout or formatting questions, `read` is insufficient evidence. Run `word dissect --output`, inspect `format.json`, `content.jsonl`, and `structure.json`, then add `fonts`, `styles`, `preview`, or `validate` as targeted follow-ups. Do not answer "open Word manually" unless the CLI failed or the exact visual property is outside the current extraction contract.
+
+Do not use desktop Word COM automation as a fallback for these commands. If the user explicitly asks to automate installed Word, read [com-automation.md](com-automation.md) before writing any PowerShell COM script.
 
 ## Validate, Repair, and Infer
 

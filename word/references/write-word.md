@@ -2,6 +2,10 @@
 
 Use Nong CLI commands for Word generation and edits. GroundPA should prepare JSON specs and route the work to `nong`; it should not recreate the DOCX writer pipeline in local code.
 
+For edits to existing user documents, especially legacy `.doc` conversions or table-heavy contracts, read [existing-document-editing.md](existing-document-editing.md) before choosing commands.
+
+Do not write PowerShell + Word COM scripts for normal Word edits. If installed Microsoft Word must be driven explicitly, use [com-automation.md](com-automation.md) and treat COM as a fragile escape hatch, not the default implementation path.
+
 ## 1. Choose the Output Path
 
 Before creating or changing a document, choose the output path explicitly:
