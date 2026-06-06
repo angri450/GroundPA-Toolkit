@@ -11,7 +11,7 @@ nong commands --json
 If the CLI is unavailable:
 
 ```powershell
-dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 ## Read-Only Workflow

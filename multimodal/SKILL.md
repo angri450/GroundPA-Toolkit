@@ -18,8 +18,8 @@ nong commands --json
 If `nong` is missing, install or update:
 
 ```powershell
-dotnet tool install --global Angri450.Nong.Cli
-dotnet tool update --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
+dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 If the .NET host says no compatible framework was found, use Nong 3.2.3+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
@@ -52,7 +52,7 @@ nong ocr analyze-image <image.png> -o <analysis-dir> --json
 nong ocr cloud <image-or.pdf> -o <ocr-out-dir> --json
 nong ocr to-word <image-or.pdf> -o <out.docx> --json
 nong ocr models --json
-nong ocr install-model pp-ocrv5-mobile --json
+nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json
 nong ocr install-model pp-ocrv5-mobile --dry-run --json
 ```
 
@@ -69,7 +69,7 @@ nong ocr local <image.png> --json
 3. For text/document recognition through PaddleOCR cloud, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr cloud <input> -o <ocr-out-dir> --json`.
 4. For Word output from a scan or PDF, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr to-word <input> -o <out.docx> --json`.
 5. For model inventory, run `nong ocr models --json`.
-6. For local deployment planning, run `nong ocr install-model pp-ocrv5-mobile --dry-run --json`; it should report `noPython: true` and domestic NuGet mirror options.
+6. For local deployment, run `nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json`; it should report `noPython: true`, `upstreamFallbackDefault: "disabled"`, and an `Angri450.Nong.OcrRuntime.*` package for the current platform.
 7. Use `ocr local` after `check-env` reports `localDotNetPpOcrV5.status=ok` and an actual image smoke test exits 0.
 
 ## Boundaries
@@ -81,3 +81,5 @@ nong ocr local <image.png> --json
 `ocr local` is an implemented CLI entrypoint through Nong's pure .NET PP-OCRv5 runtime. Do not describe it as a stable OCR route unless the local environment and a real image smoke test have passed.
 
 Treat `status: "error"` as failed. Do not mask dependency or not-implemented errors as success.
+
+If local OCR returns E005, do not suggest Python or pip. Install/check the current-platform first-party runtime bundle with the Huawei NuGet source. If that reports the first-party bundle is unavailable, tell the user the NuGet/Huawei mirror has not synced yet; use `--allow-upstream-fallback` only when the user explicitly accepts downloading upstream Sdcb/OpenCvSharp native packages.
