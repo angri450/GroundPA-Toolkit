@@ -114,7 +114,7 @@ nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；先用华为 NuGet 源安装当前平台第一方 `Angri450.Nong.OcrRuntime.*` 包，只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。
+`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；先用华为 NuGet 源安装当前平台第一方 `Angri450.Nong.OcrRuntime.*` 包，只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。本地 OCR 只负责单图文字识别；PDF、页级对齐、表格、Word 输出、跨页图片拼接、`nongmark/v1`/Word 切片对齐都走云端 OCR/to-word。
 
 ## 安装
 

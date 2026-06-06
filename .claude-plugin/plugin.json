@@ -1,7 +1,7 @@
 {
   "name": "groundpa-toolkit",
   "version": "2.2.0",
-  "description": "GroundPA Toolkit 2.2.0. Nong CLI-first skills for Word, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee/GitCode, NuGet, ILSpy, email, and skill-manager.",
+  "description": "GroundPA Toolkit 2.2.0. Nong CLI-first skills for Word, PDF, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee/GitCode, NuGet, ILSpy, email, and skill-manager.",
   "author": {
     "name": "angri450"
   },
@@ -10,12 +10,13 @@
   "license": "Apache-2.0",
   "category": "developer-tools",
   "keywords": [
-    "nong", "cli", "office", "word", "excel", "chart", "diagram", "pptx",
+    "nong", "cli", "office", "word", "pdf", "excel", "chart", "diagram", "pptx",
     "ocr", "image-qa", "paper", "inspect", "bioicons", "bash", "powershell", "dotnet", "github",
     "gitee", "gitcode", "email", "nuget", "ilspycmd", "skill-manager"
   ],
   "skills": [
     "./word",
+    "./pdf",
     "./inspect",
     "./excel",
     "./chart",
