@@ -44,7 +44,7 @@ Every `--json` response uses the standard `nong` envelope:
   "artifacts": {},
   "metrics": {},
   "errors": [],
-  "meta": { "durationMs": 0, "version": "3.2.3" }
+  "meta": { "durationMs": 0, "version": "3.2.4" }
 }
 ```
 

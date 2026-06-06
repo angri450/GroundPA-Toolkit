@@ -22,7 +22,7 @@ dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaw
 dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
-If the .NET host says no compatible framework was found, use Nong 3.2.3+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+Use Nong 3.2.4+ for the pure .NET PP-OCRv5 runtime bundle flow. If the .NET host says no compatible framework was found, update to Nong 3.2.4+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## OCR Prerequisites
 
@@ -69,7 +69,7 @@ nong ocr local <image.png> --json
 3. For PDF, multi-page scans, table/layout reconstruction, page-aligned OCR, or Word/NongMark annotation alignment, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr cloud <input> -o <ocr-out-dir> --json`.
 4. For Word output from a scan or PDF, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr to-word <input> -o <out.docx> --json`.
 5. For model inventory, run `nong ocr models --json`.
-6. For local deployment, run `nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json`; it should report `noPython: true`, `upstreamFallbackDefault: "disabled"`, and an `Angri450.Nong.OcrRuntime.*` package for the current platform.
+6. For local deployment, run `nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json`; it should report `noPython: true`, `upstreamFallbackDefault: "disabled"`, and an `Angri450.Nong.OcrRuntime.*` package for the current platform. Runtime package versions track the CLI version, so Nong 3.2.4 expects first-party runtime bundles at 3.2.4.
 7. Use `ocr local` only for single-image text recognition after `check-env` reports `localDotNetPpOcrV5.status=ok` and an actual image smoke test exits 0.
 
 ## Boundaries
@@ -84,4 +84,4 @@ If `ocr local --json` reports `local_ocr_invalid_confidence`, `local_ocr_invalid
 
 Treat `status: "error"` as failed. Do not mask dependency or not-implemented errors as success.
 
-If local OCR returns E005, do not suggest Python or pip. Install/check the current-platform first-party runtime bundle with the Huawei NuGet source. If that reports the first-party bundle is unavailable, tell the user the NuGet/Huawei mirror has not synced yet; use `--allow-upstream-fallback` only when the user explicitly accepts downloading upstream Sdcb/OpenCvSharp native packages.
+If local OCR returns E005, do not suggest Python or pip. Install/check the current-platform first-party runtime bundle with the Huawei NuGet source. If that reports the first-party bundle is unavailable, tell the user the NuGet/Huawei mirror has not synced yet; retry with NuGet.org only when the user accepts the non-mirror source. Use `--allow-upstream-fallback` only when the user explicitly accepts downloading upstream Sdcb/OpenCvSharp native packages.
