@@ -7,7 +7,7 @@ GroundPA Toolkit 2.2.0 是面向农学生论文和文档工作流的 Claude Code
 ## 基础工具
 
 ```powershell
-dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 nong commands --json
 ```
 
@@ -108,12 +108,13 @@ nong pptx slides deck.pptx --json
 
 ```powershell
 nong ocr check-env --json
+nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json
 nong ocr analyze-image fig.png -o fig.analysis --json
 nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。
+`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；先用华为 NuGet 源安装当前平台第一方 `Angri450.Nong.OcrRuntime.*` 包，只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。
 
 ## 安装
 
@@ -124,19 +125,19 @@ nong ocr to-word scan.png -o out.docx --json
 **GitCode（推荐，匿名 clone，国内快）**
 
 ```bash
-git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 **Gitee**
 
 ```bash
-git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 **GitHub（海外）**
 
 ```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 安装后执行 `/reload-plugins` 或重启 Claude Code。
@@ -164,16 +165,22 @@ claude plugin install groundpa-toolkit@angri450
 ### 必装 .NET 工具
 
 ```powershell
-dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 如果已经安装：
 
 ```powershell
-dotnet tool update --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 Nong 3.2.3+ 已为只有更新 .NET 运行时的机器写入 `RollForward=LatestMajor`，并提供纯 .NET 本地 OCR。如果旧版工具提示找不到兼容框架，先更新工具；必要时在当前 shell 设置 `DOTNET_ROLL_FORWARD=LatestMajor` 后重试。
+
+本地 OCR 首次使用前再运行：
+
+```powershell
+nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json
+```
 
 ## 更新
 
