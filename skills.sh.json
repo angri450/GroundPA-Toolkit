@@ -1,25 +1,10 @@
 {
-  "version": "2.2.1",
+  "version": "2.3.1",
   "groups": [
     {
-      "title": "Nong CLI Document Tools",
-      "description": "Implemented nong commands for Word, PDF, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, and Bioicons",
-      "skills": ["word", "pdf", "inspect", "excel", "chart", "diagram", "pptx", "multimodal", "genre", "icons"]
-    },
-    {
-      "title": "Shell Scripting",
-      "description": "Bash and PowerShell scripting references with error handling, tool selection, and sandbox safety",
-      "skills": ["bash", "powershell"]
-    },
-    {
-      "title": "Developer Tools",
-      "description": "Git version control, GitHub CLI, Gitee MCP, GitCode CLI, NuGet, .NET development, assembly decompilation, and proxy acceleration",
-      "skills": ["dotnet", "github", "gitee", "gitcode", "ghproxy", "nuget", "ilspycmd"]
-    },
-    {
-      "title": "Communication & Meta",
-      "description": "Email operations and the skill-manager meta-skill for building and maintaining skills",
-      "skills": ["email", "skill-manager"]
+      "title": "Nong Document Workflows",
+      "description": "Nong 3.2.5+ pure .NET CLI workflows for Word, PDF, literature retrieval, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, and Bioicons",
+      "skills": ["word", "pdf", "literature", "inspect", "excel", "chart", "diagram", "pptx", "multimodal", "genre", "icons"]
     }
   ]
 }
