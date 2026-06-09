@@ -37,18 +37,18 @@ Read the slice before editing:
 
 ```text
 slices/paper/document.json
+slices/paper/content.nongmark
 slices/paper/content.jsonl
 slices/paper/structure.json
 slices/paper/format.json
 slices/paper/assets/manifest.json
-slices/paper/content.md
-slices/paper/summary.json
+slices/paper/preview/content.txt
 ```
 
 ## Edit Cycle
 
-1. Create or update a JSON spec in `specs/`.
-2. Run the relevant `nong word add ...`, `fill`, `merge`, `protect`, `embed-font`, `fix-order`, or `rebuild` command with an explicit `-o output/<name>.docx`.
+1. Create or update a NongMark source in `specs/` for long documents, or a small JSON spec for targeted add/fill operations.
+2. Run the relevant `nong word create`, `add ...`, `fill`, `merge`, `protect`, `embed-font`, `academic-format`, `fix-order`, or `rebuild` command with an explicit `-o output/<name>.docx`.
 3. Validate the generated file:
 
 ```powershell
