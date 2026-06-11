@@ -141,7 +141,7 @@ if (args.Length > 0 && args[0] == "variable-plan")
 
 string outDir = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-    "GroundPA Toolkit Workplace", "output",
+    "Nong Toolkit Workspace", "output",
     $"genre-{DateTime.Now:yyyyMMdd-HHmmss}");
 Directory.CreateDirectory(outDir);
 string outPath = Path.Combine(outDir, "paper.docx");

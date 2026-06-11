@@ -5,7 +5,7 @@ description: Word document workflows through nong. Trigger on .doc/.docx convers
 
 # Word
 
-Use `nong` as the deterministic Word entrypoint. GroundPA decides the workflow, prepares NongMark or small specs, reads JSON/slice outputs, and reports evidence; it does not recreate DOCX parsing or generation logic in ad hoc scripts.
+Use `nong` as the deterministic Word entrypoint. Nong.Toolkit.Net decides the workflow, prepares NongMark or small specs, reads JSON/slice outputs, and reports evidence; it does not recreate DOCX parsing or generation logic in ad hoc scripts.
 
 Do not answer layout or formatting questions from plain text alone. Do not use desktop Word COM automation as the normal editing path.
 
@@ -15,21 +15,7 @@ Schema-valid is not visual-quality complete. For formatted deliverables, verify 
 
 ## Nong CLI Preflight
 
-Claude Plugin Marketplace installs the skills, not the `nong` CLI. Before the first Nong command in a session, run:
-
-```powershell
-nong commands --json
-```
-
-If `nong` is missing, install or update:
-
-```powershell
-dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
-dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
-```
-
-If the .NET host says no compatible framework was found, use Nong 3.2.4+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
-
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.0.0+` and the needed command group.
 ## Three-Layer Workflow
 
 ### Layer 1: NongMark -> DOCX
@@ -95,9 +81,27 @@ nong word validate <fixed.docx> --json
 For existing DOCX academic/paper formatting, do not switch to Word COM. Apply the deterministic formatter first:
 
 ```powershell
+nong word repair-plan --json
 nong word academic-format <input.docx> -o <academic.docx> --json
 nong word validate <academic.docx> --json
+nong word format-audit <academic.docx> --profile academic --min-score 80 --json
 nong word dissect <academic.docx> --output <academic.slice> --json
+```
+
+Use `word repair-plan` when the user's request mixes OOXML repair, visible formatting, and table layout. Use `word format-audit` as the read-only visual-format evidence gate for academic deliverables. Use `word table-reflow` when long or wide tables still need explicit continuation tables after formatting:
+
+```powershell
+nong word table-reflow <academic.docx> -o <tables.docx> --max-rows 20 --max-cols 6 --repeat-left-cols 1 --json
+nong word validate <tables.docx> --json
+nong word format-audit <tables.docx> --profile academic --min-score 80 --json
+```
+
+For existing DOCX official-document/gongwen formatting, use the public CLI command instead of library calls or COM:
+
+```powershell
+nong word format-gongwen <input.docx> -o <gongwen.docx> --json
+nong word validate <gongwen.docx> --json
+nong word dissect <gongwen.docx> --output <gongwen.slice> --json
 ```
 
 Write to explicit output paths with `-o`. Never overwrite the user's source unless they explicitly request that.
@@ -106,6 +110,7 @@ Write to explicit output paths with `-o`. Never overwrite the user's source unle
 
 - `word read` is text-only evidence. It cannot prove fonts, font size, line spacing, indentation, alignment, table borders, margins, captions, or visual layout.
 - For formatting/layout claims, cite facts from `format.json`, `content.jsonl`, `structure.json`, `fonts`, `styles`, `preview`, or `validate`.
+- For final academic-format claims, prefer `word format-audit` plus slice evidence. `validate`, `preview`, `outline`, `dissect`, and `fix-order` alone do not prove visible formatting quality.
 - VML formula/picture content appears as image blocks/assets, not editable text. Do not treat blank plain-text lines as proof that source content was empty.
 - If the first extraction was plain text, say so and run the format-oriented path before judging.
 - Schema-valid does not mean visually ideal. A formatted DOCX can only be called done after format evidence is reviewed.
@@ -127,6 +132,7 @@ Core stance:
 
 - `.doc` requires a conversion handoff before OpenXML work. Use Word/LibreOffice conversion only as a boundary step, then return to `nong word`.
 - Existing `.docx` should be inspected, repaired, edited through CLI/library-backed operations, and validated.
+- Use `word repair-plan` to choose between `academic-format`, `format-audit`, `fix-order`, and `table-reflow` when the request is ambiguous.
 - COM is an escape hatch, not the main implementation.
 
 ## Reference Routing
@@ -136,7 +142,7 @@ Load only the reference needed for the task:
 - [references/read-word.md](references/read-word.md): reading, slicing, formatting evidence, assets, comments, revisions.
 - [references/write-word.md](references/write-word.md): template fill, add operations, merge, protect, embed fonts, repair, validation after writes.
 - [references/api-reference.md](references/api-reference.md): exact command syntax and JSON spec shapes.
-- [references/existing-document-editing.md](references/existing-document-editing.md): `.doc` handoff, legacy DOCX repair, real-case contract workflow, current product gaps.
+- [references/existing-document-editing.md](references/existing-document-editing.md): `.doc` handoff, legacy DOCX repair, real-case contract workflow, official-document transformation.
 - [references/com-automation.md](references/com-automation.md): only when installed Microsoft Word must be driven.
 - [references/workspace-setup.md](references/workspace-setup.md): case workspace layout and artifact organization.
 - [references/paper-analysis.md](references/paper-analysis.md): when Word output feeds inspect/paper workflows.
@@ -161,6 +167,15 @@ nong word add table <file.docx> --spec table.json -o <out.docx> --json
 nong word add image <file.docx> --src fig.png --caption "Figure 1" -o <out.docx> --json
 nong word add comment <file.docx> --text "Review note" -o <out.docx> --json
 nong word add math <file.docx> --latex "E=mc^2" --display -o <out.docx> --json
+```
+
+### Document Comparison
+
+```powershell
+nong word compare <original.docx> <revised.docx> --json
+```
+
+Reports paragraph-level differences: added, removed, and modified paragraphs with their text and style IDs.
 ```
 
 Use `--after <blockId>` only after `word dissect --output` has identified the insertion point.

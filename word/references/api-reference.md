@@ -32,13 +32,17 @@ Do not use desktop Word COM automation as a fallback for these commands. If the 
 
 ```powershell
 nong word validate paper.docx --json
+nong word repair-plan --json
 nong word infer-format "宋体 小五号 首行缩进" --json
 nong word fix-order paper.docx -o fixed.docx --json
 nong word academic-format paper.docx -o paper.academic.docx --json
+nong word format-gongwen paper.docx -o paper.gongwen.docx --json
+nong word format-audit paper.academic.docx --profile academic --min-score 80 --json
+nong word table-reflow paper.academic.docx -o paper.tables.docx --max-rows 20 --max-cols 6 --repeat-left-cols 1 --json
 nong word rebuild paper.docx -o rebuilt.docx --json
 ```
 
-`validate` reports schema issues. It does not prove typography or visual layout quality. `fix-order` corrects OOXML child ordering and known dirty-OOXML artifacts. `academic-format` applies deterministic paper formatting to an existing DOCX. `rebuild` cleans style pollution. `infer-format` maps a natural-language Chinese formatting description to an OpenXML-oriented format result.
+`validate` reports schema issues. It does not prove typography or visual layout quality. `repair-plan` explains which repair command matches the user's goal. `fix-order` corrects OOXML child ordering and known dirty-OOXML artifacts. `academic-format` applies deterministic paper formatting to an existing DOCX. `format-gongwen` applies Chinese official-document formatting to an existing DOCX and accepts optional `--config <style.json>`. `format-audit` is a read-only visible-format evidence gate for academic documents. `table-reflow` explicitly splits long or wide tables into continuation tables. `rebuild` cleans style pollution. `infer-format` maps a natural-language Chinese formatting description to an OpenXML-oriented format result.
 
 ## Generate and Combine
 

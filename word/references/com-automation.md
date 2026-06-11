@@ -1,6 +1,6 @@
 # Word COM Automation Escape Hatch
 
-GroundPA's normal Word path is `nong word ...`. Do not use desktop Microsoft Word COM automation for ordinary DOCX reading, formatting inspection, table extraction, template filling, or edits.
+Nong.Toolkit.Net's normal Word path is `nong word ...`. Do not use desktop Microsoft Word COM automation for ordinary DOCX reading, formatting inspection, table extraction, template filling, or edits.
 
 Use COM only when all of these are true:
 

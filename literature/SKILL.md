@@ -5,30 +5,11 @@ description: Literature retrieval workflows through nong lit. Trigger on CNKI-li
 
 # Literature
 
-Use `nong lit` as the deterministic literature retrieval entrypoint. GroundPA prepares CNKI-like search expressions, checks provider plans, reads normalized JSON records, and exports references; it does not use Python literature packages, browser automation, scraping, or paywall bypass.
+Use `nong lit` as the deterministic literature retrieval entrypoint. Nong.Toolkit.Net prepares CNKI-like search expressions, checks provider plans, reads normalized JSON records, and exports references; it does not use Python literature packages, browser automation, scraping, or paywall bypass.
 
 ## Nong CLI Preflight
 
-Claude Plugin Marketplace installs the skills, not the `nong` CLI. Verify the installed command surface before literature work:
-
-```powershell
-nong commands --json
-```
-
-Use Nong 3.2.5+ for literature work. It includes these implemented commands:
-
-```powershell
-nong lit parse --query "<expr>" --json
-nong lit validate --query "<expr>" --json
-nong lit plan --query "<expr>" --sources openalex,crossref,unpaywall --json
-nong lit search --query "<expr>" --sources openalex,crossref,unpaywall --limit 50 --profile balanced --out refs.json --json
-nong lit export --input refs.json --format json --out refs.normalized.json --json
-nong lit export --input refs.json --format markdown --style gbt7714 --out refs.md --json
-nong lit export --input refs.json --format bibtex --out refs.bib --json
-```
-
-If `nong commands --json` does not list `lit parse`, `lit validate`, `lit plan`, `lit search`, and `lit export`, update Nong first.
-
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.0.0+` and the needed command group.
 ## DSL
 
 The stable contract is the CNKI-like Nong DSL, not any provider's native query language.
@@ -103,7 +84,9 @@ Do not treat export success as valid unless the output artifact exists and is no
 
 ## Providers
 
-Implemented Stage19 providers:
+For provider credentials, query planning, and boundaries, read [references/provider-contract.md](references/provider-contract.md).
+
+Implemented Nong.Cli.Net 4.0.0 providers:
 
 - OpenAlex: metadata search and DOI lookup; optional `NONG_LIT_OPENALEX_API_KEY` or `NONG_LIT_OPENALEX_KEY`.
 - Crossref: metadata search and DOI enrichment; optional `NONG_LIT_MAILTO`.

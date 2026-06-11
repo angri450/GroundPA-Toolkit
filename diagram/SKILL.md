@@ -5,25 +5,11 @@ description: Scientific diagram CLI via nong. Trigger on flowchart, workflow dia
 
 # Diagram
 
-Use `nong` for implemented scientific diagram rendering. GroundPA routes to the CLI; do not recreate diagram rendering logic in scripts or temporary projects.
+Use `nong` for implemented scientific diagram rendering. Nong.Toolkit.Net routes to the CLI; do not recreate diagram rendering logic in scripts or temporary projects.
 
 ## Nong CLI Preflight
 
-Claude Plugin Marketplace installs the skills, not the `nong` CLI. Run once before work:
-
-```powershell
-nong commands --json
-```
-
-If `nong` is missing, install or update:
-
-```powershell
-dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
-dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
-```
-
-If the .NET host says no compatible framework was found, use Nong 3.2.4+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
-
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.0.0+` and the needed command group.
 ## Implemented Commands
 
 ```powershell
