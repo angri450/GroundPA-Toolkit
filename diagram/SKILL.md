@@ -90,7 +90,7 @@ dotnet add <target-dir> package Angri450.Nong.Diagram
 
 Then write a `Program.cs` template. See [workspace-setup.md](references/workspace-setup.md) for the full template and details.
 
-After setup, each session only modifies `Program.cs` in `~/Documents/diagram/`. Output goes to `~/Documents/output/`.
+After setup, each session only modifies `Program.cs` in `~/Documents/GroundPA Toolkit Workplace/diagram/`. Output goes to `~/Documents/GroundPA Toolkit Workplace/output/`.
 
 ## Icon Library
 

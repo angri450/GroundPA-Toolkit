@@ -153,15 +153,24 @@ Full Issue → Code → PR → Close pipeline:
 
 ## Release Checklist (GroundPA Toolkit)
 
-When releasing a new version of any skill collection, update three things:
+When releasing a new version, update ALL of these. Claude reads `plugin.json`, NOT git tags.
 
-1. **`skills.sh.json` → `"version"` field** — Claude reads this, NOT git tags. Missing = shows "1.0.0"
-2. **`git tag -a vX.Y.Z`** — code history marker
-3. **GitHub + Gitee Release** — human-readable changelog
+1. **`.claude-plugin/plugin.json` → `"version"` field** — Claude reads THIS. Missing = shows "1.0.0" forever
+2. **`.claude-plugin/plugin.json` → `"skills"` array** — new skills must be registered here or Claude won't see them
+3. **`skills.sh.json` → `"version"` + groups** — marketplace manifest, also needs updating
+4. **`git tag -a vX.Y.Z`** — code history marker
+5. **GitHub + Gitee Release** — human-readable changelog
 
-New skills must also be registered in `skills.sh.json` under their group. Missing from manifest = invisible.
+**The trap we fell into:** bumped skills.sh.json and git tag, forgot plugin.json. Claude showed 1.0.0 through three rounds of "fixes" until we found the real version file.
 
-**Gitee release via API (when ghproxy is slow):**
+**New skill registration checklist:**
+- `.claude-plugin/plugin.json` → add to `skills` array
+- `.claude-plugin/plugin.json` → add to `keywords` array
+- `skills.sh.json` → add to appropriate group
+- Update description count ("15 skills" → "16 skills")
+- `README.zh-CN.md` → add to skills table
+
+**Gitee release via API:**
 ```bash
 curl -X POST "https://gitee.com/api/v5/repos/owner/repo/releases" \
   -H "Content-Type: application/json" \
