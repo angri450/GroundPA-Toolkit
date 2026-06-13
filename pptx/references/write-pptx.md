@@ -21,9 +21,12 @@
 
 然后问用户：**用哪个？需要微调配色或字体吗？**
 
-- 用现成模板 → `ThemePreset.Professional` 或 `ThemePreset.BuildFromJson("<skill-path>/formats/professional.json")`
-- 要微调 → 改对应 JSON 文件里的颜色/字体字段
+- 用现成模板 → `ThemePreset.Professional` 等内置主题（6 套，无需文件）
+- 用 JSON 主题 → 先将 `<skill-root>/pptx/formats/*.json` 复制到项目目录 `formats/`，再用 `ThemePreset.BuildFromJson("formats/cherry-bold.json")`
+- 要微调 → 改项目目录下对应 JSON 文件里的颜色/字体字段
 - 要新主题 → 创建 `formats/xxx.json`，INDEX.md 加一行
+
+**禁止直接引用 `<skill-path>` 或 `<skill-root>` 路径**——这些路径包含插件版本号，升级后全部失效。必须先复制到项目目录。
 
 ## Core Pattern
 

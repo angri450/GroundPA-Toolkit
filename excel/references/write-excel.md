@@ -19,9 +19,11 @@
 
 然后问用户：**用哪个？需要微调颜色吗？还是给一个参考 xlsx 提取配色？**
 
-- 用现成模板 → `StylePresets.BuildFromJson("<skill-path>/formats/mono.json")`
-- 要微调 → 改对应 JSON 文件里的 `colors` / `formats` 字段
+- 用现成模板 → 先将 `<skill-root>/excel/formats/*.json` 复制到项目目录 `formats/`，再用 `StylePresets.BuildFromJson("formats/mono.json")`
+- 要微调 → 改项目目录下对应 JSON 文件里的 `colors` / `formats` 字段
 - 要新配色 → 创建 `formats/xxx.json`，INDEX.md 加一行
+
+**禁止直接引用 `<skill-path>` 或 `<skill-root>` 路径**——这些路径包含插件版本号，升级后全部失效。必须先复制到项目目录。
 
 ## Core Pattern
 
