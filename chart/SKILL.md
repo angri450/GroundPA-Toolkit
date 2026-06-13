@@ -1,13 +1,9 @@
 ---
 name: chart
 description: >
-  Statistical analysis and chart generation for academic papers. MUST use this skill
-  when the user wants to create bar charts with error bars, run ANOVA + Duncan multiple
-  range test, generate publication-quality figures, analyze experimental data, or
-  combine multiple charts. Also trigger when the user mentions chart, 图表, 柱形图,
-  箱线图, 统计分析, ANOVA, 方差分析, Duncan, 显著性, 误差线, 实验数据, or 作图 —
-  even if they do not explicitly say "chart". This skill works with the word skill
-  (insert charts into papers) and the excel skill (prepare data for analysis).
+  Statistical charts and analysis for academic papers. Trigger on bar chart, pie chart,
+  scatter plot, box plot, histogram, heatmap, radar, ANOVA, Duncan MRT, significance
+  testing, error bars, or experimental data visualization.
 ---
 
 # ChartCore — Statistical Chart Intelligence

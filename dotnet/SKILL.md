@@ -1,13 +1,8 @@
 ---
 name: dotnet
 description: >
-  Unified .NET development skill covering all major domains: core C# coding,
-  MSBuild/build, testing, ASP.NET Core, EF Core/data, performance diagnostics,
-  AI/ML integration, MAUI mobile, NuGet packages, template engine, version
-  upgrades, and .NET 11 features. Use for ANY .NET-related task — coding,
-  debugging, building, testing, upgrading, diagnosing, or scaffolding.
-  This skill uses progressive disclosure: it loads only the domain-specific
-  reference needed for the current task, keeping token usage low.
+  .NET development across C#, MSBuild, ASP.NET Core, EF Core, MAUI, NuGet, and testing.
+  Trigger on dotnet build, .csproj, C# code, NuGet packages, ASP.NET, or .NET SDK tasks.
 ---
 
 # .NET All-in-One

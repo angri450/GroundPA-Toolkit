@@ -62,21 +62,67 @@ All runtime data lives under one tree:
 
 Each session modifies only `Program.cs` in the relevant workspace. Output lands in a timestamped subdirectory under `output/`.
 
-## Quick Install
+## Install
+
+### One-liner
 
 ```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git
-cp -r GroundPA-Toolkit/* ~/.claude/skills/
-dotnet tool install --global Angri450.Nong.Skill.Manager
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
+  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
+  rm -rf /tmp/groundpa && \
+  dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
 
-Requires .NET SDK. No version floor.
+**Prerequisites:** [.NET SDK](https://dotnet.microsoft.com/download), [Git](https://git-scm.com/).
+
+| You're on | Instead of `cp -r` |
+|-----------|--------------------|
+| Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
+| Windows (WSL / Git Bash) | Same as above |
+
+### Marketplace (recommended)
+
+GroundPA Toolkit ships with its own Claude Code marketplace. Friends install in two commands:
+
+```bash
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
+```
+
+Then reload in Claude Code:
+
+```text
+/reload-plugins
+```
+
+Skills use the `groundpa-toolkit:` namespace:
+
+```text
+/groundpa-toolkit:word
+/groundpa-toolkit:pptx
+/groundpa-toolkit:chart
+```
 
 ## Architecture
 
 Skill folders ship read-only. Deterministic work runs through NuGet packages (`Angri450.Nong.*`). The skill-manager global tool handles validation, security scanning, packaging, and evaluation. Progressive disclosure keeps SKILL.md lean — deep reference material lives in `references/`.
 
 See [`skill-manager/SKILL.md`](skill-manager/SKILL.md) for full conventions.
+
+## Marketplace
+
+This repo is its own marketplace. Anyone can register it once and install:
+
+```bash
+claude plugin marketplace add angri450/GroundPA-Toolkit
+claude plugin install groundpa-toolkit@angri450
+```
+
+To submit to community directories for wider discovery:
+
+1. Validate locally: `claude plugin validate .`
+2. Submit to Anthropic Community Marketplace via the form on claude.ai
+3. Or submit a PR to `kossakovsky/cc-plugins` for third-party listing
 
 ## License
 

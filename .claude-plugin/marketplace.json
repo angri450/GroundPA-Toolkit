@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "groundpa-marketplace",
+  "name": "angri450",
   "description": "GroundPA Toolkit — 15 skills for Office, Shell, .NET, GitHub, and more",
   "owner": {
     "name": "angri450"
