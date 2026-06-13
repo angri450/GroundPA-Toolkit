@@ -36,6 +36,7 @@ See [workflows.md](references/workflows.md) for detailed instructions per workfl
 | Stale PR Reminder | "stale PR", "inactive PR", "aging PR" | `list_repo_pulls`, `get_pull_detail`, `list_comments` |
 
 Full MCP tool reference: [mcp-tools.md](references/mcp-tools.md)
+Lessons learned: [lessons-learned.md](references/lessons-learned.md)
 
 ## Cross-Skill Flow
 
