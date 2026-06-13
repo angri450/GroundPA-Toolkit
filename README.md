@@ -57,13 +57,16 @@ Only implemented `nong` commands are exposed as 2.1.0 skills.
 ### Word
 
 ```powershell
-nong word read paper.docx --json
-nong word preview paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
+nong word fonts paper.docx --json
+nong word styles paper.docx --json
+nong word preview paper.docx --json
 nong word fill template.docx data.json -o out.docx --json
 nong word rebuild dirty.docx -o clean.docx --json
 nong word add paragraph paper.docx --spec paragraph.json -o out.docx --json
 ```
+
+For layout, fonts, font sizes, margins, alignment, table borders, or other formatting questions, do not judge from `word read` alone. Start with `word dissect --output`, then inspect `format.json`, `content.jsonl`, and `structure.json` in the slice directory.
 
 ### Paper Inspection
 

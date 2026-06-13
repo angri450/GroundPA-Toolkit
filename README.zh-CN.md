@@ -55,13 +55,16 @@ nong skill package . --json
 ### Word
 
 ```powershell
-nong word read paper.docx --json
-nong word preview paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
+nong word fonts paper.docx --json
+nong word styles paper.docx --json
+nong word preview paper.docx --json
 nong word fill template.docx data.json -o out.docx --json
 nong word rebuild dirty.docx -o clean.docx --json
 nong word add paragraph paper.docx --spec paragraph.json -o out.docx --json
 ```
+
+排版、字体、字号、页边距、对齐方式、表格线等问题不要只用 `word read` 判断。先用 `word dissect --output`，再查看切片目录里的 `format.json`、`content.jsonl` 和 `structure.json`。
 
 ### 论文诊断
 
