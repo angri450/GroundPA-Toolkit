@@ -150,3 +150,21 @@ Full Issue → Code → PR → Close pipeline:
 - Never auto-merge conflicting PRs
 - Search repos defaults to sorting by stars descending
 - Source: https://gitee.com/oschina/gitee-agent-skills
+
+## Release Checklist (GroundPA Toolkit)
+
+When releasing a new version of any skill collection, update three things:
+
+1. **`skills.sh.json` → `"version"` field** — Claude reads this, NOT git tags. Missing = shows "1.0.0"
+2. **`git tag -a vX.Y.Z`** — code history marker
+3. **GitHub + Gitee Release** — human-readable changelog
+
+New skills must also be registered in `skills.sh.json` under their group. Missing from manifest = invisible.
+
+**Gitee release via API (when ghproxy is slow):**
+```bash
+curl -X POST "https://gitee.com/api/v5/repos/owner/repo/releases" \
+  -H "Content-Type: application/json" \
+  -d '{"tag_name":"v1.0.0","name":"Title","body":"Notes","target_commitish":"master"}'
+```
+Authenticate with `--oauth2-bearer <gitee-token>`.

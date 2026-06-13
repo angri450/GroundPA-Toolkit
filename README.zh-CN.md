@@ -64,7 +64,16 @@ OpenXML 底层直控、.NET 原生执行的 Claude Code 技能插件集。15 个
 
 ## 安装
 
-### 一键安装
+### 一键安装（国内推荐，Gitee 更快）
+
+```bash
+git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
+  cp -r /tmp/groundpa/* ~/.claude/skills/ && \
+  rm -rf /tmp/groundpa && \
+  dotnet tool install --global Angri450.Nong.Skill.Manager
+```
+
+### 一键安装（海外，GitHub）
 
 ```bash
 git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
@@ -73,56 +82,19 @@ git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
   dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
 
-**前置条件：** [.NET SDK](https://dotnet.microsoft.com/download)、[Git](https://git-scm.com/)。
+### Marketplace（推荐，Gitee 源）
 
-| 你的系统 | `cp -r` 换成 |
-|----------|-------------|
-| Windows PowerShell | `Copy-Item /tmp/groundpa/* -Destination ~/.claude/skills/ -Recurse` |
-| Windows (WSL / Git Bash) | 同上不变 |
+```bash
+claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit.git
+claude plugin install groundpa-toolkit@angri450
+```
 
-### Marketplace（推荐）
-
-GroundPA Toolkit 自带 Claude Code marketplace。朋友只需两条命令：
+如果上述命令报 "no such marketplace" 错误，可以尝试 GitHub 源：
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
 ```
-
-然后在 Claude Code 中重载：
-
-```text
-/reload-plugins
-```
-
-Skills 通过 `groundpa-toolkit:` 命名空间调用：
-
-```text
-/groundpa-toolkit:word
-/groundpa-toolkit:pptx
-/groundpa-toolkit:chart
-```
-
-## 核心架构
-
-Skill 文件夹分发时只读。确定性工作通过 NuGet 包（`Angri450.Nong.*`）执行。skill-manager 全局工具负责校验、安全扫描、打包和评测。渐进式披露原则保持 SKILL.md 精简——详细参考资料放在 `references/` 中。
-
-完整约定见 [`skill-manager/SKILL.md`](skill-manager/SKILL.md)。
-
-## Marketplace 注册
-
-本仓库本身就是 marketplace，任何人注册一次即可安装：
-
-```bash
-claude plugin marketplace add angri450/GroundPA-Toolkit
-claude plugin install groundpa-toolkit@angri450
-```
-
-如需提交到社区目录获得更多曝光：
-
-1. 本地校验：`claude plugin validate .`
-2. 通过 claude.ai 上的表单提交到 Anthropic Community Marketplace
-3. 或提交 PR 到 `kossakovsky/cc-plugins` 第三方市场
 
 ## 开源协议
 
