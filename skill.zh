@@ -26,7 +26,6 @@ Nong.Toolkit.Net 是一个 Claude Code 多 skill 插件。目标是让 Claude Co
 | `skill-breeder` | Skill 育种：模板、命名规范、结构约定 |
 | `skill-tester` | Skill 验种：触发精度检查、失败反馈回收 |
 | `skill-pruner` | Skill 修剪：合并、拆分、废弃 |
-| `progress-report` | 结构化日志摘要和 HTML 进展报告 |
 
 Nong.Toolkit.Net 2.4.0 面向 Nong 4.0.0+。使用前通过 `nong commands --json` 确认需要的命令组存在。
 
