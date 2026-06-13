@@ -9,6 +9,7 @@ For workflows that start from an existing `.doc`/`.docx` and need repair or layo
 ```powershell
 nong word check paper.docx --json
 nong word convert legacy.doc -o legacy.docx --json
+nong word create document.nongmark -o document.docx --json
 nong word read paper.docx --json
 nong word preview paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
@@ -33,14 +34,16 @@ Do not use desktop Word COM automation as a fallback for these commands. If the 
 nong word validate paper.docx --json
 nong word infer-format "宋体 小五号 首行缩进" --json
 nong word fix-order paper.docx -o fixed.docx --json
+nong word academic-format paper.docx -o paper.academic.docx --json
 nong word rebuild paper.docx -o rebuilt.docx --json
 ```
 
-`validate` reports schema issues. `fix-order` corrects OOXML child ordering. `rebuild` cleans style pollution. `infer-format` maps a natural-language Chinese formatting description to an OpenXML-oriented format result.
+`validate` reports schema issues. It does not prove typography or visual layout quality. `fix-order` corrects OOXML child ordering and known dirty-OOXML artifacts. `academic-format` applies deterministic paper formatting to an existing DOCX. `rebuild` cleans style pollution. `infer-format` maps a natural-language Chinese formatting description to an OpenXML-oriented format result.
 
 ## Generate and Combine
 
 ```powershell
+nong word create document.nongmark -o document.docx --json
 nong word fill template.docx data.json -o filled.docx --json
 nong word merge intro.docx body.docx appendix.docx -o merged.docx --json
 nong word extract paper.docx -o extracted-images --json
@@ -49,6 +52,8 @@ nong word embed-font paper.docx simsun.ttf -o embedded.docx --json
 ```
 
 Use `fill` for template placeholders, `merge` for ordered DOCX composition, `extract` for media export, `protect` for document protection, and `embed-font` when a real font file is available.
+
+For a new document, `word create` from `.nongmark` is the default route. Do not generate DOCX from Markdown, `python-docx`, or a temporary Word COM script.
 
 ## Add Leaves
 

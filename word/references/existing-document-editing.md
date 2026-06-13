@@ -41,9 +41,14 @@ nong word validate contract.fixed.docx --json
 nong word rebuild contract.fixed.docx -o contract.rebuilt.docx --json
 nong word validate contract.rebuilt.docx --json
 nong word preview contract.rebuilt.docx --json
+
+# 5. For academic/paper formatting, use the deterministic OpenXML formatter.
+nong word academic-format contract.rebuilt.docx -o contract.academic.docx --json
+nong word validate contract.academic.docx --json
+nong word dissect contract.academic.docx --output contract.academic.slice --json
 ```
 
-Do not stop after `read`. For table-heavy contracts, `content.md` often shows text but not the visible contract layout. Use `format.json`, `content.jsonl`, `structure.json`, `fonts`, `styles`, `preview`, and `validate`.
+Do not stop after `read`. For table-heavy contracts, `preview/content.txt` or plain text may show text but not the visible contract layout. Use `format.json`, `content.jsonl`, `structure.json`, `fonts`, `styles`, `preview`, and `validate`.
 
 Use `content.jsonl` or `structure.json` for insertion anchors. Recent Nong builds emit both `id` and `blockId`, plus `index`, in each JSONL line.
 
@@ -99,8 +104,22 @@ The practical complaint was valid: a prior session fell back to raw COM and made
 
 Current remaining gap:
 
-- Nong now has `word check` and `word convert`, but still needs a higher-level existing-document editing API/CLI that behaves like `DocumentReader -> rule matcher -> DocumentEditor -> writer`.
-- Until that exists, use `check`, `convert`, `dissect`, `fix-order`, `rebuild`, `add`, `fill`, and `inspect write-paper` as composable operations, with explicit artifacts and validation.
+- Nong now has `word check`, `word convert`, and `word academic-format`. For academic formatting complaints, use `academic-format` before any COM fallback.
+- Higher-level arbitrary existing-document editing is still composable. Use `check`, `convert`, `dissect`, `fix-order`, `academic-format`, `rebuild`, `add`, `fill`, `word create`, and `inspect write-paper` with explicit artifacts and validation.
+
+## Formatting Quality Gate
+
+Do not confuse schema repair with acceptable layout. `word validate` can pass while the document still has poor typography or unreadable spacing.
+
+For academic or proposal documents, inspect at least:
+
+- Headings: level, font family, font size, alignment, and keep-next behavior.
+- Body: Chinese font, Latin font, first-line indent, line rule, spacing before/after.
+- Tables: top/bottom/header rules, inside borders, width, header shading, merged cells, and cell vertical alignment.
+- Mixed text: Chinese/Latin run segmentation, Times New Roman for Latin, Songti/Heiti for Chinese, italics where requested.
+- Non-text assets: VML pictures, images, formulas, captions, TOC, and page numbers.
+
+If slice evidence cannot prove a property, inspect the relevant OOXML part directly instead of falling back to COM.
 
 ## Success Criteria
 
@@ -111,4 +130,5 @@ For real user documents, do not call the task done until:
 - `word check` was reviewed for `.doc`, VML, image, and blockId risks.
 - `word validate` passes for deliverable DOCX files.
 - `word preview` diagnostics are reviewed.
+- `word dissect` artifacts provide positive format evidence for the user's visual requirements.
 - A report records command outcomes and remaining limitations.

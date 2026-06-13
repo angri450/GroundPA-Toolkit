@@ -1,10 +1,10 @@
 # Write Word
 
-Use Nong CLI commands for Word generation and edits. GroundPA should prepare JSON specs and route the work to `nong`; it should not recreate the DOCX writer pipeline in local code.
+Use Nong CLI commands for Word generation and edits. GroundPA should prepare NongMark or small JSON specs and route the work to `nong`; it should not recreate the DOCX writer pipeline in local code.
 
 For edits to existing user documents, especially legacy `.doc` conversions or table-heavy contracts, read [existing-document-editing.md](existing-document-editing.md) before choosing commands.
 
-Do not write PowerShell + Word COM scripts for normal Word edits. If installed Microsoft Word must be driven explicitly, use [com-automation.md](com-automation.md) and treat COM as a fragile escape hatch, not the default implementation path.
+Do not write `python-docx`, Markdown-to-DOCX, or PowerShell + Word COM scripts for normal Word generation, formatting, or edits. If installed Microsoft Word must be driven explicitly, use [com-automation.md](com-automation.md) and treat COM as the final escape hatch, not the default implementation path.
 
 ## 1. Choose the Output Path
 
@@ -17,6 +17,44 @@ $out = "paper.out.docx"
 Use `-o <out.docx>` on every command that writes a DOCX.
 
 ## 2. Template Fill
+
+## 2. NongMark Long Documents
+
+For new long documents, reports, proposals, or paper-like deliverables, write `document.nongmark` first:
+
+```powershell
+nong word create document.nongmark -o document.docx --json
+nong word validate document.docx --json
+nong word dissect document.docx --output document.slice --json
+```
+
+Use `.nongmark` or `.nmk`. Do not create `content.md` or use Markdown as the source. NongMark should carry the content, structure, tables, references, figures, and formatting intent.
+
+Use block forms for structure:
+
+```nongmark
+---
+title: Document Title
+author: Author
+date: 2026-06-07
+---
+
+# 一级标题
+
+正文（Latin name）继续写在 NongMark 里。
+
+::: table {caption="表1 结果"}
+| 处理 | 指标 |
+| --- | --- |
+| A | 12.3 |
+:::
+
+::: references
+[1] Smith J. Example reference. Journal, 2024.
+:::
+```
+
+## 3. Template Fill
 
 Use template fill when the source document already contains placeholders:
 
@@ -31,7 +69,7 @@ nong word preview filled.docx --json
 nong word validate filled.docx --json
 ```
 
-## 3. Append Content
+## 4. Append Content
 
 Use the nested `word add ...` commands as the canonical editing path:
 
@@ -82,7 +120,32 @@ nong word add comment paper.docx --text "Review note" -o out.docx --json
 
 `word add-*` is a compatibility alias pattern only.
 
-## 4. Merge, Protect, Embed, and Repair
+## 5. Existing DOCX Academic Formatting
+
+For a draft DOCX that needs paper-style formatting, use the deterministic formatter before considering COM:
+
+```powershell
+nong word academic-format draft.docx -o draft.academic.docx --json
+nong word validate draft.academic.docx --json
+nong word dissect draft.academic.docx --output draft.academic.slice --json
+```
+
+This applies Chinese/Latin font defaults, heading levels, three-line table borders, centered table cells, and italic Latin text inside parentheses where possible.
+
+Do not call the result complete from `validate` alone. Run `dissect` and inspect format evidence:
+
+```powershell
+nong word dissect draft.academic.docx --output draft.academic.slice --json
+```
+
+Minimum evidence:
+
+- `format.json` shows expected page and table formats.
+- `content.jsonl` shows font and line-spacing evidence.
+- `preview/content.txt` shows no missing sections.
+- Direct OOXML checks are acceptable when a property is not yet surfaced by the slice.
+
+## 6. Merge, Protect, Embed, and Repair
 
 ```powershell
 nong word merge intro.docx body.docx appendix.docx -o merged.docx --json
@@ -99,9 +162,9 @@ nong word validate rebuilt.docx --json
 nong word preview rebuilt.docx --json
 ```
 
-## 5. Paper Drafts
+## 7. Paper Drafts
 
-For full paper drafting from a JSON spec, use Inspect:
+For full paper drafting, prefer NongMark + `word create`. Use Inspect JSON spec generation only when the workflow already has a structured paper spec:
 
 ```powershell
 nong inspect write-paper paper-spec.json -o paper.docx --json
@@ -114,7 +177,7 @@ nong word dissect paper.docx --output paper.slice --json
 nong word validate paper.docx --json
 ```
 
-## 6. Error Handling
+## 8. Error Handling
 
 Treat `status: "error"` as a hard stop. Common fixes:
 

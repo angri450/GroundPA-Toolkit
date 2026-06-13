@@ -18,12 +18,12 @@ Slice files:
 | File | Purpose |
 |------|---------|
 | `document.json` | Document metadata, package facts, relationships, and top-level counts. |
+| `content.nongmark` | Primary NongMark semantic stream for review, generation handoff, and source-like reasoning. |
 | `content.jsonl` | Ordered block stream with stable IDs for paragraphs, tables, images, comments, and other content units. |
 | `structure.json` | Heading tree, section hierarchy, outline order, and block-to-section mapping. |
 | `format.json` | Styles, fonts, page setup, paragraph/run formatting, and detected format features. |
 | `assets/manifest.json` | Media assets and their relationship IDs, paths, captions, and linked blocks. |
-| `content.md` | Readable Markdown projection for review, summarization, and inspect workflows. |
-| `summary.json` | Compact counts, warnings, errors, generated artifacts, and recommended next steps. |
+| `preview/content.txt` | Lossy plain-text preview for quick reading only. |
 
 When you need to insert content later, keep block IDs from `content.jsonl` or `structure.json` and pass them with `--after <blockId>`. Recent slices expose both `id` and `blockId`, plus `index`, in each JSONL line.
 
@@ -80,6 +80,7 @@ nong word extract paper.docx -o paper.images --json
 ```
 
 VML formula/picture content from legacy documents should appear in `word check`, `word images`, `content.jsonl`, and `assets/manifest.json` as image evidence. Do not treat a blank line in `content.md` as proof that the source had no content.
+Do not look for `content.md`; current slices use `content.nongmark` plus `preview/content.txt`.
 
 ## Feature Deposition
 
