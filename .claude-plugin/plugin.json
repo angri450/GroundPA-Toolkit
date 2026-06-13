@@ -1,6 +1,6 @@
 {
   "name": "nong-toolkit",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Nong.Toolkit.Net 2.4.0. Claude Code multi-skill plugin for Nong 4.0.0+ pure .NET document work, literature retrieval, agricultural paper inspection, Office formats, OCR/image QA, slices, skill lifecycle, progress reports, and Bioicons.",
   "author": {
     "name": "angri450"

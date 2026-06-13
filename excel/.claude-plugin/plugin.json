@@ -11,6 +11,6 @@
   ],
   "description": "Excel operations through nong CLI — sheets, read, to-groups, create, dissect, style, formula, pivot",
   "license": "Apache-2.0",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "name": "excel"
 }

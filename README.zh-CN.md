@@ -50,7 +50,7 @@ dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huawe
 nong commands --json
 ```
 
-Nong.Toolkit.Net 2.4.0 面向 Nong 4.0.0+。
+Nong.Toolkit.Net 2.5.0 面向 Nong 4.1.0+。
 
 ## Skills
 
@@ -85,6 +85,14 @@ nong word dissect paper.docx --output paper.slice --json
 nong word fonts paper.docx --json
 nong word styles paper.docx --json
 nong word validate paper.docx --json
+# 文档紧缩管线
+nong word estimate paper.docx --json           # 页面空白分析
+nong word crop paper.docx -o cropped.docx      # 图片去白边
+nong word fit-images paper.docx -o fit.docx    # 图片并排
+nong word compact-tables paper.docx -o out.docx # 表格紧缩
+nong word page-setup paper.docx --size A4 --margin-top 25 -o out.docx
+nong word indent paper.docx --role body --first-line 7.4 -o out.docx
+nong word paragraph-control paper.docx --role heading --keep-next true -o out.docx
 ```
 
 PDF：

@@ -50,7 +50,7 @@ Check the command surface before using the skills:
 nong commands --json
 ```
 
-Nong.Toolkit.Net 2.4.0 targets Nong 4.0.0+.
+Nong.Toolkit.Net 2.5.0 targets Nong 4.1.0+.
 
 ## Skills
 
@@ -85,6 +85,14 @@ nong word dissect paper.docx --output paper.slice --json
 nong word fonts paper.docx --json
 nong word styles paper.docx --json
 nong word validate paper.docx --json
+# Compaction pipeline
+nong word estimate paper.docx --json           # page break analysis
+nong word crop paper.docx -o cropped.docx      # auto-crop image borders
+nong word fit-images paper.docx -o fit.docx    # side-by-side image pairs
+nong word compact-tables paper.docx -o out.docx # table width + row height
+nong word page-setup paper.docx --size A4 --margin-top 25 -o out.docx
+nong word indent paper.docx --role body --first-line 7.4 -o out.docx
+nong word paragraph-control paper.docx --role heading --keep-next true -o out.docx
 ```
 
 PDF:
