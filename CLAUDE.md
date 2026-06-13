@@ -4,9 +4,12 @@ Nong.Toolkit.Net is the Claude Code skill layer for Nong.Cli.Net. It teaches age
 
 ## Current Contract
 
-- Toolkit version: `2.4.0-dev`.
-- Required CLI: Nong.Cli.Net `4.0.0+`.
+- Toolkit version: `4.1.0`.
+- Required CLI: Nong.Cli.Net `4.1.0+`.
 - Plugin id: `nong-toolkit`.
+- Modular architecture: `nong` (12MB router) + 6 auto-install external tools (chart/diagram/pdf/pptx/ocr/imaging).
+  - External tools install on first use: `nong chart bar ...` auto-installs `Angri450.Nong.Tool.Chart`.
+  - Package IDs use `Angri450.Nong.Tool.*` prefix. Core library IDs (`Angri450.Nong.Chart` etc.) reserved for library packaging.
 - Do not use retired GroundPA or GroundPA-Toolkit names for active docs, manifests, skills, scripts, or install commands.
 - This repository contains skills and documentation only. Deterministic execution belongs in Nong.Cli.Net.
 
@@ -123,16 +126,16 @@ Validate changed skills directly:
 
 ## Nong CLI reference
 
-Global `nong` tool: 109 commands across 14 modules. All support `--json`. Command surface: `nong commands --json`.
+Global `nong` tool: 125 commands across 16 modules. All support `--json`. Command surface: `nong commands --json`. NanoBot bridge: `nong commands --format openai-tools`.
 
 | Module | Key commands |
 |--------|-------------|
-| word (40) | check, create, read, dissect, diagnose, clean-styles, format-gongwen, format-audit, table-reflow, add *, merge, protect, compare |
+| word (39) | check, create, read, dissect, diagnose, clean-styles, format-gongwen, format-audit, table-reflow, add *, merge, protect, compare, crop, fit-images, compact-tables, regroup-images, estimate, page-setup, indent, paragraph-control, image-wrap, cell-format, run-format, images (->nong-imaging for analyze/crop) |
 | inspect (12) | diagnose, classify, structure, refs, evidence, data-req, gap, semantics, write-paper, write-official, official-check |
 | chart (11) | analyze, anova, duncan, bar, line, scatter, pie, boxplot, histogram, heatmap, radar |
 | excel (8) | sheets, read, to-groups, create, dissect, style, formula, pivot |
-| pdf (7) | check, dissect, render, images, merge, split, ocr |
-| ocr (7) | local, cloud, check-env, analyze-image, models, install-model, to-word |
+| pdf (8) | check, dissect, render, images, merge, split, ocr, compress |
+| ocr (11) | local, cloud, check-env, analyze-image, models, install-model, to-word, batch, video, screen, camera |
 | lit (5) | parse, validate, plan, search, export |
 | pptx (4) | read, slides, dissect, create |
 | diagram (3) | flowchart, network, tree |
@@ -141,6 +144,7 @@ Global `nong` tool: 109 commands across 14 modules. All support `--json`. Comman
 | slice (4) | inspect, blocks, block, assets |
 | skill (4) | validate, scan, inventory, package |
 | progress (1) | report |
+| commands (1) | list commands (--json / --format openai-tools) |
 
 ## Skill authoring rules
 

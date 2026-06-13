@@ -11,6 +11,6 @@
   ],
   "description": "Skill lifecycle governance — merge, split, deprecate",
   "license": "Apache-2.0",
-  "version": "2.5.0",
+  "version": "4.1.0",
   "name": "skill-pruner"
 }

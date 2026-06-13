@@ -9,7 +9,9 @@ Use `nong ocr` as the only entrypoint for OCR and image-structure analysis. Do n
 
 ## Nong CLI Preflight
 
-Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.0.0+` and the `ocr` command group.
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.1.0+` and the `ocr` command group.
+
+**Modular (4.1.0+):** `nong ocr` routes to the standalone `Angri450.Nong.Tool.Ocr` dotnet tool. First use auto-installs. Command surface unchanged.
 
 ## Prerequisites
 

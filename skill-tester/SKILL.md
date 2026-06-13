@@ -9,7 +9,7 @@ Test existing skills for trigger precision, description quality, and failure pat
 
 ## Nong CLI Preflight
 
-Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before running validation gates. Confirm Nong.Cli.Net `4.0.0+` and the `skill` command group.
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before running validation gates. Confirm Nong.Cli.Net `4.1.0+` and the `skill` command group.
 
 ## Route Table
 
