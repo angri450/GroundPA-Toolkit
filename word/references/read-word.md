@@ -1,6 +1,6 @@
 # Read Word
 
-Use `nong word dissect` as the main path for complex `.docx` reading. It creates a NongMark slice that separates readable content, structural hierarchy, formatting facts, and assets.
+Use `nong word check` before reading user-supplied `.doc`/`.docx`, then use `nong word dissect` as the main path for complex `.docx` reading. It creates a NongMark slice that separates readable content, structural hierarchy, formatting facts, and assets.
 
 For existing user-supplied contracts, old Word files, table-heavy forms, or `.doc` conversion handoffs, also read [existing-document-editing.md](existing-document-editing.md).
 
@@ -9,6 +9,7 @@ For formatting or layout questions, `nong word read` is not enough. Plain text c
 ## Primary Path
 
 ```powershell
+nong word check paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
 ```
 
@@ -24,7 +25,7 @@ Slice files:
 | `content.md` | Readable Markdown projection for review, summarization, and inspect workflows. |
 | `summary.json` | Compact counts, warnings, errors, generated artifacts, and recommended next steps. |
 
-When you need to insert content later, keep block IDs from `content.jsonl` or `structure.json` and pass them with `--after <blockId>`.
+When you need to insert content later, keep block IDs from `content.jsonl` or `structure.json` and pass them with `--after <blockId>`. Recent slices expose both `id` and `blockId`, plus `index`, in each JSONL line.
 
 For formatting review, inspect these files before answering:
 
@@ -77,6 +78,8 @@ Only export media when needed:
 ```powershell
 nong word extract paper.docx -o paper.images --json
 ```
+
+VML formula/picture content from legacy documents should appear in `word check`, `word images`, `content.jsonl`, and `assets/manifest.json` as image evidence. Do not treat a blank line in `content.md` as proof that the source had no content.
 
 ## Feature Deposition
 

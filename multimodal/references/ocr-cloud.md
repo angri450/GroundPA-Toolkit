@@ -9,6 +9,8 @@ nong ocr to-word scan.png -o out.docx --json
 
 Both commands require `PADDLEOCR_ACCESS_TOKEN` in the environment. Do not place real access tokens in repository files, command logs, or examples.
 
+Token source: PaddleOCR/AI Studio access-token page, `https://aistudio.baidu.com/account/accessToken`. If the user has no token, say cloud OCR is blocked by credentials and use `ocr local` only after local smoke passes.
+
 ## Cloud Recognition
 
 ```powershell

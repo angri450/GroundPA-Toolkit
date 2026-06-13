@@ -7,7 +7,24 @@ description: OCR and image-structure QA via nong. Trigger on OCR, PaddleOCR, sca
 
 Use `nong ocr` as the only GroundPA entrypoint for OCR and image-structure analysis. Do not route GroundPA through Python OCR libraries or custom OCR wrappers.
 
-## Prerequisites
+## Nong CLI Preflight
+
+Claude Plugin Marketplace installs the skills, not the `nong` CLI. Verify the CLI before OCR work:
+
+```powershell
+nong commands --json
+```
+
+If `nong` is missing, install or update:
+
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Cli
+```
+
+If the .NET host says no compatible framework was found, use Nong 3.2.3+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+
+## OCR Prerequisites
 
 Run once before OCR work:
 
@@ -20,6 +37,8 @@ Cloud OCR and image-to-Word require this environment variable:
 ```powershell
 $env:PADDLEOCR_ACCESS_TOKEN = "<access-token>"
 ```
+
+Get the cloud token from the PaddleOCR/AI Studio access-token page: `https://aistudio.baidu.com/account/accessToken`. If the user has no token, use local OCR only after its smoke test passes.
 
 Do not write real credentials into repository files, logs, or examples.
 
@@ -34,6 +53,7 @@ nong ocr cloud <image-or.pdf> -o <ocr-out-dir> --json
 nong ocr to-word <image-or.pdf> -o <out.docx> --json
 nong ocr models --json
 nong ocr install-model pp-ocrv5-mobile --json
+nong ocr install-model pp-ocrv5-mobile --dry-run --json
 ```
 
 Gated local path:
@@ -49,8 +69,8 @@ nong ocr local <image.png> --json
 3. For text/document recognition through PaddleOCR cloud, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr cloud <input> -o <ocr-out-dir> --json`.
 4. For Word output from a scan or PDF, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr to-word <input> -o <out.docx> --json`.
 5. For model inventory, run `nong ocr models --json`.
-6. For model installation, run `nong ocr install-model pp-ocrv5-mobile --json` and treat E009 as an external capability limitation, not a successful install.
-7. Use `ocr local` only after `check-env` and an actual image smoke test both exit 0. It may return E005 or E009 when the local PP-OCRv5 path is missing or unsupported.
+6. For local deployment planning, run `nong ocr install-model pp-ocrv5-mobile --dry-run --json`; it should report `noPython: true` and domestic NuGet mirror options.
+7. Use `ocr local` after `check-env` reports `localDotNetPpOcrV5.status=ok` and an actual image smoke test exits 0.
 
 ## Boundaries
 
@@ -58,6 +78,6 @@ nong ocr local <image.png> --json
 
 `ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`.
 
-`ocr local` is an implemented CLI entrypoint but is a gated local path. Do not describe it as a stable OCR route unless the local environment and a real image smoke test have passed.
+`ocr local` is an implemented CLI entrypoint through Nong's pure .NET PP-OCRv5 runtime. Do not describe it as a stable OCR route unless the local environment and a real image smoke test have passed.
 
-Treat `status: "error"` as failed. Do not mask E005/E009 as success.
+Treat `status: "error"` as failed. Do not mask dependency or not-implemented errors as success.

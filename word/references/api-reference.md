@@ -7,6 +7,8 @@ For workflows that start from an existing `.doc`/`.docx` and need repair or layo
 ## Read and Inspect
 
 ```powershell
+nong word check paper.docx --json
+nong word convert legacy.doc -o legacy.docx --json
 nong word read paper.docx --json
 nong word preview paper.docx --json
 nong word dissect paper.docx --output paper.slice --json
@@ -19,7 +21,7 @@ nong word comments paper.docx --json
 nong word revisions paper.docx --json
 ```
 
-Use `word dissect --output` for complex documents. Use `read` only when plain text is enough, and `preview` or `validate` when you need OOXML diagnostics.
+Use `word check` before working on user-supplied `.doc`/`.docx`. Use `word convert` only as a `.doc -> .docx` boundary step, then return to OpenXML commands. Use `word dissect --output` for complex documents. Use `read` only when plain text is enough, and `preview` or `validate` when you need OOXML diagnostics.
 
 For layout or formatting questions, `read` is insufficient evidence. Run `word dissect --output`, inspect `format.json`, `content.jsonl`, and `structure.json`, then add `fonts`, `styles`, `preview`, or `validate` as targeted follow-ups. Do not answer "open Word manually" unless the CLI failed or the exact visual property is outside the current extraction contract.
 
@@ -105,7 +107,10 @@ Common Word-facing error codes:
 | Code | Meaning | Action |
 |------|---------|--------|
 | `E001` | `file_not_found` | Fix the path and rerun. |
+| `E002` | `unsupported_format` | Run `word check`; convert `.doc` to `.docx` first. |
 | `E003` | `missing_argument` | Add the required argument or option. |
+| `E005` | `dependency_missing` | Install the CLI/runtime or a boundary converter such as LibreOffice/Word. |
 | `E006` | `validation_failed` | Repair the spec, document, or format input. |
+| `E009` | `not_implemented` | Stop and report the limitation; do not continue from a failed command. |
 
 Do not continue from stale output after any `status: "error"` response.
