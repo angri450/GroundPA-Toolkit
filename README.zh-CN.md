@@ -96,6 +96,12 @@ claude plugin marketplace add angri450/GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
 ```
 
+完事儿了记得在claudecode里面启用这个插件
+
+```bash
+/reload-plugins
+```
+
 ## 开源协议
 
 Apache-2.0

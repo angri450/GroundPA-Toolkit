@@ -17,10 +17,10 @@ Three independent capabilities, loaded on demand:
 
 ## Dependencies
 
-- .NET SDK 11.0 (`dotnet` command available)
+- .NET SDK 8.0+ (`dotnet` command available)
 - NuGet package: `Angri450.Nong.Docx` (sole dependency, transitively pulls `DocumentFormat.OpenXml`)
 
-If .NET SDK 11.0 is missing, stop immediately and tell the user to install it. Do not attempt to fix.
+If .NET SDK 8.0+ is missing, stop immediately and tell the user to install it. Do not attempt to fix.
 
 ## Dispatch Logic
 
