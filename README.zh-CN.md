@@ -113,16 +113,45 @@ nong ocr to-word scan.png -o out.docx --json
 
 ## 安装
 
-### Marketplace
+### Skills 安装（推荐，无需 Git 登录，无需 SSH Key）
+
+这是**经典的 Claude Code Skills 安装方式**：git clone 整个仓库，复制到 `~/.claude/skills/`。不走 Claude Code plugin marketplace 机制，不需要后台 clone，不会触发 Gitee 交互式登录。
+
+**GitCode（推荐，匿名 clone，国内快）**
+
+```bash
+git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+```
+
+**Gitee**
+
+```bash
+git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+```
+
+**GitHub（海外）**
+
+```bash
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+```
+
+安装后执行 `/reload-plugins` 或重启 Claude Code。
+
+### Plugin Marketplace 安装（实验性）
+
+这个方式通过 Claude Code plugin marketplace 机制安装。要求 Claude Code 在后台成功 clone 仓库，Gitee HTTPS 可能触发认证弹窗导致失败。
+
+```bash
+claude plugin marketplace add https://gitcode.com/angri450/GroundPA-Toolkit.git
+claude plugin install groundpa-toolkit@angri450
+/reload-plugins
+```
+
+GitHub 备用：
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
-```
-
-然后在 Claude Code 里：
-
-```text
 /reload-plugins
 ```
 
@@ -136,6 +165,22 @@ dotnet tool install --global Angri450.Nong.Cli
 
 ```powershell
 dotnet tool update --global Angri450.Nong.Cli
+```
+
+## 更新
+
+Skills 安装方式：重新 clone 覆盖即可。
+
+```bash
+git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa
+```
+
+Plugin Marketplace 方式：
+
+```bash
+claude plugin marketplace update angri450
+claude plugin update groundpa-toolkit@angri450
+/reload-plugins
 ```
 
 ## 工作区
