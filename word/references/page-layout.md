@@ -14,6 +14,9 @@ Reference for `nong word` compaction pipeline and OOXML pagination controls. Loa
 | `word page-setup` | Page size, orientation, margins, columns, different first page | no |
 | `word indent` | First-line, hanging, left, right indentation by role | no |
 | `word paragraph-control` | keepNext, keepLines, pageBreakBefore, widowControl by role | no |
+| `word image-wrap` | Convert inline images to floating anchor with wrap modes | no |
+| `word cell-format` | Table cell borders, shading, alignment, padding | no |
+| `word run-format` | Character-level: underline, strikethrough, color, highlight, spacing | no |
 
 ## Typical Pipeline
 
@@ -91,3 +94,44 @@ nong word page-setup <file.docx> --orient landscape -o <out.docx>
 # Two-column layout
 nong word page-setup <file.docx> --columns 2 --column-gap 5 -o <out.docx>
 ```
+
+## Image Wrap
+
+`word image-wrap` converts inline images to floating anchors with configurable text wrap modes:
+
+```
+nong word image-wrap <file.docx> --mode square --align-h center -o <out.docx>
+```
+
+Wrap modes: `square` (四周型), `topAndBottom` (上下型), `tight` (紧密型), `through` (穿越型), `behind` (衬于文字下方), `inFront` (浮于文字上方), `inline` (恢复嵌入型). Options: `--offset` (mm from text, default 3), `--align-h` (left/center/right), `--align-v` (top/center/bottom).
+
+## Cell Formatting
+
+`word cell-format` controls table cell borders, shading, alignment, and padding:
+
+```
+# Dark header row with white text
+nong word cell-format <file.docx> --table 0 --row 0 --shading 1A3A3A -o <out.docx>
+
+# Green top+bottom borders on all cells
+nong word cell-format <file.docx> --border-top 0.75 --border-bottom 0.75 --border-color 2A7A65 -o <out.docx>
+```
+
+Targets: `--table` (0-based index), `--row`, `--col` (all null=all targets). Options: `--shading` (hex or "none"), border width per edge (`--border-top/bottom/left/right mm`), `--border-color`, `--valign` (top/center/bottom), `--pad-top/left/bottom/right` (mm).
+
+## Run Formatting
+
+`word run-format` applies character-level formatting by regex pattern or paragraph role:
+
+```
+# Highlight policy keywords
+nong word run-format <file.docx> --highlight yellow --pattern "艾草|政策|投资" -o <out.docx>
+
+# Underline all references
+nong word run-format <file.docx> --underline single --pattern "\[\\d+\]" -o <out.docx>
+
+# Strikethrough body text
+nong word run-format <file.docx> --strikethrough true --role body -o <out.docx>
+```
+
+Options: `--underline` (single/double/none), `--strikethrough`, `--color` (hex), `--highlight` (yellow/cyan/none), `--spacing` (mm), `--superscript`, `--subscript`, `--pattern` (regex), `--role` (heading/body/all).
