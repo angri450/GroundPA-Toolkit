@@ -3,8 +3,8 @@
   "groups": [
     {
       "title": "Nong CLI Document Tools",
-      "description": "Implemented nong commands for Word, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, and Bioicons",
-      "skills": ["word", "inspect", "excel", "chart", "diagram", "pptx", "multimodal", "genre", "icons"]
+      "description": "Implemented nong commands for Word, PDF, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, and Bioicons",
+      "skills": ["word", "pdf", "inspect", "excel", "chart", "diagram", "pptx", "multimodal", "genre", "icons"]
     },
     {
       "title": "Shell Scripting",

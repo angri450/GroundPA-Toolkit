@@ -66,19 +66,21 @@ nong ocr local <image.png> --json
 
 1. For environment status, run `nong ocr check-env --json`.
 2. For chart or diagram visual QA, run `nong ocr analyze-image <image.png> -o <analysis-dir> --json`.
-3. For text/document recognition through PaddleOCR cloud, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr cloud <input> -o <ocr-out-dir> --json`.
+3. For PDF, multi-page scans, table/layout reconstruction, page-aligned OCR, or Word/NongMark annotation alignment, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr cloud <input> -o <ocr-out-dir> --json`.
 4. For Word output from a scan or PDF, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr to-word <input> -o <out.docx> --json`.
 5. For model inventory, run `nong ocr models --json`.
 6. For local deployment, run `nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json`; it should report `noPython: true`, `upstreamFallbackDefault: "disabled"`, and an `Angri450.Nong.OcrRuntime.*` package for the current platform.
-7. Use `ocr local` after `check-env` reports `localDotNetPpOcrV5.status=ok` and an actual image smoke test exits 0.
+7. Use `ocr local` only for single-image text recognition after `check-env` reports `localDotNetPpOcrV5.status=ok` and an actual image smoke test exits 0.
 
 ## Boundaries
 
 `ocr analyze-image` performs structural image QA and does not recognize text. It checks layout-oriented signals such as whitespace, content bounds, and visible content regions.
 
-`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`.
+`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`. Use cloud OCR when the user needs page-level structure, table/layout labels, image/PDF input, Word output, or output aligned with Word's `nongmark/v1` slice fields such as `content.jsonl`, `blockId`, and page/block evidence.
 
-`ocr local` is an implemented CLI entrypoint through Nong's pure .NET PP-OCRv5 runtime. Do not describe it as a stable OCR route unless the local environment and a real image smoke test have passed.
+`ocr local` is an implemented CLI entrypoint through Nong's pure .NET PP-OCRv5 runtime. It is text-only and single-image only. It does not support PDF, cross-page image stitching, layout analysis, table structure, Word formatting, or pandoc/NongMark annotation alignment. Do not describe it as a stable OCR route unless the local environment and a real image smoke test have passed.
+
+If `ocr local --json` reports `local_ocr_invalid_confidence`, `local_ocr_invalid_geometry`, or `local_ocr_numeric_fallback`, keep the recognized text if useful but report that local OCR confidence/geometry evidence is degraded. Do not turn those warnings into layout or formatting claims.
 
 Treat `status: "error"` as failed. Do not mask dependency or not-implemented errors as success.
 

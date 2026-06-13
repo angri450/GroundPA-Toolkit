@@ -43,6 +43,33 @@ nong ocr local scan.png --json
 
 If it returns E005, report the missing .NET native runtime dependency and run the Huawei-source `install-model` command above. If the first-party bundle is unavailable, report a NuGet publish/mirror-sync issue instead of silently falling back. Use `--allow-upstream-fallback` only when the user explicitly accepts downloading upstream Sdcb/OpenCvSharp native packages. If the command is unavailable or returns E009, update/reinstall `Angri450.Nong.Cli` from the Huawei NuGet source before retrying.
 
+## Capability Boundary
+
+`ocr local` is for single-image text recognition. It is not a document-layout engine.
+
+It does not support:
+
+- PDF input.
+- Cross-page image stitching.
+- Page-aligned document parsing.
+- Table structure reconstruction.
+- Word formatting recovery.
+- pandoc/NongMark annotation alignment.
+
+For those tasks, use `ocr cloud` or `ocr to-word` with `PADDLEOCR_ACCESS_TOKEN`, then combine the cloud page/block output with `word dissect --output` and NongMark evidence.
+
+## Numeric Warnings
+
+Recent Nong builds sanitize invalid local inference numbers before JSON serialization. If Paddle/OpenCV returns NaN or Infinity confidence/geometry:
+
+- JSON stays valid.
+- `confidence` becomes `null`.
+- `confidenceValid` or `geometryValid` becomes `false`.
+- `issues` may include `local_ocr_numeric_fallback`, `local_ocr_invalid_confidence`, or `local_ocr_invalid_geometry`.
+- Text mode shows invalid confidence as `n/a`.
+
+Use the recognized text if it is visibly useful, but do not claim reliable confidence, position, layout, or formatting from degraded local OCR output.
+
 ## GroundPA Boundary
 
 - Do not install or invoke OCR through Python from GroundPA.

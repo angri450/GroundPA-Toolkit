@@ -116,7 +116,7 @@ nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime. Install the current-platform first-party `Angri450.Nong.OcrRuntime.*` bundle with the Huawei NuGet source, then treat local OCR as stable only after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass.
+`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime. Install the current-platform first-party `Angri450.Nong.OcrRuntime.*` bundle with the Huawei NuGet source, then treat local OCR as stable only after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass. Local OCR is single-image text OCR only; use cloud OCR/to-word for PDF, page alignment, tables, Word output, cross-page image stitching, and `nongmark/v1`/Word slice alignment.
 
 ## Install
 
