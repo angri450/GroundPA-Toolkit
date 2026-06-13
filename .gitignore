@@ -1,19 +1,31 @@
-# Local archive and development-only material.
-# Keep the real archive outside this repo as ../Nong.Toolkit_archive/.
-# These patterns protect against accidentally placing archive material back under the repo root.
-_archive/
-Nong.Toolkit_archive/
-_v1_backup/
-claude.md
+# Project management files — local only, do not upload to GitHub/Gitee/GitCode
+CLAUDE.md
 Claude.md
+claude.md
 CLAUDE.local.md
 claude.local.md
+AGENTS.md
+PROJECT_STATE.md
+施工窗口.md
+计划窗口.md
+
+# Development logs — local only
+log/
+
+# Development notes — local only
 DEVELOP.md
 install.ps1
+
+# Claude Code local config
 .claude/
 .codex/
 
-# Build, package, and test outputs.
+# Archive and backup material
+_archive/
+Nong.Toolkit_archive/
+_v1_backup/
+
+# Build, package, and test outputs
 bin/
 obj/
 build/
@@ -21,12 +33,6 @@ dist/
 TestResults/
 coverage/
 .coverage
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-__pycache__/
-*.pyc
-*.pyo
 *.skill
 *.zip
 *.nupkg
@@ -36,12 +42,20 @@ __pycache__/
 .skill/
 .security-scan-passed
 
-# Local dependency caches and environments.
+# Python and test caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.pyo
+
+# Local dependency caches and environments
 .venv/
 venv/
 node_modules/
 
-# IDE, editor, and OS noise.
+# IDE, editor, and OS noise
 .vs/
 .vscode/
 .idea/
@@ -49,7 +63,3 @@ node_modules/
 *.suo
 .DS_Store
 Thumbs.db
-
-# Keep development process records committed.
-!log/
-!log/**
