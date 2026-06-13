@@ -1,5 +1,7 @@
-# MultiModal Skill Disabled in 2.0.0
+# Multimodal Skill
 
-`multimodal` is not exposed as a GroundPA skill in 2.0.0 because the current `nong` CLI only marks OCR commands as stubs.
+`multimodal` is exposed as a GroundPA skill for Nong OCR and image-structure QA commands.
 
-Cloud OCR should return as a .NET/nong command when it is implemented and verified. Do not route users to Python PaddleOCR or ad hoc cloud OCR wrappers from this skill layer.
+Use `nong ocr analyze-image` for structure/blank/whitespace/content-region QA. Use `nong ocr cloud` and `nong ocr to-word` only when `PADDLEOCR_ACCESS_TOKEN` is available. Treat `ocr local` as a gated local path that may return E005/E009 unless the environment and a real image smoke test pass.
+
+Do not route GroundPA through Python OCR libraries or custom OCR wrappers.

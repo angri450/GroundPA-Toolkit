@@ -16,9 +16,9 @@ Default scan (non-verbose) detects ALL pattern types. There is no verbose gate.
 |----------|------|----------|---------|
 | Email addresses | `EMAIL_EXPOSED` | High | real email addresses in source files |
 | Private keys | `PRIVATE_KEY` | Critical | private key block markers |
-| GitHub tokens | `GITHUB_TOKEN` | Critical | ghp_... patterns |
-| API keys | `API_KEY` | Critical | api_key = 'sk-...' |
-| JWT tokens | `JWT_TOKEN` | High | eyJ... tokens |
+| GitHub tokens | `GITHUB_TOKEN` | Critical | provider token patterns |
+| API keys | `API_KEY` | Critical | API key assignment patterns |
+| JWT tokens | `JWT_TOKEN` | High | JWT-shaped token strings |
 | Absolute user paths | `ABSOLUTE_USER_PATH` | High | hardcoded user profile paths |
 | Home paths | `HOME_PATH_REFERENCE` | Medium | shell home-directory shortcuts |
 | Unsafe shell commands | `DANGEROUS_RM` | Critical | rm -rf without safeguards |
