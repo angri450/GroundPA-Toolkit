@@ -1,10 +1,10 @@
 {
-  "version": "1.2.0",
+  "version": "2.0.0",
   "groups": [
     {
-      "title": "Office & Document Generation",
-      "description": "Word, Excel, PowerPoint, chart, diagram, and OCR via OpenXML NuGet — read, write, format with full intelligence",
-      "skills": ["word", "excel", "pptx", "chart", "diagram", "multimodal", "genre"]
+      "title": "Nong CLI Document Tools",
+      "description": "Implemented nong commands for Word, paper inspection, Excel, statistics, diagrams, templates, and Bioicons",
+      "skills": ["word", "inspect", "excel", "chart", "diagram", "genre", "icons"]
     },
     {
       "title": "Shell Scripting",

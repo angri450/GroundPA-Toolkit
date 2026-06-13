@@ -1,111 +1,135 @@
 # GroundPA Toolkit — 土地公的工具箱
 
-OpenXML 底层直控、.NET 原生执行的 Claude Code 技能插件集。15 个技能覆盖 Office 文档生成、Shell 脚本、.NET 开发、GitHub 操作和技能生命周期管理——全部通过确定性 NuGet 包和 CLI 工具执行。
+GroundPA Toolkit 2.0.0 是面向农学生论文和文档工作流的 Claude Code skill 集。核心变化是：skill 层不再让模型临时写 .NET 小项目，而是统一调用 `nong` CLI。
 
-## 设计哲学
+模型负责判断任务、准备 JSON/spec、解释诊断结果。确定性工作交给 .NET CLI。
 
-模型容量留给语义工作——挖掘、综述、写作。确定性工作（校验、扫描、打包、生成、渲染）以 NuGet 包发布。Skill 文件夹分发时只读，所有运行时数据统一放在工作区目录下。
+## 基础工具
 
-## 技能目录
-
-### Office 与文档生成
-
-| 技能 | 做什么 | NuGet 包 |
-|------|--------|----------|
-| **word** | 学术论文、毕业论文、课题报告：三线表、公式编号、目录、模板引擎 | `Angri450.Nong.Docx` |
-| **pptx** | 答辩 PPT、研究汇报、讲座 slides：10 套主题、流式 SlideBuilder | `Angri450.Nong.Pptx` |
-| **excel** | 表格、财务模型、仪表盘：公式、数据验证、条件格式 | `Angri450.Nong.Excel` |
-| **chart** | ANOVA、Duncan MRT、带显著性标注的论文级柱形图 | `Angri450.Nong.Chart` |
-| **diagram** | 流程图(Sugiyama)、网络图(力导向)、系统发育树(Newick)、生物图标库 | `Angri450.Nong.Diagram` |
-| **multimodal** | OCR(PaddleOCR-VL 云端 + 本地 CPU)、文档转 Markdown、文档转 Word | `Angri450.Nong.MultiModal` |
-
-### Shell 脚本
-
-| 技能 | 做什么 |
-|------|--------|
-| **bash** | 引用、数组、`set -e`、trap、Git 安全协议、沙箱安全模式 |
-| **powershell** | PS 7+：Cmdlet、模块、Pester、PSScriptAnalyzer、凭据安全 |
-
-### 开发者工具
-
-| 技能 | 做什么 |
-|------|--------|
-| **dotnet** | C#、MSBuild、ASP.NET Core、EF Core、MAUI、性能诊断 |
-| **github** | git + gh CLI：提交、PR、Issue、Release |
-| **ghproxy** | GitHub 链接加速代理，受限网络环境可用 |
-| **nuget** | 包管理：安装、更新、打包、发布 |
-| **ilspycmd** | .NET 程序集反编译为 C# 源码：查看 DLL 内部实现、提取 API 接口 |
-
-### 通信与元技能
-
-| 技能 | 做什么 | NuGet 包 |
-|------|--------|----------|
-| **email** | ClawEmail 收发：收件箱、转发、搜索、附件 | — |
-| **skill-manager** | 校验、扫描、打包、评测、脚手架——技能全生命周期 CLI | `Angri450.Nong.Skill.Manager` |
-
-## 工作区
-
-所有运行时数据统一放在一棵目录树下：
-
-```
-~/Documents/GroundPA Toolkit Workplace/
-├── word/DocxWriter/          # Word 工程
-├── pptx/PptxWriter/          # PPT 工程
-├── excel/ExcelWriter/        # Excel 工程
-├── chart/ChartWriter/        # Chart 工程
-├── diagram/DiagramWriter/    # Diagram 工程
-├── multimodal/OcrTask/       # OCR 工程
-├── skill-manager/            # 评测、会话记录、编译产物
-└── output/                   # 生成文件
-    └── <时间>+<项目>+<序号>/
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
+nong commands --json
 ```
 
-每次会话只修改对应工作区的 `Program.cs`。输出自动落入带时间戳的子目录。
+skill 生命周期工具：
+
+```powershell
+dotnet tool install --global Angri450.Nong.Skill.Manager
+```
+
+## 2.0.0 暴露的 Nong Skills
+
+只暴露当前 `nong` CLI 已实现的命令。
+
+| Skill | 已实现命令 |
+|-------|------------|
+| `word` | `word read`, `word preview`, `word fill`, `word rebuild` |
+| `inspect` | `inspect diagnose`, `inspect refs`, `inspect write-paper` |
+| `excel` | `excel sheets`, `excel read`, `excel to-groups` |
+| `chart` | `chart analyze`, `chart anova`, `chart duncan`, `chart bar` |
+| `diagram` | `diagram flowchart`, `diagram network` |
+| `genre` | `genre list`, `genre show` |
+| `icons` | `icons list`, `icons search` |
+
+PPTX 和 OCR 在 2.0.0 不作为 skill 暴露，因为当前 `nong` CLI 里它们还是 stub。
+
+## 其他 Skills
+
+| Skill | 用途 |
+|-------|------|
+| `bash` | Bash 引用、数组、错误处理、沙箱安全模式 |
+| `powershell` | PowerShell cmdlet、模块、错误处理、凭据安全 |
+| `dotnet` | C#、MSBuild、ASP.NET Core、EF Core、MAUI、诊断、NuGet |
+| `github` | `git` 和 `gh` CLI 工作流 |
+| `gitee` | Gitee 与 Gitee MCP 工作流 |
+| `ghproxy` | GitHub 链接加速 |
+| `nuget` | 包安装、打包、发布 |
+| `ilspycmd` | .NET 程序集反编译 |
+| `email` | ClawEmail mail-cli 工作流 |
+| `skill-manager` | skill 校验、扫描、打包、评测、脚手架 |
+
+## 常用流程
+
+### Word
+
+```powershell
+nong word read paper.docx --json
+nong word preview paper.docx --json
+nong word fill template.docx data.json -o out.docx --json
+nong word rebuild dirty.docx -o clean.docx --json
+```
+
+### 论文诊断
+
+```powershell
+nong inspect diagnose paper.txt --json
+nong inspect refs paper.txt --json
+nong inspect write-paper spec.json -o paper.docx --json
+```
+
+### Excel 到统计图
+
+```powershell
+nong excel to-groups data.xlsx --group Treatment --value Yield --raw > groups.json
+nong chart analyze groups.json --json
+nong chart bar groups.json -o fig.png --json
+```
+
+### 图示
+
+```powershell
+nong diagram flowchart flow.json -o flow.png --json
+nong diagram network network.json -o network.png --json
+```
 
 ## 安装
 
-### 一键安装（国内推荐，Gitee 更快）
-
-```bash
-git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
-  cp -r /tmp/groundpa/. ~/.claude/skills/ && \
-  rm -rf /tmp/groundpa && \
-  dotnet tool install --global Angri450.Nong.Skill.Manager
-```
-
-### 一键安装（海外，GitHub）
-
-```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && \
-  cp -r /tmp/groundpa/. ~/.claude/skills/ && \
-  rm -rf /tmp/groundpa && \
-  dotnet tool install --global Angri450.Nong.Skill.Manager
-```
-
-### Marketplace（推荐，Gitee 源）
-
-```bash
-claude plugin marketplace add https://gitee.com/angri450/GroundPA-Toolkit.git
-claude plugin install groundpa-toolkit@angri450
-```
-
-如果上述命令报 "no such marketplace" 错误，可以尝试 GitHub 源：
+### Marketplace
 
 ```bash
 claude plugin marketplace add angri450/GroundPA-Toolkit
 claude plugin install groundpa-toolkit@angri450
 ```
-完事儿了记得在claudecode里面启用这个插件
 
-```bash
+然后在 Claude Code 里：
+
+```text
 /reload-plugins
 ```
 
-完事儿了记得在claudecode里面启用这个插件
+### 必装 .NET 工具
 
-```bash
-/reload-plugins
+```powershell
+dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Skill.Manager
 ```
+
+如果已经安装：
+
+```powershell
+dotnet tool update --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Skill.Manager
+```
+
+## 工作区
+
+运行时输出建议统一放在：
+
+```text
+$HOME/Documents/GroundPA Toolkit Workplace/output/
+```
+
+agent 调用 `nong` 时优先使用绝对路径。生成文件以后读取 JSON 里的 `artifacts` 字段。
+
+## 契约
+
+所有 Nong-facing skills 都遵守同一规则：
+
+1. 先用 `nong commands --json` 看可用命令。
+2. 只调用 `implemented` 命令。
+3. 面向模型判断时优先加 `--json`。
+4. `status: "error"` 一律视为失败。
+5. 下一步行动前读取 `errors[0].code`、`errors[0].message` 和 `artifacts`。
 
 ## 开源协议
 

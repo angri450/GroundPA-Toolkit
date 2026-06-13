@@ -1,7 +1,7 @@
 {
   "name": "groundpa-toolkit",
-  "version": "1.2.0",
-  "description": "GroundPA Toolkit. 17 skills: Office suite (Word/Excel/PPT/Chart/Diagram/MultiModal/Genre), shell scripting (Bash/PowerShell), developer tools (.NET/GitHub/Gitee/NuGet/ILSpy/ghproxy), email, and skill-manager.",
+  "version": "2.0.0",
+  "description": "GroundPA Toolkit 2.0.0. Nong CLI-first skills for Word, paper inspection, Excel, statistics, diagrams, templates, Bioicons, shell, .NET, GitHub/Gitee, NuGet, ILSpy, email, and skill-manager.",
   "author": {
     "name": "angri450"
   },
@@ -10,27 +10,27 @@
   "license": "Apache-2.0",
   "category": "developer-tools",
   "keywords": [
-    "office", "word", "excel", "powerpoint", "chart", "diagram", "ocr",
-    "bash", "powershell", "dotnet", "github", "gitee", "email",
-    "nuget", "ilspycmd", "skill-manager", "document-generation"
+    "nong", "cli", "office", "word", "excel", "chart", "diagram", "paper",
+    "inspect", "bioicons", "bash", "powershell", "dotnet", "github",
+    "gitee", "email", "nuget", "ilspycmd", "skill-manager"
   ],
   "skills": [
+    "./word",
+    "./inspect",
+    "./excel",
+    "./chart",
+    "./diagram",
+    "./genre",
+    "./icons",
     "./bash",
     "./powershell",
     "./dotnet",
     "./github",
     "./gitee",
     "./ghproxy",
-    "./email",
-    "./word",
-    "./pptx",
-    "./excel",
-    "./chart",
-    "./diagram",
-    "./multimodal",
-    "./genre",
     "./nuget",
     "./ilspycmd",
+    "./email",
     "./skill-manager"
   ]
 }
