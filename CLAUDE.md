@@ -2,6 +2,12 @@
 
 Nong.Toolkit.Net is the Claude Code skill layer for Nong.Cli.Net. It teaches agents how to route document, literature, Office, OCR, slice, and skill lifecycle work through the deterministic `nong` CLI.
 
+## Start Here
+
+Read `PROJECT_STATE.md` before this file. It is the current truth source for active plans, current CLI expectations, release-line drift, and known risks.
+
+Do not bulk-read `log/` to decide current work. `log/` is historical archive. Only the plan linked from `PROJECT_STATE.md` is active for a builder window.
+
 ## Current Contract
 
 - Required CLI: latest `nong` CLI (auto-update with `dotnet tool update --global Angri450.Nong.Cli`).
@@ -66,11 +72,13 @@ Validated by `claude plugin validate . --strict`. Schema URI: `https://anthropic
 
 ## Required Workflow
 
-1. Inspect the relevant `SKILL.md` and linked references before editing.
-2. Keep each `SKILL.md` concise. Put shared or detailed rules in `references/`.
-3. Use `references/shared/nong-cli-preflight.md` for the common CLI prerequisite instead of duplicating install blocks.
-4. Keep generated outputs, package zips, experiments, and cache material outside the repository in `../Nong.Toolkit_archive/`.
-5. Record development work under `log/plans/`, `log/changelog/`, `log/debug/`, or `log/guidance/` and update the matching `index.md`.
+1. Read `PROJECT_STATE.md` first.
+2. Inspect the relevant `SKILL.md` and linked references before editing.
+3. Keep each `SKILL.md` concise. Put shared or detailed rules in `references/`.
+4. Use `references/shared/nong-cli-preflight.md` for the common CLI prerequisite instead of duplicating install blocks.
+5. Keep generated outputs, package zips, experiments, and cache material outside the repository in `../Nong.Toolkit_archive/`.
+6. Record development work under `log/plans/`, `log/changelog/`, `log/debug/`, or `log/guidance/` and update the matching `index.md`.
+7. If a plan is meant for another construction window, update `PROJECT_STATE.md` so it links to that plan.
 
 ## Credentials
 
@@ -104,23 +112,30 @@ skill-pruner    Pruner    — prune: merge, split, deprecate
 
 ## Validation
 
-Use the local 4.0.0 CLI when the global `nong` tool is stale:
+Use the installed current CLI. If the global `nong` tool is stale, use a current local build from sibling repo `..\Nong.Cli.Net`:
 
 ```powershell
-..\Nong.Cli.Net\Cli\bin\Release\net8.0\nong.exe skill inventory . --json
-..\Nong.Cli.Net\Cli\bin\Release\net8.0\nong.exe skill scan . --json
-..\Nong.Cli.Net\Cli\bin\Release\net8.0\nong.exe skill package . --json
+nong skill inventory . --json
+nong skill scan . --json
+nong skill package . --json
 ```
 
 Validate changed skills directly:
 
 ```powershell
-..\Nong.Cli.Net\Cli\bin\Release\net8.0\nong.exe skill validate .\word --json
+nong skill validate .\word --json
 ```
 
 ## Nong CLI reference
 
-Global `nong` tool: 125 commands across 16 modules. All support `--json`. Command surface: `nong commands --json`. NanoBot bridge: `nong commands --format openai-tools`.
+Do not treat this table as the current contract by itself. The current contract is the live command surface:
+
+```powershell
+nong commands --json
+nong commands --format openai-tools
+```
+
+Latest known sibling CLI state on 2026-06-13: 126 commands across 16 modules. All support `--json`. NanoBot bridge: 126 OpenAI tool schemas.
 
 | Module | Key commands |
 |--------|-------------|
