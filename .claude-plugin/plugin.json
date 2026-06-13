@@ -1,7 +1,7 @@
 {
   "name": "groundpa-toolkit",
-  "version": "2.1.0",
-  "description": "GroundPA Toolkit 2.1.0. Nong CLI-first skills for Word, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee, NuGet, ILSpy, email, and skill-manager.",
+  "version": "2.2.0",
+  "description": "GroundPA Toolkit 2.2.0. Nong CLI-first skills for Word, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee/GitCode, NuGet, ILSpy, email, and skill-manager.",
   "author": {
     "name": "angri450"
   },
@@ -12,7 +12,7 @@
   "keywords": [
     "nong", "cli", "office", "word", "excel", "chart", "diagram", "pptx",
     "ocr", "image-qa", "paper", "inspect", "bioicons", "bash", "powershell", "dotnet", "github",
-    "gitee", "email", "nuget", "ilspycmd", "skill-manager"
+    "gitee", "gitcode", "email", "nuget", "ilspycmd", "skill-manager"
   ],
   "skills": [
     "./word",
@@ -29,6 +29,7 @@
     "./dotnet",
     "./github",
     "./gitee",
+    "./gitcode",
     "./ghproxy",
     "./nuget",
     "./ilspycmd",
