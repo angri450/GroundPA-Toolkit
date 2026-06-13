@@ -1,17 +1,17 @@
 {
-  "name": "groundpa-toolkit",
-  "version": "2.3.1",
-  "description": "GroundPA Toolkit 2.3.1. Claude Code multi-skill plugin for Nong 3.2.5+ pure .NET document work, literature retrieval, agricultural paper inspection, Office formats, OCR/image QA, and Bioicons.",
+  "name": "nong-toolkit",
+  "version": "2.4.0",
+  "description": "Nong.Toolkit.Net 2.4.0. Claude Code multi-skill plugin for Nong 4.0.0+ pure .NET document work, literature retrieval, agricultural paper inspection, Office formats, OCR/image QA, slices, skill lifecycle, progress reports, and Bioicons.",
   "author": {
     "name": "angri450"
   },
-  "homepage": "https://github.com/angri450/GroundPA-Toolkit",
-  "repository": "https://gitee.com/angri450/GroundPA-Toolkit.git",
+  "homepage": "https://github.com/angri450/Nong.Toolkit.Net",
+  "repository": "https://gitee.com/angri450/Nong.Toolkit.Net.git",
   "license": "Apache-2.0",
   "keywords": [
     "nong", "cli", "office", "word", "pdf", "literature", "openalex", "crossref",
     "unpaywall", "excel", "chart", "diagram", "pptx", "ocr", "image-qa", "paper",
-    "inspect", "agriculture", "bioicons", "dotnet", "claude-code-plugin"
+    "inspect", "slice", "skill", "progress-report", "agriculture", "bioicons", "dotnet", "claude-code-plugin"
   ],
   "skills": [
     "./word",
@@ -22,8 +22,12 @@
     "./chart",
     "./diagram",
     "./pptx",
-    "./multimodal",
+    "./ocr",
     "./genre",
-    "./icons"
+    "./icons",
+    "./slice",
+    "./skill",
+    "./skill-manager",
+    "./progress-report"
   ]
 }

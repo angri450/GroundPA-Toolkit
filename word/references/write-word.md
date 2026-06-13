@@ -1,6 +1,6 @@
 # Write Word
 
-Use Nong CLI commands for Word generation and edits. GroundPA should prepare NongMark or small JSON specs and route the work to `nong`; it should not recreate the DOCX writer pipeline in local code.
+Use Nong CLI commands for Word generation and edits. Nong.Toolkit.Net should prepare NongMark or small JSON specs and route the work to `nong`; it should not recreate the DOCX writer pipeline in local code.
 
 For edits to existing user documents, especially legacy `.doc` conversions or table-heavy contracts, read [existing-document-editing.md](existing-document-editing.md) before choosing commands.
 
@@ -125,8 +125,10 @@ nong word add comment paper.docx --text "Review note" -o out.docx --json
 For a draft DOCX that needs paper-style formatting, use the deterministic formatter before considering COM:
 
 ```powershell
+nong word repair-plan --json
 nong word academic-format draft.docx -o draft.academic.docx --json
 nong word validate draft.academic.docx --json
+nong word format-audit draft.academic.docx --profile academic --min-score 80 --json
 nong word dissect draft.academic.docx --output draft.academic.slice --json
 ```
 
@@ -135,6 +137,7 @@ This applies Chinese/Latin font defaults, heading levels, three-line table borde
 Do not call the result complete from `validate` alone. Run `dissect` and inspect format evidence:
 
 ```powershell
+nong word format-audit draft.academic.docx --profile academic --min-score 80 --json
 nong word dissect draft.academic.docx --output draft.academic.slice --json
 ```
 
@@ -145,12 +148,39 @@ Minimum evidence:
 - `preview/content.txt` shows no missing sections.
 - Direct OOXML checks are acceptable when a property is not yet surfaced by the slice.
 
-## 6. Merge, Protect, Embed, and Repair
+If long or wide tables remain unreadable after formatting, reflow them explicitly:
+
+```powershell
+nong word table-reflow draft.academic.docx -o draft.tables.docx --max-rows 20 --max-cols 6 --repeat-left-cols 1 --json
+nong word validate draft.tables.docx --json
+nong word format-audit draft.tables.docx --profile academic --min-score 80 --json
+```
+
+## 6. Official-Document Drafts and Gongwen Formatting
+
+For an official-document draft from structured fields, use Inspect to generate the DOCX, then validate and slice with Word:
+
+```powershell
+nong inspect write-official official-spec.json -o official.docx --json
+nong word validate official.docx --json
+nong word dissect official.docx --output official.slice --json
+```
+
+For an existing DOCX that needs gongwen/public-document formatting, use the Word formatter:
+
+```powershell
+nong word format-gongwen draft.docx -o draft.gongwen.docx --json
+nong word validate draft.gongwen.docx --json
+nong word dissect draft.gongwen.docx --output draft.gongwen.slice --json
+```
+
+## 7. Merge, Protect, Embed, and Repair
 
 ```powershell
 nong word merge intro.docx body.docx appendix.docx -o merged.docx --json
 nong word protect merged.docx -o protected.docx --mode readonly --json
 nong word embed-font merged.docx simsun.ttf -o embedded.docx --json
+nong word repair-plan --json
 nong word fix-order merged.docx -o fixed.docx --json
 nong word rebuild merged.docx -o rebuilt.docx --json
 ```
@@ -162,7 +192,7 @@ nong word validate rebuilt.docx --json
 nong word preview rebuilt.docx --json
 ```
 
-## 7. Paper Drafts
+## 8. Paper Drafts
 
 For full paper drafting, prefer NongMark + `word create`. Use Inspect JSON spec generation only when the workflow already has a structured paper spec:
 
@@ -177,7 +207,7 @@ nong word dissect paper.docx --output paper.slice --json
 nong word validate paper.docx --json
 ```
 
-## 8. Error Handling
+## 9. Error Handling
 
 Treat `status: "error"` as a hard stop. Common fixes:
 

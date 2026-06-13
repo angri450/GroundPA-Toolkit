@@ -1,13 +1,13 @@
 # Word Workspace Setup
 
-This workspace is for CLI inputs and outputs. Do not scaffold a local Word library project for normal GroundPA work.
+This workspace is for CLI inputs and outputs. Do not scaffold a local Word library project for normal Nong.Toolkit.Net work.
 
 ## Recommended Layout
 
 Use a task-specific directory outside the plugin files:
 
 ```text
-GroundPA Toolkit Workplace/
+Nong Toolkit Workspace/
   word/
     <task-id>/
       input/

@@ -43,9 +43,16 @@ nong word validate contract.rebuilt.docx --json
 nong word preview contract.rebuilt.docx --json
 
 # 5. For academic/paper formatting, use the deterministic OpenXML formatter.
+nong word repair-plan --json
 nong word academic-format contract.rebuilt.docx -o contract.academic.docx --json
 nong word validate contract.academic.docx --json
+nong word format-audit contract.academic.docx --profile academic --min-score 80 --json
 nong word dissect contract.academic.docx --output contract.academic.slice --json
+
+# 6. If long or wide tables still need explicit continuation tables.
+nong word table-reflow contract.academic.docx -o contract.tables.docx --max-rows 20 --max-cols 6 --repeat-left-cols 1 --json
+nong word validate contract.tables.docx --json
+nong word format-audit contract.tables.docx --profile academic --min-score 80 --json
 ```
 
 Do not stop after `read`. For table-heavy contracts, `preview/content.txt` or plain text may show text but not the visible contract layout. Use `format.json`, `content.jsonl`, `structure.json`, `fonts`, `styles`, `preview`, and `validate`.
@@ -91,11 +98,11 @@ For "contract to official document", "contract to paper", or "extract contract t
   - official-document draft DOCX when requested
   - report with commands, logs, pass/fail status, and limitations
 
-Use `nong inspect write-paper` for paper-style drafts. For official-document drafts, current Nong source has library support (`GongWenFormatter`, `OfficialDocWriter`), but the CLI does not yet expose a first-class `write-official` or `format-gongwen` command. If the CLI cannot do it directly, say that clearly and use available library-backed tooling only when the environment supports it.
+Use `nong inspect write-paper` for paper-style drafts. Use `nong inspect write-official <spec.json> -o <official.docx> --json` for official-document drafts. Use `nong word format-gongwen <input.docx> -o <gongwen.docx> --json` when the source is an existing DOCX that needs gongwen/public-document formatting. Validate and slice the generated DOCX before calling the deliverable complete.
 
 ## Consumer Feedback Response
 
-The practical complaint was valid: a prior session fell back to raw COM and made Nong look absent. The correct GroundPA behavior is:
+The practical complaint was valid: a prior session fell back to raw COM and made Nong look absent. The correct Nong.Toolkit.Net behavior is:
 
 - Acknowledge that `.doc` conversion may require Word/LibreOffice.
 - Do not continue with naked COM after conversion.
@@ -105,7 +112,8 @@ The practical complaint was valid: a prior session fell back to raw COM and made
 Current remaining gap:
 
 - Nong now has `word check`, `word convert`, and `word academic-format`. For academic formatting complaints, use `academic-format` before any COM fallback.
-- Higher-level arbitrary existing-document editing is still composable. Use `check`, `convert`, `dissect`, `fix-order`, `academic-format`, `rebuild`, `add`, `fill`, `word create`, and `inspect write-paper` with explicit artifacts and validation.
+- Nong now has `word repair-plan`, `word format-audit`, and `word table-reflow`. Use them to avoid confusing schema repair with visible formatting repair and to handle table continuation explicitly.
+- Higher-level arbitrary existing-document editing is still composable. Use `check`, `convert`, `dissect`, `repair-plan`, `fix-order`, `academic-format`, `format-gongwen`, `format-audit`, `table-reflow`, `rebuild`, `add`, `fill`, `word create`, `inspect write-paper`, and `inspect write-official` with explicit artifacts and validation.
 
 ## Formatting Quality Gate
 
@@ -130,5 +138,6 @@ For real user documents, do not call the task done until:
 - `word check` was reviewed for `.doc`, VML, image, and blockId risks.
 - `word validate` passes for deliverable DOCX files.
 - `word preview` diagnostics are reviewed.
+- `word format-audit` passes or its warnings are reported honestly for academic-style deliverables.
 - `word dissect` artifacts provide positive format evidence for the user's visual requirements.
 - A report records command outcomes and remaining limitations.

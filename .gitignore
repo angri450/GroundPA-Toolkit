@@ -1,10 +1,9 @@
 # Local archive and development-only material.
-# Keep the real archive outside this repo as ../GroundPA-Toolkit_archive/.
+# Keep the real archive outside this repo as ../Nong.Toolkit_archive/.
 # These patterns protect against accidentally placing archive material back under the repo root.
 _archive/
-GroundPA-Toolkit_archive/
+Nong.Toolkit_archive/
 _v1_backup/
-CLAUDE.md
 claude.md
 Claude.md
 CLAUDE.local.md

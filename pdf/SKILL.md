@@ -1,32 +1,20 @@
 ---
 name: pdf
-description: Local PDF document slicing through nong. Trigger on PDF preflight, selectable-text PDF extraction, hybrid/scan routing, PDF page rendering, embedded PDF image extraction, content.nongmark, page/bbox evidence, or PDF-to-AI-readable document packages.
+description: Local PDF document slicing and editing through nong. Trigger on PDF preflight, selectable-text PDF extraction, hybrid/scan routing, PDF page rendering, embedded PDF image extraction, PDF merge, PDF split, content.nongmark, page/bbox evidence, or PDF-to-AI-readable document packages.
 ---
 
 # PDF
 
-Use `nong pdf` as the deterministic local PDF entrypoint. GroundPA routes, reads JSON/slice outputs, and reports evidence; it does not recreate PDF parsing with Python, Pandoc, MinerU, or ad hoc scripts.
+Use `nong pdf` as the deterministic local PDF entrypoint. Nong.Toolkit.Net routes, reads JSON/slice outputs, and reports evidence; it does not recreate PDF parsing with Python, Pandoc, MinerU, or ad hoc scripts.
 
 The primary readable artifact is `content.nongmark`, not plain Markdown. `preview/content.md` is a lossy compatibility preview only.
 
 ## Nong CLI Preflight
 
-Claude Plugin Marketplace installs the skills, not the `nong` CLI. Before the first Nong command in a session, run:
-
-```powershell
-nong commands --json
-```
-
-If `nong` is missing, install or update:
-
-```powershell
-dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
-dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
-```
-
-Use Nong 3.2.5+ for GroundPA PDF workflows; `pdf check`, `pdf dissect`, `pdf render`, and `pdf images` are part of the current command surface. If the .NET host says no compatible framework was found, update to Nong 3.2.5+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
-
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.0.0+` and the needed command group.
 ## Default Workflow
+
+For detailed routing notes, read [references/pdf-routing.md](references/pdf-routing.md).
 
 1. Always classify the PDF first:
 
@@ -73,7 +61,7 @@ nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/
 nong pdf dissect <scan.pdf> --output <slice-dir> --mode ocr --json
 ```
 
-Local OCR runtime bundles track the CLI version (`Angri450.Nong.OcrRuntime.*` 3.2.5 for Nong 3.2.5). Right after a fresh NuGet release, domestic mirrors can lag; if Huawei has not synced the runtime package yet, use NuGet.org explicitly or report mirror lag instead of falling back silently.
+Local OCR runtime bundles track the CLI version (`Angri450.Nong.OcrRuntime.*` 4.0.0 for Nong 4.0.0). Right after a fresh NuGet release, domestic mirrors can lag; if Huawei has not synced the runtime package yet, use NuGet.org explicitly or report mirror lag instead of falling back silently.
 
 Local OCR is text recognition only. It does not provide cloud-grade layout labels, table structure, Word formatting, or reliable cross-page reconstruction. For page-faithful PDF-to-Word/NongMark output, prefer readable-text `pdf dissect` first; use cloud OCR/to-word when scan layout, tables, or page alignment matter and a token is available.
 
@@ -102,13 +90,13 @@ slice-dir/
   format.json
   content.nongmark
   preview/content.md
-  assets/manifest.json
+  asset manifest
   diagnostics/check.json
   diagnostics/reading-order.json
   diagnostics/warnings.json
 ```
 
-For a non-empty text PDF, do not treat the command as successful unless `content.nongmark`, `content.jsonl`, `document.json`, `structure.json`, `format.json`, and the asset manifest under the slice asset directory exist and are non-empty.
+For a non-empty text PDF, do not treat the command as successful unless `content.nongmark`, `content.jsonl`, `document.json`, `structure.json`, `format.json`, and the slice asset manifest exist and are non-empty.
 
 ## Boundaries
 
@@ -119,11 +107,16 @@ nong pdf check <file.pdf> --json
 nong pdf dissect <file.pdf> --output <slice-dir> --mode auto --json
 nong pdf render <file.pdf> --output <pages-dir> --dpi 150 --json
 nong pdf images <file.pdf> --output <assets-dir> --json
+nong pdf merge <file1.pdf> <file2.pdf> ... -o <merged.pdf> --json
+nong pdf split <file.pdf> -o <split.pdf> --pages <range> --json
+nong pdf ocr <scan.pdf> -o <output.pdf> --dpi 200 --json
 ```
 
 Do not use Pandoc as a PDF parser. Do not require Python, pip, MinerU, or a Pandoc executable on the client machine.
 
-`pdf dissect --mode auto` is reliable for selectable text PDFs in Nong 3.2.5+. Hybrid mode preserves native text and embedded image evidence, while image-region OCR/layout enrichment is still limited. OCR mode depends on Nong's local PP-OCRv5 runtime and should be treated as text extraction, not full document reconstruction.
+`pdf dissect --mode auto` is reliable for selectable text PDFs in Nong 4.0.0+. Hybrid mode preserves native text and embedded image evidence, while image-region OCR/layout enrichment is still limited. OCR mode depends on Nong's local PP-OCRv5 runtime and should be treated as text extraction, not full document reconstruction.
+
+`pdf ocr` renders each page of a scanned PDF as JPEG images and embeds them in a new PDF with placeholder text markers. For full text recognition, combine with `nong ocr cloud` or local OCR. `--dpi` controls render quality (default 200).
 
 ## Error Contract
 
