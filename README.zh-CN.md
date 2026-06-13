@@ -58,8 +58,10 @@ Nong.Toolkit.Net 2.4.0 面向 Nong 4.0.0+ 的 93 个命令面。
 | `genre` | 论文体裁列表和体裁写作指导 |
 | `icons` | Bioicons 列表和搜索 |
 | `slice` | NongPandoc 包检查、严格证据检查、block 读取和资源清单 |
-| `skill` | `nong skill validate/scan/inventory/package` 生命周期闸门 |
-| `skill-manager` | Skill 设计、维护、触发质量和旧工作流迁移 |
+| `skill-grader` | `nong skill` 校验、扫描、清单和打包（入库） |
+| `skill-breeder` | Skill 育种：模板、命名规范、结构约定 |
+| `skill-tester` | Skill 验种：触发精度检查、失败反馈回收 |
+| `skill-pruner` | Skill 修剪：合并、拆分、废弃 |
 | `progress-report` | 结构化日志摘要和 HTML 进展报告指导 |
 
 开发态和旧材料本地保存在仓库外的 `../Nong.Toolkit_archive/`；如果误拷回仓库，也会被 Git 忽略。开发过程记录保留在 `log/`，需要提交。
@@ -126,7 +128,7 @@ nong ocr to-word scan.png -o out.docx --json
 ```text
 .claude-plugin/
 word/ pdf/ literature/ inspect/ excel/ chart/ diagram/ pptx/ ocr/ genre/ icons/
-slice/ skill/ skill-manager/ progress-report/
+slice/ skill-grader/ skill-breeder/ skill-tester/ skill-pruner/ progress-report/
 README.md README.zh-CN.md skill.zh skills.sh.json LICENSE
 ```
 

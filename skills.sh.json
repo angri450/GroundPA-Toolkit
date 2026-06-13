@@ -4,7 +4,7 @@
     {
       "title": "Nong Document Workflows",
       "description": "Nong 4.0.0+ pure .NET CLI workflows for Word, PDF, literature retrieval, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, slices, skill lifecycle, progress reports, and Bioicons",
-      "skills": ["word", "pdf", "literature", "inspect", "excel", "chart", "diagram", "pptx", "ocr", "genre", "icons", "slice", "skill", "skill-manager", "progress-report"]
+      "skills": ["word", "pdf", "literature", "inspect", "excel", "chart", "diagram", "pptx", "ocr", "genre", "icons", "slice", "skill-grader", "skill-breeder", "skill-tester", "skill-pruner", "progress-report"]
     }
   ]
 }

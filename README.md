@@ -58,8 +58,10 @@ Nong.Toolkit.Net 2.4.0 targets Nong 4.0.0+ with the 93-command surface.
 | `genre` | Paper genre listing and genre-specific writing guidance |
 | `icons` | Bioicons listing and search |
 | `slice` | NongPandoc package inspection, strict provenance checks, block reads, and asset inventory |
-| `skill` | `nong skill validate/scan/inventory/package` lifecycle gates |
-| `skill-manager` | Skill design, maintenance, trigger quality, and legacy workflow migration |
+| `skill-grader` | `nong skill validate/scan/inventory/package` lifecycle gates |
+| `skill-breeder` | Skill breeding: templates, naming conventions, structure |
+| `skill-tester` | Skill testing: trigger precision, feedback loops |
+| `skill-pruner` | Lifecycle pruning: merge, split, deprecate |
 | `progress-report` | Structured log summaries and HTML progress report guidance |
 
 Archived development-only material is kept outside the repository at `../Nong.Toolkit_archive/` and ignored by Git if it is accidentally copied back. Development process records stay in `log/` and are committed.
@@ -126,7 +128,7 @@ This repository is organized as an installable Claude Code plugin. The installab
 ```text
 .claude-plugin/
 word/ pdf/ literature/ inspect/ excel/ chart/ diagram/ pptx/ ocr/ genre/ icons/
-slice/ skill/ skill-manager/ progress-report/
+slice/ skill-grader/ skill-breeder/ skill-tester/ skill-pruner/ progress-report/
 README.md README.zh-CN.md skill.zh skills.sh.json LICENSE
 ```
 

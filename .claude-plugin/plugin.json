@@ -26,8 +26,10 @@
     "./genre",
     "./icons",
     "./slice",
-    "./skill",
-    "./skill-manager",
+    "./skill-grader",
+    "./skill-breeder",
+    "./skill-tester",
+    "./skill-pruner",
     "./progress-report"
   ]
 }
