@@ -4,17 +4,17 @@
 
 - 仓库：`https://github.com/angri450/GroundPA-Toolkit`
 - 本地：`<repo-root>`
-- 版本：v2.2.0
+- 版本：v2.2.1
 - 架构：Nong CLI-first skill layer
 
-## 2.2.0 边界
+## 2.2.1 边界
 
 只把当前 `nong commands --json` 中标记为 `implemented` 的能力做成 skill。
 
 已暴露：
 
 ```text
-word, inspect, excel, chart, diagram, genre, icons
+word, pdf, inspect, excel, chart, diagram, genre, icons
 pptx, multimodal
 bash, powershell, dotnet, github, gitee, ghproxy, nuget, ilspycmd, email, skill-manager
 ```
@@ -22,6 +22,7 @@ bash, powershell, dotnet, github, gitee, ghproxy, nuget, ilspycmd, email, skill-
 门控暴露：
 
 ```text
+pdf: 暴露 check/dissect/render/images；主输出是 `content.nongmark`，plain Markdown 只当预览；本地 OCR 模式只做文字识别，不承诺云端级版面、表格或跨页重建。
 ocr local: 入口存在，经 Nong 的纯 .NET PP-OCRv5 runtime 执行；只有 `check-env` 报 localDotNetPpOcrV5.status=ok 且真实图片 smoke test EXIT:0 后才能作为稳定 OCR 路径推荐。
 ocr install-model: 安装/检查当前平台第一方 `Angri450.Nong.OcrRuntime.*` PP-OCRv5 native runtime 缓存；默认走华为 NuGet v3；`--dry-run` 给部署计划，不安装 Python；上游 fallback 必须显式 `--allow-upstream-fallback`。
 ocr cloud / ocr to-word: 需要来自 https://aistudio.baidu.com/account/accessToken 的 PADDLEOCR_ACCESS_TOKEN。

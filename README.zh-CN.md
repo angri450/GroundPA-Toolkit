@@ -1,6 +1,6 @@
 # GroundPA Toolkit — 土地公的工具箱
 
-GroundPA Toolkit 2.2.0 是面向农学生论文和文档工作流的 Claude Code skill 集。核心变化是：skill 层不再让模型临时写 .NET 小项目，而是统一调用 `nong` CLI。
+GroundPA Toolkit 2.2.1 是面向农学生论文和文档工作流的 Claude Code skill 集。核心变化是：skill 层不再让模型临时写 .NET 小项目，而是统一调用 `nong` CLI。
 
 模型负责判断任务、准备 JSON/spec、解释诊断结果。确定性工作交给 .NET CLI。
 
@@ -19,13 +19,14 @@ nong skill scan . --json
 nong skill package . --json
 ```
 
-## 2.2.0 暴露的 Nong Skills
+## 2.2.1 暴露的 Nong Skills
 
 只暴露当前 `nong` CLI 已实现的命令。
 
 | Skill | 已实现命令 |
 |-------|------------|
 | `word` | check, convert, read, preview, fill, rebuild, extract, dissect, stats, fonts, styles, validate, merge, outline, images, comments, revisions, infer-format, fix-order, protect, embed-font, add paragraph/table/footnote/endnote/image/toc/xref/link/bookmark/comment/math |
+| `pdf` | check, dissect, render, images |
 | `inspect` | diagnose, refs, write-paper, classify, structure, varplan, evidence, data-req, gap, semantics |
 | `excel` | sheets, read, to-groups, create |
 | `chart` | analyze, anova, duncan, bar, line, scatter, pie |
@@ -66,6 +67,17 @@ nong word add paragraph paper.docx --spec paragraph.json -o out.docx --json
 ```
 
 排版、字体、字号、页边距、对齐方式、表格线等问题不要只用 `word read` 判断。先用 `word dissect --output`，再查看切片目录里的 `format.json`、`content.jsonl` 和 `structure.json`。
+
+### PDF
+
+```powershell
+nong pdf check guide.pdf --json
+nong pdf dissect guide.pdf --output guide.slice --mode auto --json
+nong pdf render guide.pdf --output guide.pages --dpi 150 --json
+nong pdf images guide.pdf --output guide.assets --json
+```
+
+PDF 的主要 AI 可读产物是 `content.nongmark`。`preview/content.md` 只是有损预览。有可选中文本层的 PDF 默认走本地 `pdf dissect --mode auto`；扫描版版面对齐、表格、页级 Word 输出和跨页图片拼接，有 token 时走云端 OCR/to-word。
 
 ### 论文诊断
 
@@ -114,7 +126,7 @@ nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；先用华为 NuGet 源安装当前平台第一方 `Angri450.Nong.OcrRuntime.*` 包，只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。本地 OCR 只负责单图文字识别；PDF、页级对齐、表格、Word 输出、跨页图片拼接、`nongmark/v1`/Word 切片对齐都走云端 OCR/to-word。
+`ocr cloud` 和 `ocr to-word` 需要来自 `https://aistudio.baidu.com/account/accessToken` 的 `PADDLEOCR_ACCESS_TOKEN`。`ocr analyze-image` 做图像结构和版面检查，不识别文本。`ocr local` 通过 Nong 的纯 .NET PP-OCRv5 runtime 执行；先用华为 NuGet 源安装当前平台第一方 `Angri450.Nong.OcrRuntime.*` 包，只有 `localDotNetPpOcrV5.status=ok` 和真实图片 smoke test 都通过后，才把它当作稳定 OCR 路径。runtime 包版本跟随 CLI 版本；NuGet 刚发布后，国内镜像可能短暂滞后。本地 OCR 只负责单图文字识别；PDF、页级对齐、表格、Word 输出、跨页图片拼接、`nongmark/v1`/Word 切片对齐都走云端 OCR/to-word。
 
 ## 安装
 
@@ -174,7 +186,7 @@ dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaw
 dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
-Nong 3.2.3+ 已为只有更新 .NET 运行时的机器写入 `RollForward=LatestMajor`，并提供纯 .NET 本地 OCR。如果旧版工具提示找不到兼容框架，先更新工具；必要时在当前 shell 设置 `DOTNET_ROLL_FORWARD=LatestMajor` 后重试。
+Nong 3.2.4+ 已为只有更新 .NET 运行时的机器写入 `RollForward=LatestMajor`，并提供纯 .NET 本地 OCR runtime 部署和本地 PDF 切片。如果旧版工具提示找不到兼容框架，先更新工具；必要时在当前 shell 设置 `DOTNET_ROLL_FORWARD=LatestMajor` 后重试。
 
 本地 OCR 首次使用前再运行：
 

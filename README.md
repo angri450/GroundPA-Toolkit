@@ -1,6 +1,6 @@
 # GroundPA Toolkit
 
-GroundPA Toolkit 2.2.0 is a Nong CLI-first Claude Code skill set for agricultural paper and document workflows.
+GroundPA Toolkit 2.2.1 is a Nong CLI-first Claude Code skill set for agricultural paper and document workflows.
 
 The skill layer no longer asks the model to scaffold temporary .NET projects for normal Office work. It routes requests to the deterministic `nong` CLI, then lets the model read JSON output, fix inputs, and compose the next step.
 
@@ -23,11 +23,12 @@ nong skill package . --json
 
 ## Implemented Nong Skills
 
-Only implemented `nong` commands are exposed as 2.2.0 skills.
+Only implemented `nong` commands are exposed as 2.2.1 skills.
 
 | Skill | Implemented Commands |
 |-------|----------------------|
 | `word` | check, convert, read, preview, fill, rebuild, extract, dissect, stats, fonts, styles, validate, merge, outline, images, comments, revisions, infer-format, fix-order, protect, embed-font, add paragraph/table/footnote/endnote/image/toc/xref/link/bookmark/comment/math |
+| `pdf` | check, dissect, render, images |
 | `inspect` | diagnose, refs, write-paper, classify, structure, varplan, evidence, data-req, gap, semantics |
 | `excel` | sheets, read, to-groups, create |
 | `chart` | analyze, anova, duncan, bar, line, scatter, pie |
@@ -68,6 +69,17 @@ nong word add paragraph paper.docx --spec paragraph.json -o out.docx --json
 ```
 
 For layout, fonts, font sizes, margins, alignment, table borders, or other formatting questions, do not judge from `word read` alone. Start with `word dissect --output`, then inspect `format.json`, `content.jsonl`, and `structure.json` in the slice directory.
+
+### PDF
+
+```powershell
+nong pdf check guide.pdf --json
+nong pdf dissect guide.pdf --output guide.slice --mode auto --json
+nong pdf render guide.pdf --output guide.pages --dpi 150 --json
+nong pdf images guide.pdf --output guide.assets --json
+```
+
+Use `content.nongmark` as the primary AI-readable PDF artifact. `preview/content.md` is a lossy preview. Local `pdf dissect --mode auto` is the default for selectable-text PDFs; scan-layout reconstruction, tables, page-faithful Word output, and cross-page image stitching need cloud OCR/to-word when a token is available.
 
 ### Paper Inspection
 
@@ -116,7 +128,7 @@ nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime. Install the current-platform first-party `Angri450.Nong.OcrRuntime.*` bundle with the Huawei NuGet source, then treat local OCR as stable only after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass. Local OCR is single-image text OCR only; use cloud OCR/to-word for PDF, page alignment, tables, Word output, cross-page image stitching, and `nongmark/v1`/Word slice alignment.
+`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime. Install the current-platform first-party `Angri450.Nong.OcrRuntime.*` bundle with the Huawei NuGet source, then treat local OCR as stable only after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass. Runtime package versions track the CLI version; right after a NuGet release, domestic mirrors may lag. Local OCR is single-image text OCR only; use cloud OCR/to-word for PDF, page alignment, tables, Word output, cross-page image stitching, and `nongmark/v1`/Word slice alignment.
 
 ## Install
 
@@ -176,7 +188,7 @@ If already installed:
 dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
-Nong 3.2.3+ includes `RollForward=LatestMajor` for machines with a newer .NET runtime and pure .NET local OCR. If an older tool build reports "no compatible framework", update the tool or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+Nong 3.2.4+ includes `RollForward=LatestMajor` for machines with a newer .NET runtime, pure .NET local OCR runtime deployment, and local PDF slicing. If an older tool build reports "no compatible framework", update the tool or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 For local OCR, run once after installing the CLI:
 

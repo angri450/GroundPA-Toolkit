@@ -1,7 +1,7 @@
 {
   "name": "groundpa-toolkit",
-  "version": "2.2.0",
-  "description": "GroundPA Toolkit 2.2.0. Nong CLI-first skills for Word, PDF, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee/GitCode, NuGet, ILSpy, email, and skill-manager.",
+  "version": "2.2.1",
+  "description": "GroundPA Toolkit 2.2.1. Nong CLI-first skills for Word, PDF, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee/GitCode, NuGet, ILSpy, email, and skill-manager.",
   "author": {
     "name": "angri450"
   },
