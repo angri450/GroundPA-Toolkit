@@ -22,7 +22,7 @@ Failures included: `Marshal.GetActiveObject` not found, HRESULT errors on merged
 
 2. **Analyzed** the pattern: The root cause was that the AI didn't know the boundary between COM and `nong word`.
 
-3. **Added a reference**: Created `word/references/com-automation.md` with explicit rules:
+3. **Added a reference**: Created a COM automation reference with explicit rules (later moved to Nong.Dev.Net `references/word-com-automation.md`):
    - No desktop Word COM automation for normal Word operations
    - COM is only an explicit escape hatch for operations `nong word` cannot do
    - For `.doc` files: `nong word check` → `nong word convert` → then full `nong word` pipeline

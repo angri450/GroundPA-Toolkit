@@ -31,7 +31,7 @@ A user wrote about COM automation failures in Word:
 
 1. **Capture**: Recorded in `log/debug/2026-06-05-word-com-automation-failure-report.md`.
 2. **Analyze**: The failure pattern was "AI escaped to PowerShell COM automation instead of staying with `nong word`".
-3. **Feed back**: Added `word/references/com-automation.md` with explicit rules: no COM automation for normal Word operations, COM only as explicit escape hatch.
+3. **Feed back**: Added a COM automation reference with explicit rules: no COM automation for normal Word operations, COM only as explicit escape hatch. This reference later moved to Nong.Dev.Net (`references/word-com-automation.md`) as a developer tool.
 4. **Update SKILL.md**: Added boundary statement: "Do not use desktop Word COM automation for normal tasks."
 
 ## When to Consider Changing Triggers

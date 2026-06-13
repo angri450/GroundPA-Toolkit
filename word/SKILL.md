@@ -143,7 +143,6 @@ Load only the reference needed for the task:
 - [references/write-word.md](references/write-word.md): template fill, add operations, merge, protect, embed fonts, repair, validation after writes.
 - [references/api-reference.md](references/api-reference.md): exact command syntax and JSON spec shapes.
 - [references/existing-document-editing.md](references/existing-document-editing.md): `.doc` handoff, legacy DOCX repair, real-case contract workflow, official-document transformation.
-- [references/com-automation.md](references/com-automation.md): only when installed Microsoft Word must be driven.
 - [references/workspace-setup.md](references/workspace-setup.md): case workspace layout and artifact organization.
 - [references/paper-analysis.md](references/paper-analysis.md): when Word output feeds inspect/paper workflows.
 
@@ -184,14 +183,7 @@ Use `word add-*` flattened aliases only for compatibility with older scripts; do
 
 ## COM Escape Hatch
 
-Use desktop Word COM only when all are true:
-
-1. The user explicitly asks to drive installed Word, or the task requires Word's visual/layout engine.
-2. `nong` cannot provide the needed fact or transformation.
-3. The environment is Windows with Word installed.
-4. You can isolate outputs and clean COM objects safely.
-
-Before writing any COM script, read [references/com-automation.md](references/com-automation.md). Do not blanket-kill `WINWORD` without explicit user approval.
+COM automation is a developer tool, not a document-skill concern. The hardened COM patterns, failure modes, and enum constants have moved to **Nong.Dev.Net** (`references/word-com-automation.md`). Do not write PowerShell + Word COM scripts for normal editing. If installed Word must be driven, load that reference from Dev.Net.
 
 ## Error Contract
 
