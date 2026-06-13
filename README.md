@@ -50,7 +50,7 @@ Check the command surface before using the skills:
 nong commands --json
 ```
 
-Nong.Toolkit.Net 2.5.0 targets Nong 4.1.0+.
+Nong.Toolkit.Net targets the installed `nong` CLI.
 
 ## Skills
 

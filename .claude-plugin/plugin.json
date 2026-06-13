@@ -1,7 +1,7 @@
 {
   "name": "nong-toolkit",
-  "version": "4.1.1",
-  "description": "Nong.Toolkit.Net 4.1.0. Claude Code multi-skill plugin for Nong.Cli.Net 4.1.0+ — modular architecture: light CLI router + 6 independent dotnet tools. Pure .NET document work, literature retrieval, agricultural paper inspection, Office formats, OCR/image QA, slices, skill lifecycle, and Bioicons.",
+  "version": "1.0.0",
+  "description": "Nong.Toolkit.Net — Claude Code multi-skill plugin for Nong.Cli.Net. Modular architecture: light CLI router + 6 auto-install external dotnet tools. Pure .NET document work, literature retrieval, agricultural paper inspection, Office formats, OCR/image QA, slices, skill lifecycle, and Bioicons.",
   "author": {
     "name": "angri450"
   },

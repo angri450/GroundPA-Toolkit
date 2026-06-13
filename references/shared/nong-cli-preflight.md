@@ -8,11 +8,11 @@ Before the first Nong command in a session, run:
 nong commands --json
 ```
 
-Use Nong.Cli.Net 4.1.0 or newer. Confirm:
+Use the installed `nong` CLI. Confirm:
 
 - `status` is `ok`.
 - `summary` reports the expected command surface.
-- `meta.version` is `4.1.0` or newer.
+- `meta.version` is present (any version is fine; Toolkit is compatible with all current Nong.Cli.Net releases).
 - The needed command group is listed in `data`.
 
 If `nong` is missing or points at an old broken global tool, install or update:
@@ -22,7 +22,7 @@ dotnet tool install --global Angri450.Nong.Cli
 dotnet tool update --global Angri450.Nong.Cli
 ```
 
-**Modular architecture (4.1.0+):** The 6 heavy modules (chart/diagram/pdf/pptx/ocr/imaging) are separate dotnet tools. On first use, `nong` auto-installs the missing tool. The user command surface is unchanged: `nong chart bar ...` still works, CLI handles the rest.
+**Modular architecture:** The 6 heavy modules (chart/diagram/pdf/pptx/ocr/imaging) are separate dotnet tools. On first use, `nong` auto-installs the missing tool. The user command surface is unchanged: `nong chart bar ...` still works, CLI handles the rest.
 
 If a remote NuGet source is unavailable, install tools from a local pack directory:
 

@@ -4,14 +4,8 @@ Nong.Toolkit.Net is the Claude Code skill layer for Nong.Cli.Net. It teaches age
 
 ## Current Contract
 
-- Toolkit version: `4.1.0`.
-- Required CLI: Nong.Cli.Net `4.1.0+`.
-- Plugin id: `nong-toolkit`.
-- Modular architecture: `nong` (12MB router) + 6 auto-install external tools (chart/diagram/pdf/pptx/ocr/imaging).
-  - External tools install on first use: `nong chart bar ...` auto-installs `Angri450.Nong.Tool.Chart`.
-  - Package IDs use `Angri450.Nong.Tool.*` prefix. Core library IDs (`Angri450.Nong.Chart` etc.) reserved for library packaging.
-- Do not use retired GroundPA or GroundPA-Toolkit names for active docs, manifests, skills, scripts, or install commands.
-- This repository contains skills and documentation only. Deterministic execution belongs in Nong.Cli.Net.
+- Required CLI: latest `nong` CLI (auto-update with `dotnet tool update --global Angri450.Nong.Cli`).
+- Toolkit and CLI versions are decoupled: any current Toolkit release works with any current CLI release. Do not gate on a specific CLI version number.
 
 ## Plugin Infrastructure
 

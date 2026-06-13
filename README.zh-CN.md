@@ -50,7 +50,7 @@ dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huawe
 nong commands --json
 ```
 
-Nong.Toolkit.Net 2.5.0 面向 Nong 4.1.0+。
+Nong.Toolkit.Net 面向已安装的 `nong` CLI。
 
 ## Skills
 

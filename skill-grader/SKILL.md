@@ -9,7 +9,7 @@ Use `nong skill` as the deterministic lifecycle gate for Nong.Toolkit.Net skills
 
 ## Nong CLI Preflight
 
-Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm Nong.Cli.Net `4.1.0+` and the `skill` command group.
+Read [../references/shared/nong-cli-preflight.md](../references/shared/nong-cli-preflight.md) before the first Nong command in a session. Confirm the `nong` CLI is installed and the `skill` command group.
 
 ## Commands
 
