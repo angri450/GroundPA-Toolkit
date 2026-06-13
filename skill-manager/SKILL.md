@@ -10,7 +10,7 @@ Meta-skill for creating, improving, and maintaining skills throughout their life
 ## Prerequisites
 
 ```bash
-dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 nong commands --json
 ```
 
@@ -124,7 +124,7 @@ Commit, package, ship per Create Skill Steps 11-12. See [`references/packaging-g
 
 ## .NET CLI Command Reference
 
-Primary commands are in `Angri450.Nong.Cli`: `dotnet tool install --global Angri450.Nong.Cli`
+Primary commands are in `Angri450.Nong.Cli`: `dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json`
 
 | Command | Purpose |
 |---------|---------|

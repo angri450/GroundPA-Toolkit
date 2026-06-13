@@ -9,7 +9,7 @@ The skill layer no longer asks the model to scaffold temporary .NET projects for
 Model capacity is for semantic work: choosing workflows, drafting specs, interpreting diagnostics, and writing. Deterministic work runs through .NET tools:
 
 ```powershell
-dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 nong commands --json
 ```
 
@@ -110,12 +110,13 @@ nong pptx slides deck.pptx --json
 
 ```powershell
 nong ocr check-env --json
+nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json
 nong ocr analyze-image fig.png -o fig.analysis --json
 nong ocr cloud scan.png -o ocr-out --json
 nong ocr to-word scan.png -o out.docx --json
 ```
 
-`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime; treat it as stable after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass.
+`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr analyze-image` checks image structure and layout; it does not recognize text. `ocr local` is implemented through Nong's pure .NET PP-OCRv5 runtime. Install the current-platform first-party `Angri450.Nong.OcrRuntime.*` bundle with the Huawei NuGet source, then treat local OCR as stable only after `localDotNetPpOcrV5.status=ok` and a real image smoke test pass.
 
 ## Install
 
@@ -126,19 +127,19 @@ This is the **classic Claude Code skills installation**: git clone the repo and 
 **GitCode (recommended, anonymous clone)**
 
 ```bash
-git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+git clone https://gitcode.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 **Gitee**
 
 ```bash
-git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+git clone https://gitee.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 **GitHub**
 
 ```bash
-git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli
+git clone https://github.com/angri450/GroundPA-Toolkit.git /tmp/groundpa && mkdir -p ~/.claude/skills && cp -r /tmp/groundpa/. ~/.claude/skills/ && rm -rf /tmp/groundpa && dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 After install, run `/reload-plugins` or restart Claude Code.
@@ -166,16 +167,22 @@ claude plugin install groundpa-toolkit@angri450
 ### Required .NET Tools
 
 ```powershell
-dotnet tool install --global Angri450.Nong.Cli
+dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 If already installed:
 
 ```powershell
-dotnet tool update --global Angri450.Nong.Cli
+dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
 Nong 3.2.3+ includes `RollForward=LatestMajor` for machines with a newer .NET runtime and pure .NET local OCR. If an older tool build reports "no compatible framework", update the tool or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+
+For local OCR, run once after installing the CLI:
+
+```powershell
+nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json
+```
 
 ## Update
 

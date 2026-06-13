@@ -23,7 +23,7 @@ bash, powershell, dotnet, github, gitee, ghproxy, nuget, ilspycmd, email, skill-
 
 ```text
 ocr local: 入口存在，经 Nong 的纯 .NET PP-OCRv5 runtime 执行；只有 `check-env` 报 localDotNetPpOcrV5.status=ok 且真实图片 smoke test EXIT:0 后才能作为稳定 OCR 路径推荐。
-ocr install-model: 安装/检查 Windows x64 PP-OCRv5 native runtime 缓存；`--dry-run` 给国内 NuGet 镜像计划，不安装 Python。
+ocr install-model: 安装/检查当前平台第一方 `Angri450.Nong.OcrRuntime.*` PP-OCRv5 native runtime 缓存；默认走华为 NuGet v3；`--dry-run` 给部署计划，不安装 Python；上游 fallback 必须显式 `--allow-upstream-fallback`。
 ocr cloud / ocr to-word: 需要来自 https://aistudio.baidu.com/account/accessToken 的 PADDLEOCR_ACCESS_TOKEN。
 pptx: 只暴露 read/slides，不承诺生成或编辑。
 ```
