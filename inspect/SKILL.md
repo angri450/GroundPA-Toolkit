@@ -5,7 +5,7 @@ description: Agricultural paper inspection and generation via nong. Trigger on p
 
 # Inspect
 
-Use `nong inspect` for paper-level semantic, structural, evidence, reference, and writing workflows. Inspect consumes text or paper specs; for `.docx` sources, use `word dissect` or `word read` first.
+Use `nong inspect` for paper-level semantic, structural, evidence, reference, and writing workflows. Inspect consumes text or paper specs; for `.docx` sources, use `word dissect` or `word read` first. For external literature metadata/OA retrieval, use the `literature` skill and `nong lit`; `inspect refs` is an internal reference-list and citation-risk check, not a database search.
 
 ## Nong CLI Preflight
 
@@ -22,7 +22,7 @@ dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaw
 dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
-If the .NET host says no compatible framework was found, use Nong 3.2.4+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+If the .NET host says no compatible framework was found, use Nong 3.2.5+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## Implemented Commands
 
@@ -83,4 +83,4 @@ Use this minimal shape for `write-paper`:
 
 Always use `--json` when the result will feed another tool or model decision. Treat `status: "error"` as failed.
 
-Reference and semantic outputs are rule-based writing and method diagnostics. Do not present them as external database verification, advisor review, or peer review.
+Reference and semantic outputs are rule-based writing and method diagnostics. Do not present them as external database verification, advisor review, or peer review. Use `nong lit` when the task requires OpenAlex/Crossref/Unpaywall metadata, DOI lookup, or reference export.

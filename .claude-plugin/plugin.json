@@ -1,22 +1,22 @@
 {
   "name": "groundpa-toolkit",
-  "version": "2.2.1",
-  "description": "GroundPA Toolkit 2.2.1. Nong CLI-first skills for Word, PDF, paper inspection, Excel, statistics, diagrams, PPTX reads, OCR/image QA, templates, Bioicons, shell, .NET, GitHub/Gitee/GitCode, NuGet, ILSpy, email, and skill-manager.",
+  "version": "2.3.1",
+  "description": "GroundPA Toolkit 2.3.1. Claude Code multi-skill plugin for Nong 3.2.5+ pure .NET document work, literature retrieval, agricultural paper inspection, Office formats, OCR/image QA, and Bioicons.",
   "author": {
     "name": "angri450"
   },
   "homepage": "https://github.com/angri450/GroundPA-Toolkit",
   "repository": "https://gitee.com/angri450/GroundPA-Toolkit.git",
   "license": "Apache-2.0",
-  "category": "developer-tools",
   "keywords": [
-    "nong", "cli", "office", "word", "pdf", "excel", "chart", "diagram", "pptx",
-    "ocr", "image-qa", "paper", "inspect", "bioicons", "bash", "powershell", "dotnet", "github",
-    "gitee", "gitcode", "email", "nuget", "ilspycmd", "skill-manager"
+    "nong", "cli", "office", "word", "pdf", "literature", "openalex", "crossref",
+    "unpaywall", "excel", "chart", "diagram", "pptx", "ocr", "image-qa", "paper",
+    "inspect", "agriculture", "bioicons", "dotnet", "claude-code-plugin"
   ],
   "skills": [
     "./word",
     "./pdf",
+    "./literature",
     "./inspect",
     "./excel",
     "./chart",
@@ -24,17 +24,6 @@
     "./pptx",
     "./multimodal",
     "./genre",
-    "./icons",
-    "./bash",
-    "./powershell",
-    "./dotnet",
-    "./github",
-    "./gitee",
-    "./gitcode",
-    "./ghproxy",
-    "./nuget",
-    "./ilspycmd",
-    "./email",
-    "./skill-manager"
+    "./icons"
   ]
 }

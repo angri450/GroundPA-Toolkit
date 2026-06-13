@@ -22,7 +22,7 @@ dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaw
 dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
-Use Nong 3.2.4+ for the pure .NET PP-OCRv5 runtime bundle flow. If the .NET host says no compatible framework was found, update to Nong 3.2.4+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+Use Nong 3.2.5+ for the pure .NET PP-OCRv5 runtime bundle flow. If the .NET host says no compatible framework was found, update to Nong 3.2.5+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## OCR Prerequisites
 
@@ -60,6 +60,7 @@ Gated local path:
 
 ```powershell
 nong ocr local <image.png> --json
+nong ocr local <image.png> --force --json
 ```
 
 ## Dispatch
@@ -69,7 +70,7 @@ nong ocr local <image.png> --json
 3. For PDF, multi-page scans, table/layout reconstruction, page-aligned OCR, or Word/NongMark annotation alignment, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr cloud <input> -o <ocr-out-dir> --json`.
 4. For Word output from a scan or PDF, require `PADDLEOCR_ACCESS_TOKEN`, then run `nong ocr to-word <input> -o <out.docx> --json`.
 5. For model inventory, run `nong ocr models --json`.
-6. For local deployment, run `nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json`; it should report `noPython: true`, `upstreamFallbackDefault: "disabled"`, and an `Angri450.Nong.OcrRuntime.*` package for the current platform. Runtime package versions track the CLI version, so Nong 3.2.4 expects first-party runtime bundles at 3.2.4.
+6. For local deployment, run `nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json --json`; it should report `noPython: true`, `upstreamFallbackDefault: "disabled"`, and an `Angri450.Nong.OcrRuntime.*` package for the current platform. Runtime package versions track the CLI version, so Nong 3.2.5 expects first-party runtime bundles at 3.2.5.
 7. Use `ocr local` only for single-image text recognition after `check-env` reports `localDotNetPpOcrV5.status=ok` and an actual image smoke test exits 0.
 
 ## Boundaries
@@ -79,6 +80,8 @@ nong ocr local <image.png> --json
 `ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN`. Use cloud OCR when the user needs page-level structure, table/layout labels, image/PDF input, Word output, or output aligned with Word's `nongmark/v1` slice fields such as `content.jsonl`, `blockId`, and page/block evidence.
 
 `ocr local` is an implemented CLI entrypoint through Nong's pure .NET PP-OCRv5 runtime. It is text-only and single-image only. It does not support PDF, cross-page image stitching, layout analysis, table structure, Word formatting, or pandoc/NongMark annotation alignment. Do not describe it as a stable OCR route unless the local environment and a real image smoke test have passed.
+
+Before local PP-OCRv5 inference, `ocr local` runs a lightweight preflight: ZXing.Net barcode/QR decoding first, then image-structure heuristics. If it returns `E006 validation_failed` with issue `local_ocr_preflight_skipped`, the input is a decoded barcode/QR or looks code-like/graphic-heavy rather than text-like. Do not retry repeatedly. Use the decoded barcode/QR value when `data.preflight.barcode` is present, inspect the image as an asset, or rerun with `--force` only when the user explicitly wants text OCR despite the warning.
 
 If `ocr local --json` reports `local_ocr_invalid_confidence`, `local_ocr_invalid_geometry`, or `local_ocr_numeric_fallback`, keep the recognized text if useful but report that local OCR confidence/geometry evidence is degraded. Do not turn those warnings into layout or formatting claims.
 

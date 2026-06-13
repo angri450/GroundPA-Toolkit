@@ -24,7 +24,7 @@ dotnet tool install --global Angri450.Nong.Cli --add-source https://mirrors.huaw
 dotnet tool update --global Angri450.Nong.Cli --add-source https://mirrors.huaweicloud.com/repository/nuget/v3/index.json
 ```
 
-Use Nong 3.2.4+ for PDF workflows; `pdf check`, `pdf dissect`, `pdf render`, and `pdf images` are part of that command surface. If the .NET host says no compatible framework was found, update to Nong 3.2.4+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
+Use Nong 3.2.5+ for GroundPA PDF workflows; `pdf check`, `pdf dissect`, `pdf render`, and `pdf images` are part of the current command surface. If the .NET host says no compatible framework was found, update to Nong 3.2.5+ or set `DOTNET_ROLL_FORWARD=LatestMajor` for the current shell and retry.
 
 ## Default Workflow
 
@@ -49,6 +49,9 @@ Read at least:
 - `<slice-dir>/structure.json`
 - `<slice-dir>/format.json`
 - `<slice-dir>/diagnostics/check.json`
+- `<slice-dir>/diagnostics/reading-order.json`
+
+Current text-layer slicing removes repeated running headers/footers when they repeat across pages near page edges, detects simple two-column reading order, emits simple aligned-row table blocks, and warns about suspicious custom-encoded fonts. Treat those as deterministic heuristics with page/bbox evidence, not as semantic certainty.
 
 3. For page images or visual inspection:
 
@@ -70,7 +73,7 @@ nong ocr install-model pp-ocrv5-mobile --source https://mirrors.huaweicloud.com/
 nong pdf dissect <scan.pdf> --output <slice-dir> --mode ocr --json
 ```
 
-Local OCR runtime bundles track the CLI version (`Angri450.Nong.OcrRuntime.*` 3.2.4 for Nong 3.2.4). Right after a fresh NuGet release, domestic mirrors can lag; if Huawei has not synced the runtime package yet, use NuGet.org explicitly or report mirror lag instead of falling back silently.
+Local OCR runtime bundles track the CLI version (`Angri450.Nong.OcrRuntime.*` 3.2.5 for Nong 3.2.5). Right after a fresh NuGet release, domestic mirrors can lag; if Huawei has not synced the runtime package yet, use NuGet.org explicitly or report mirror lag instead of falling back silently.
 
 Local OCR is text recognition only. It does not provide cloud-grade layout labels, table structure, Word formatting, or reliable cross-page reconstruction. For page-faithful PDF-to-Word/NongMark output, prefer readable-text `pdf dissect` first; use cloud OCR/to-word when scan layout, tables, or page alignment matter and a token is available.
 
@@ -80,6 +83,8 @@ Local OCR is text recognition only. It does not provide cloud-grade layout label
 - Use `content.nongmark` for AI-readable text with page, bbox, source, font, size, and block IDs.
 - Use `content.jsonl` as the block-level source of truth for page/bbox/source evidence.
 - Use `diagnostics/check.json` to explain why a PDF was routed as `text`, `hybrid`, or `scan`.
+- Use `diagnostics/reading-order.json` to explain whether the text stream used single-column or two-column reading order.
+- If `diagnostics/warnings.json` mentions repeated header/footer removal or suspicious custom-encoded fonts, report that qualification before making layout-sensitive claims.
 - If `preview/content.md` exists, treat it as lossy preview and say so when precision matters.
 - If `pdf check` reports `scan`, do not claim local parsing can recover full layout unless OCR mode actually succeeds and the output contains blocks.
 - If cloud OCR is available, `nong ocr cloud` or `nong ocr to-word` can be stronger for full PDF layout/table reconstruction, but the cloud key is not a prerequisite for basic local PDF slicing.
@@ -97,7 +102,7 @@ slice-dir/
   format.json
   content.nongmark
   preview/content.md
-  pdf-assets-manifest
+  assets/manifest.json
   diagnostics/check.json
   diagnostics/reading-order.json
   diagnostics/warnings.json
@@ -118,7 +123,7 @@ nong pdf images <file.pdf> --output <assets-dir> --json
 
 Do not use Pandoc as a PDF parser. Do not require Python, pip, MinerU, or a Pandoc executable on the client machine.
 
-`pdf dissect --mode auto` is reliable for selectable text PDFs in Nong 3.2.4+. Hybrid mode preserves native text and embedded image evidence, while image-region OCR/layout enrichment is still limited. OCR mode depends on Nong's local PP-OCRv5 runtime and should be treated as text extraction, not full document reconstruction.
+`pdf dissect --mode auto` is reliable for selectable text PDFs in Nong 3.2.5+. Hybrid mode preserves native text and embedded image evidence, while image-region OCR/layout enrichment is still limited. OCR mode depends on Nong's local PP-OCRv5 runtime and should be treated as text extraction, not full document reconstruction.
 
 ## Error Contract
 
