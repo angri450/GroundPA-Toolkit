@@ -20,6 +20,8 @@ nong word outline paper.docx --json
 nong word images paper.docx --json
 nong word comments paper.docx --json
 nong word revisions paper.docx --json
+nong word compare doc1.docx doc2.docx --json
+nong word render-preview paper.docx --output pages --dpi 150 --json
 ```
 
 Use `word check` before working on user-supplied `.doc`/`.docx`. Use `word convert` only as a `.doc -> .docx` boundary step, then return to OpenXML commands. Use `word dissect --output` for complex documents. Use `read` only when plain text is enough, and `preview` or `validate` when you need OOXML diagnostics.

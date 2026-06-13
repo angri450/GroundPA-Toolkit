@@ -112,6 +112,7 @@ nong pdf images <file.pdf> --output <assets-dir> --json
 nong pdf merge <file1.pdf> <file2.pdf> ... -o <merged.pdf> --json
 nong pdf split <file.pdf> -o <split.pdf> --pages <range> --json
 nong pdf ocr <scan.pdf> -o <output.pdf> --dpi 200 --json
+nong pdf compress <file.pdf> -o <compressed.pdf> --json
 ```
 
 Do not use Pandoc as a PDF parser. Do not require Python, pip, MinerU, or a Pandoc executable on the client machine.
@@ -119,6 +120,8 @@ Do not use Pandoc as a PDF parser. Do not require Python, pip, MinerU, or a Pand
 `pdf dissect --mode auto` is reliable for selectable text PDFs in the current Nong release. Hybrid mode preserves native text and embedded image evidence, while image-region OCR/layout enrichment is still limited. OCR mode depends on Nong's local PP-OCRv5 runtime and should be treated as text extraction, not full document reconstruction.
 
 `pdf ocr` renders each page of a scanned PDF as JPEG images and embeds them in a new PDF with placeholder text markers. For full text recognition, combine with `nong ocr cloud` or local OCR. `--dpi` controls render quality (default 200).
+
+`pdf compress` rebuilds content streams and removes unused objects to reduce file size.
 
 ## Error Contract
 
