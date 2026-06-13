@@ -133,10 +133,14 @@ nong pptx slides deck.pptx --json
 nong ocr check-env --json
 nong ocr analyze-image fig.png -o fig.analysis --json
 nong ocr cloud scan.png -o ocr-out --json
+nong ocr local scan.png --json
 nong ocr to-word scan.png -o out.docx --json
+nong ocr batch ./scans/ --pattern "*.png" --json
+nong ocr video demo.mp4 -o subtitles.srt --json
+nong ocr screen --x 0 --y 0 --w 800 --h 600 --json
 ```
 
-`ocr cloud` 和 `ocr to-word` 需要 `PADDLEOCR_ACCESS_TOKEN`。Token 页面是 `https://aistudio.baidu.com/account/accessToken`。
+`ocr cloud` 和 `ocr to-word` 需要 `PADDLEOCR_ACCESS_TOKEN`。Token 页面是 `https://aistudio.baidu.com/account/accessToken`。`ocr local` 使用 PP-OCRv6 纯 .NET 原生运行时。`ocr batch` 批量处理目录。`ocr video` 用 dHash 帧去重提取视频帧并输出 SRT 字幕。`ocr screen` 捕获 Windows 屏幕区域。
 
 ## 开发边界
 

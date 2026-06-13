@@ -133,10 +133,14 @@ nong pptx slides deck.pptx --json
 nong ocr check-env --json
 nong ocr analyze-image fig.png -o fig.analysis --json
 nong ocr cloud scan.png -o ocr-out --json
+nong ocr local scan.png --json
 nong ocr to-word scan.png -o out.docx --json
+nong ocr batch ./scans/ --pattern "*.png" --json
+nong ocr video demo.mp4 -o subtitles.srt --json
+nong ocr screen --x 0 --y 0 --w 800 --h 600 --json
 ```
 
-`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`.
+`ocr cloud` and `ocr to-word` require `PADDLEOCR_ACCESS_TOKEN` from `https://aistudio.baidu.com/account/accessToken`. `ocr local` uses PP-OCRv6 with pure .NET native runtime. `ocr batch` processes directories. `ocr video` extracts frames with dHash dedup and outputs SRT subtitles. `ocr screen` captures screen regions on Windows.
 
 ## Development Boundary
 
